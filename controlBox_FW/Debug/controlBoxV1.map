@@ -61,6 +61,8 @@ Discarded input sections
                 0x00000000       0x50 controlBoxHAL.o
  .text.TWI0_write
                 0x00000000       0x24 controlBoxHAL.o
+ .text.TWI0_readAck
+                0x00000000       0x16 controlBoxHAL.o
  .text.TWI1_init
                 0x00000000        0xc controlBoxHAL.o
  .text.TWI1_stop
@@ -69,6 +71,8 @@ Discarded input sections
                 0x00000000       0x50 controlBoxHAL.o
  .text.TWI1_write
                 0x00000000       0x24 controlBoxHAL.o
+ .text.TWI1_readAck
+                0x00000000       0x16 controlBoxHAL.o
  .text.EAT123_init
                 0x00000000       0x84 controlBoxHAL.o
  .text.EAT123_write
@@ -657,85 +661,85 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x238
+.debug_aranges  0x00000000      0x248
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0xf0 controlBoxHAL.o
+                0x00000000      0x100 controlBoxHAL.o
  .debug_aranges
-                0x000000f0       0x28 lightcontrol.o
+                0x00000100       0x28 lightcontrol.o
  .debug_aranges
-                0x00000118       0x40 lightcontrol_hal.o
+                0x00000128       0x40 lightcontrol_hal.o
  .debug_aranges
-                0x00000158       0x40 main.o
+                0x00000168       0x40 main.o
  .debug_aranges
-                0x00000198       0x28 measurements.o
+                0x000001a8       0x28 measurements.o
  .debug_aranges
-                0x000001c0       0x40 measurements_hal.o
+                0x000001d0       0x40 measurements_hal.o
  .debug_aranges
-                0x00000200       0x38 protocolAbstraction.o
+                0x00000210       0x38 protocolAbstraction.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x20f9
+.debug_info     0x00000000     0x212e
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x8ea C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_info    0x000008ea      0x8ef controlBoxHAL.o
- .debug_info    0x000011d9      0x215 lightcontrol.o
- .debug_info    0x000013ee       0xed lightcontrol_hal.o
- .debug_info    0x000014db      0x511 main.o
- .debug_info    0x000019ec      0x22a measurements.o
- .debug_info    0x00001c16      0x2de measurements_hal.o
- .debug_info    0x00001ef4      0x205 protocolAbstraction.o
+ .debug_info    0x000008ea      0x924 controlBoxHAL.o
+ .debug_info    0x0000120e      0x215 lightcontrol.o
+ .debug_info    0x00001423       0xed lightcontrol_hal.o
+ .debug_info    0x00001510      0x511 main.o
+ .debug_info    0x00001a21      0x22a measurements.o
+ .debug_info    0x00001c4b      0x2de measurements_hal.o
+ .debug_info    0x00001f29      0x205 protocolAbstraction.o
 
-.debug_abbrev   0x00000000     0x1181
+.debug_abbrev   0x00000000     0x119b
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x86e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_abbrev  0x0000086e      0x2b4 controlBoxHAL.o
- .debug_abbrev  0x00000b22       0xe8 lightcontrol.o
- .debug_abbrev  0x00000c0a       0x7a lightcontrol_hal.o
- .debug_abbrev  0x00000c84      0x1c4 main.o
- .debug_abbrev  0x00000e48      0x15a measurements.o
- .debug_abbrev  0x00000fa2       0xec measurements_hal.o
- .debug_abbrev  0x0000108e       0xf3 protocolAbstraction.o
+ .debug_abbrev  0x0000086e      0x2ce controlBoxHAL.o
+ .debug_abbrev  0x00000b3c       0xe8 lightcontrol.o
+ .debug_abbrev  0x00000c24       0x7a lightcontrol_hal.o
+ .debug_abbrev  0x00000c9e      0x1c4 main.o
+ .debug_abbrev  0x00000e62      0x15a measurements.o
+ .debug_abbrev  0x00000fbc       0xec measurements_hal.o
+ .debug_abbrev  0x000010a8       0xf3 protocolAbstraction.o
 
-.debug_line     0x00000000     0x1417
+.debug_line     0x00000000     0x148c
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x1a5 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_line    0x000001a5      0x74d controlBoxHAL.o
- .debug_line    0x000008f2      0x274 lightcontrol.o
- .debug_line    0x00000b66      0x123 lightcontrol_hal.o
- .debug_line    0x00000c89      0x28a main.o
- .debug_line    0x00000f13      0x1d6 measurements.o
- .debug_line    0x000010e9      0x19c measurements_hal.o
- .debug_line    0x00001285      0x192 protocolAbstraction.o
+ .debug_line    0x000001a5      0x7c2 controlBoxHAL.o
+ .debug_line    0x00000967      0x274 lightcontrol.o
+ .debug_line    0x00000bdb      0x123 lightcontrol_hal.o
+ .debug_line    0x00000cfe      0x28a main.o
+ .debug_line    0x00000f88      0x1d6 measurements.o
+ .debug_line    0x0000115e      0x19c measurements_hal.o
+ .debug_line    0x000012fa      0x192 protocolAbstraction.o
 
-.debug_frame    0x00000000      0x4ac
+.debug_frame    0x00000000      0x4cc
  *(.debug_frame)
- .debug_frame   0x00000000      0x214 controlBoxHAL.o
- .debug_frame   0x00000214       0x34 lightcontrol.o
- .debug_frame   0x00000248       0x64 lightcontrol_hal.o
- .debug_frame   0x000002ac       0xa4 main.o
- .debug_frame   0x00000350       0x54 measurements.o
- .debug_frame   0x000003a4       0xac measurements_hal.o
- .debug_frame   0x00000450       0x5c protocolAbstraction.o
+ .debug_frame   0x00000000      0x234 controlBoxHAL.o
+ .debug_frame   0x00000234       0x34 lightcontrol.o
+ .debug_frame   0x00000268       0x64 lightcontrol_hal.o
+ .debug_frame   0x000002cc       0xa4 main.o
+ .debug_frame   0x00000370       0x54 measurements.o
+ .debug_frame   0x000003c4       0xac measurements_hal.o
+ .debug_frame   0x00000470       0x5c protocolAbstraction.o
 
-.debug_str      0x00000000      0xa30
+.debug_str      0x00000000      0xa4a
  *(.debug_str)
  .debug_str     0x00000000      0x318 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_str     0x00000318      0x34e controlBoxHAL.o
-                                0x393 (size before relaxing)
- .debug_str     0x00000666       0xff lightcontrol.o
+ .debug_str     0x00000318      0x368 controlBoxHAL.o
+                                0x3ad (size before relaxing)
+ .debug_str     0x00000680       0xff lightcontrol.o
                                 0x26b (size before relaxing)
- .debug_str     0x00000765       0x61 lightcontrol_hal.o
+ .debug_str     0x0000077f       0x61 lightcontrol_hal.o
                                 0x1d5 (size before relaxing)
- .debug_str     0x000007c6      0x131 main.o
+ .debug_str     0x000007e0      0x131 main.o
                                 0x3b2 (size before relaxing)
- .debug_str     0x000008f7       0x68 measurements.o
+ .debug_str     0x00000911       0x68 measurements.o
                                 0x243 (size before relaxing)
- .debug_str     0x0000095f       0x4a measurements_hal.o
+ .debug_str     0x00000979       0x4a measurements_hal.o
                                 0x219 (size before relaxing)
- .debug_str     0x000009a9       0x87 protocolAbstraction.o
+ .debug_str     0x000009c3       0x87 protocolAbstraction.o
                                 0x23d (size before relaxing)
 
 .debug_loc      0x00000000      0x7ef
@@ -764,15 +768,15 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x1c8
+.debug_ranges   0x00000000      0x1d8
  *(.debug_ranges)
- .debug_ranges  0x00000000       0xe0 controlBoxHAL.o
- .debug_ranges  0x000000e0       0x18 lightcontrol.o
- .debug_ranges  0x000000f8       0x30 lightcontrol_hal.o
- .debug_ranges  0x00000128       0x30 main.o
- .debug_ranges  0x00000158       0x18 measurements.o
- .debug_ranges  0x00000170       0x30 measurements_hal.o
- .debug_ranges  0x000001a0       0x28 protocolAbstraction.o
+ .debug_ranges  0x00000000       0xf0 controlBoxHAL.o
+ .debug_ranges  0x000000f0       0x18 lightcontrol.o
+ .debug_ranges  0x00000108       0x30 lightcontrol_hal.o
+ .debug_ranges  0x00000138       0x30 main.o
+ .debug_ranges  0x00000168       0x18 measurements.o
+ .debug_ranges  0x00000180       0x30 measurements_hal.o
+ .debug_ranges  0x000001b0       0x28 protocolAbstraction.o
 
 .debug_macro
  *(.debug_macro)
