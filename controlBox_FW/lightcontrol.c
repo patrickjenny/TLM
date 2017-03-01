@@ -19,7 +19,7 @@ uint8_t act_brightness;
 
 timer_var_t light_timer;
 
-void linghtcontrol_init(void)
+void lightcontrol_init(void)
 {
 	state = FULLYON;
 	measLED_valid = 1;

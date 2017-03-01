@@ -9,7 +9,6 @@
 #ifndef LIGHTCONTROL_HAL_H_
 #define LIGHTCONTROL_HAL_H_
 
-#include "Global_Timer.h"
 #include <stdint.h>
 
 void lighcontrol_hal_init();

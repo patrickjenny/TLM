@@ -70,6 +70,8 @@ uint8_t measLED_valid;
 	 {
 		 case NORMAL:	/* normal operation state */
 		 /* Your code here */
+			lightcontrol_process();
+			measurement_process();
 		 break;
 
 		 case BUSSYSTEM:		/* bus evaluation state */
@@ -130,12 +132,15 @@ void sendAddress(void)
 
 int main(void)
 {
+	hal_init();
+	measurement_init();
+	lightcontrol_init();
+		
     /* initialize main features */
 	sei();
 	/* initialize UART interfaces */
 	
-	hal_init();
-	
+	//could be put into hal_init() @joshua from patrick ?
 	USART0_init();
 	USART1_init();
 
@@ -144,7 +149,7 @@ int main(void)
 
     while (1) 
     {
-		
+		hal_process();
 		stateMachine();
 		//sendAddress();
     }

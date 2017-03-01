@@ -13,7 +13,7 @@
 
 extern timer_var_t light_timer;
 
-void linghtcontrol_init(void);
+void lightcontrol_init(void);
 
 void lightcontrol_process(void);
 

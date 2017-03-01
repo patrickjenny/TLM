@@ -9,8 +9,6 @@
 #include "measurements_hal.h"
 #include "controlBoxHAL.h"
 
-#include <avr/io.h>
-
 static enum states{MEAS_ADV, MEAS_SIMP, WAIT} state;
 
 extern uint16_t bounds[7];
