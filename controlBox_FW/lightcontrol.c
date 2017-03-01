@@ -7,7 +7,7 @@
 
 #include "lightcontrol_hal.h"
 #include "lightcontrol.h"
-#include "Global_Timer.h"
+#include "controlBoxHAL.h"
 
 static enum states{FULLYON, FULLYOFF, BLINK, COSTUMBRIGHTNESS} state;
 	

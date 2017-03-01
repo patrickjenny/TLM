@@ -6,8 +6,8 @@
  *  Author: paddy
  */ 
 #include "measurements.h"
-#include "Global_Timer.h"
 #include "measurements_hal.h"
+#include "controlBoxHAL.h"
 
 #include <avr/io.h>
 
@@ -25,7 +25,8 @@ void measurement_init(void)
 	state = WAIT;
 	
 	DDRD |= (1<<PORTD7);
-	PORTD &= ~(1<<PORTD7); 
+	PORTD &= ~(1<<PORTD7);
+	meas_timer = TIMER_MINUTE(1);
 }
 
 void measurement_process(void)
@@ -40,7 +41,7 @@ void measurement_process(void)
 	{
 		case MEAS_ADV:		//State MEAS_ADV
 			
-			get_sensor_value(0);			meas_timer = TIMER_MINUTE(1);
+			get_sensor_value(0);			
 			get_all_voltages();
 			get_all_div_voltages();
 			for (uint8_t i = 0; i<4; i++)
@@ -103,7 +104,6 @@ void measurement_process(void)
 			statusCode |= (nLED << 3);
 			state = WAIT;
 			meas_timer = TIMER_SEC(1);
-			PORTD &= ~(1<<PORTD7); 
 		break;
 		
 		case WAIT:			//STATE WAIT

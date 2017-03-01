@@ -20,6 +20,52 @@
 
 ////////////////////////////////////////////////////////////////////////// USART0 interface
 
+static uint8_t timer_800us=0;
+
+ISR(TIMER2_COMPA_vect)
+{
+	timer_800us++;
+}
+
+void hal_init(void)
+{
+	/* init global Timer */
+	TCCR2A = 0x02; //CTC Mode, Prescaler 128, no output mode
+	TCCR2B = 0x05;
+	OCR2A = 99; // setting period to 800us
+	TIMSK2 = 0x02; //Output Compare A Match Interrupt Enable
+}
+
+void hal_process(void)
+{
+	uint8_t index = 0;
+	int32_t timer_interval;
+
+	TIMSK2&=~0x02; // disable 800us timer
+	if (timer_800us)
+	{
+		timer_interval=timer_800us*800;
+		while (hal_timers[index] != 0)
+		{
+			if ((*(timer_var_t*)hal_timers[index] != 0) && (*(timer_var_t*)hal_timers[index] != TIMER_DISABLED))
+			{
+				if (*(timer_var_t*)(hal_timers[index]) <= timer_interval)
+				{
+					*(timer_var_t*)hal_timers[index] = 0;
+				}
+				else
+				{
+					*(timer_var_t*)hal_timers[index] -= timer_interval;
+				}
+			}
+			index++;
+		}
+		timer_800us=0;
+
+	}
+	TIMSK2|=0x02; // enable 800us timer
+}
+
 void USART0_init(void) {
 	/* Set baud rate to 9600 */
 	UBRR0H = 0x00;

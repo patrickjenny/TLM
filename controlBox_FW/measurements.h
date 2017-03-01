@@ -10,7 +10,7 @@
 #define MEASUREMENTS_H_
 
 #include "measurements_hal.h"
-#include "Global_Timer.h"
+#include "controlBoxHAL.h"
 
 extern timer_var_t meas_timer;
 
