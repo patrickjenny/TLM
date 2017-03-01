@@ -7,11 +7,12 @@ c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/..
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_copy_data.o)
                               main.o (__do_copy_data)
 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_clear_bss.o)
-                              lightcontrol.o (__do_clear_bss)
+                              controlBoxHAL.o (__do_clear_bss)
 
 Allocating common symbols
 Common symbol       size              file
 
+voltages            0xc               main.o
 nLED                0x1               measurements.o
 voltageDiv          0x8               main.o
 measLED_valid       0x1               main.o
@@ -36,6 +37,8 @@ Discarded input sections
  .text          0x00000000        0x0 controlBoxHAL.o
  .data          0x00000000        0x0 controlBoxHAL.o
  .bss           0x00000000        0x0 controlBoxHAL.o
+ .text.hal_process
+                0x00000000       0xb2 controlBoxHAL.o
  .text.USART0_setToTransmit
                 0x00000000       0x16 controlBoxHAL.o
  .text.USART0_sendChar
@@ -80,13 +83,13 @@ Discarded input sections
  .text.lightcontrol_process
                 0x00000000      0x1ec lightcontrol.o
  .bss.state     0x00000000        0x1 lightcontrol.o
- .debug_info    0x00000000      0x215 lightcontrol.o
+ .debug_info    0x00000000      0x20a lightcontrol.o
  .debug_abbrev  0x00000000       0xe8 lightcontrol.o
  .debug_aranges
                 0x00000000       0x28 lightcontrol.o
  .debug_ranges  0x00000000       0x18 lightcontrol.o
- .debug_line    0x00000000      0x273 lightcontrol.o
- .debug_str     0x00000000      0x281 lightcontrol.o
+ .debug_line    0x00000000      0x261 lightcontrol.o
+ .debug_str     0x00000000      0x260 lightcontrol.o
  .comment       0x00000000       0x31 lightcontrol.o
  .debug_frame   0x00000000       0x34 lightcontrol.o
  COMMON         0x00000000        0x5 lightcontrol.o
@@ -119,13 +122,15 @@ Discarded input sections
                 0x00000000       0x38 main.o
  .bss.readPointerU1
                 0x00000000        0x1 main.o
+ .rodata.hal_timers
+                0x00000000        0x6 main.o
  .text          0x00000000        0x0 measurements.o
  .data          0x00000000        0x0 measurements.o
  .bss           0x00000000        0x0 measurements.o
  .text.measurement_init
-                0x00000000        0xc measurements.o
+                0x00000000       0x24 measurements.o
  .text.measurement_process
-                0x00000000      0x1a2 measurements.o
+                0x00000000      0x188 measurements.o
  .bss.state     0x00000000        0x1 measurements.o
  .debug_info    0x00000000      0x22a measurements.o
  .debug_abbrev  0x00000000      0x15a measurements.o
@@ -133,8 +138,8 @@ Discarded input sections
  .debug_aranges
                 0x00000000       0x28 measurements.o
  .debug_ranges  0x00000000       0x18 measurements.o
- .debug_line    0x00000000      0x1d5 measurements.o
- .debug_str     0x00000000      0x258 measurements.o
+ .debug_line    0x00000000      0x1d6 measurements.o
+ .debug_str     0x00000000      0x243 measurements.o
  .comment       0x00000000       0x31 measurements.o
  .debug_frame   0x00000000       0x54 measurements.o
  COMMON         0x00000000        0x5 measurements.o
@@ -359,7 +364,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x3ac
+.text           0x00000000      0x3ea
  *(.vectors)
  .vectors       0x00000000       0xb4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
                 0x00000000                __vector_default
@@ -438,7 +443,6 @@ END GROUP
                 0x000000ee                __vector_13
                 0x000000ee                __vector_17
                 0x000000ee                __vector_19
-                0x000000ee                __vector_7
                 0x000000ee                __vector_41
                 0x000000ee                __vector_43
                 0x000000ee                __vector_27
@@ -463,52 +467,58 @@ END GROUP
                 0x000000ee                __vector_42
                 0x000000f2                . = ALIGN (0x2)
  *(.text.*)
+ .text.__vector_7
+                0x000000f2       0x22 controlBoxHAL.o
+                0x000000f2                __vector_7
+ .text.hal_init
+                0x00000114       0x18 controlBoxHAL.o
+                0x00000114                hal_init
  .text.USART0_init
-                0x000000f2       0x18 controlBoxHAL.o
-                0x000000f2                USART0_init
+                0x0000012c       0x18 controlBoxHAL.o
+                0x0000012c                USART0_init
  .text.USART0_setToReceive
-                0x0000010a       0x18 controlBoxHAL.o
-                0x0000010a                USART0_setToReceive
+                0x00000144       0x18 controlBoxHAL.o
+                0x00000144                USART0_setToReceive
  .text.USART1_init
-                0x00000122       0x18 controlBoxHAL.o
-                0x00000122                USART1_init
+                0x0000015c       0x18 controlBoxHAL.o
+                0x0000015c                USART1_init
  .text.USART1_setToTransmit
-                0x0000013a       0x16 controlBoxHAL.o
-                0x0000013a                USART1_setToTransmit
+                0x00000174       0x16 controlBoxHAL.o
+                0x00000174                USART1_setToTransmit
  .text.USART1_sendChar
-                0x00000150       0x10 controlBoxHAL.o
-                0x00000150                USART1_sendChar
+                0x0000018a       0x10 controlBoxHAL.o
+                0x0000018a                USART1_sendChar
  .text.USART1_sendString
-                0x00000160       0x2a controlBoxHAL.o
-                0x00000160                USART1_sendString
+                0x0000019a       0x2a controlBoxHAL.o
+                0x0000019a                USART1_sendString
  .text.stateMachine
-                0x0000018a       0x1c main.o
-                0x0000018a                stateMachine
+                0x000001c4       0x1c main.o
+                0x000001c4                stateMachine
  .text.__vector_18
-                0x000001a6       0x4c main.o
-                0x000001a6                __vector_18
+                0x000001e0       0x4c main.o
+                0x000001e0                __vector_18
  .text.__vector_28
-                0x000001f2       0x4c main.o
-                0x000001f2                __vector_28
- .text.main     0x0000023e       0x18 main.o
-                0x0000023e                main
+                0x0000022c       0x4c main.o
+                0x0000022c                __vector_28
+ .text.main     0x00000278       0x1c main.o
+                0x00000278                main
  .text.bus_createAddressForNext
-                0x00000256       0x44 protocolAbstraction.o
-                0x00000256                bus_createAddressForNext
+                0x00000294       0x44 protocolAbstraction.o
+                0x00000294                bus_createAddressForNext
  .text.bus_createHello
-                0x0000029a       0x38 protocolAbstraction.o
-                0x0000029a                bus_createHello
+                0x000002d8       0x38 protocolAbstraction.o
+                0x000002d8                bus_createHello
  .text.calculateReadPointer
-                0x000002d2       0x16 protocolAbstraction.o
-                0x000002d2                calculateReadPointer
+                0x00000310       0x16 protocolAbstraction.o
+                0x00000310                calculateReadPointer
  .text.bus_process
-                0x000002e8       0xc0 protocolAbstraction.o
-                0x000002e8                bus_process
-                0x000003a8                . = ALIGN (0x2)
+                0x00000326       0xc0 protocolAbstraction.o
+                0x00000326                bus_process
+                0x000003e6                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000003a8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
-                0x000003a8                _exit
-                0x000003a8                exit
+ .fini9         0x000003e6        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+                0x000003e6                _exit
+                0x000003e6                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -527,11 +537,11 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000003a8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+ .fini0         0x000003e6        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x000003ac                _etext = .
+                0x000003ea                _etext = .
 
-.data           0x00800100        0x6 load address 0x000003ac
+.data           0x00800100        0x6 load address 0x000003ea
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
@@ -553,45 +563,48 @@ END GROUP
                 0x00800106                _edata = .
                 0x00800106                PROVIDE (__data_end, .)
 
-.bss            0x00800106       0xf0
+.bss            0x00800106       0xfd
                 0x00800106                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
+ .bss.timer_800us
+                0x00800106        0x1 controlBoxHAL.o
  .bss.writePointerU1
-                0x00800106        0x1 main.o
-                0x00800106                writePointerU1
- .bss.readPointerU0
                 0x00800107        0x1 main.o
-                0x00800107                readPointerU0
- .bss.writePointerU0
+                0x00800107                writePointerU1
+ .bss.readPointerU0
                 0x00800108        0x1 main.o
-                0x00800108                writePointerU0
- .bss.state     0x00800109        0x1 main.o
-                0x00800109                state
+                0x00800108                readPointerU0
+ .bss.writePointerU0
+                0x00800109        0x1 main.o
+                0x00800109                writePointerU0
+ .bss.state     0x0080010a        0x1 main.o
+                0x0080010a                state
  *(COMMON)
- COMMON         0x0080010a       0xe6 main.o
-                0x0080010a                voltageDiv
-                0x00800112                measLED_valid
-                0x00800113                temperature
-                0x00800115                bounds
-                0x00800123                bufferU1
-                0x00800187                statusCode
-                0x00800188                bufferU0
-                0x008001ec                sensorValue
-                0x008001ee                brightness
-                0x008001ef                lightmode
- COMMON         0x008001f0        0x6 protocolAbstraction.o
-                0x008001f0                helloPacket
-                0x008001f3                addressFrame
-                0x008001f6                PROVIDE (__bss_end, .)
-                0x000003ac                __data_load_start = LOADADDR (.data)
-                0x000003b2                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080010b       0xf2 main.o
+                0x0080010b                voltages
+                0x00800117                voltageDiv
+                0x0080011f                measLED_valid
+                0x00800120                temperature
+                0x00800122                bounds
+                0x00800130                bufferU1
+                0x00800194                statusCode
+                0x00800195                bufferU0
+                0x008001f9                sensorValue
+                0x008001fb                brightness
+                0x008001fc                lightmode
+ COMMON         0x008001fd        0x6 protocolAbstraction.o
+                0x008001fd                helloPacket
+                0x00800200                addressFrame
+                0x00800203                PROVIDE (__bss_end, .)
+                0x000003ea                __data_load_start = LOADADDR (.data)
+                0x000003f0                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008001f6        0x0
+.noinit         0x00800203        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x008001f6                _end = .
+                0x00800203                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -658,60 +671,60 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x150
+.debug_aranges  0x00000000      0x168
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0xd8 controlBoxHAL.o
+                0x00000000       0xf0 controlBoxHAL.o
  .debug_aranges
-                0x000000d8       0x40 main.o
+                0x000000f0       0x40 main.o
  .debug_aranges
-                0x00000118       0x38 protocolAbstraction.o
+                0x00000130       0x38 protocolAbstraction.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1750
+.debug_info     0x00000000     0x1890
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x8ea C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_info    0x000008ea      0x836 controlBoxHAL.o
- .debug_info    0x00001120      0x42b main.o
- .debug_info    0x0000154b      0x205 protocolAbstraction.o
+ .debug_info    0x000008ea      0x8ef controlBoxHAL.o
+ .debug_info    0x000011d9      0x4b2 main.o
+ .debug_info    0x0000168b      0x205 protocolAbstraction.o
 
-.debug_abbrev   0x00000000      0xd35
+.debug_abbrev   0x00000000      0xdd9
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x86e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_abbrev  0x0000086e      0x231 controlBoxHAL.o
- .debug_abbrev  0x00000a9f      0x1a3 main.o
- .debug_abbrev  0x00000c42       0xf3 protocolAbstraction.o
+ .debug_abbrev  0x0000086e      0x2b4 controlBoxHAL.o
+ .debug_abbrev  0x00000b22      0x1c4 main.o
+ .debug_abbrev  0x00000ce6       0xf3 protocolAbstraction.o
 
-.debug_line     0x00000000      0xbfa
+.debug_line     0x00000000      0xce7
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x1a5 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_line    0x000001a5      0x687 controlBoxHAL.o
- .debug_line    0x0000082c      0x23c main.o
- .debug_line    0x00000a68      0x192 protocolAbstraction.o
+ .debug_line    0x000001a5      0x74d controlBoxHAL.o
+ .debug_line    0x000008f2      0x263 main.o
+ .debug_line    0x00000b55      0x192 protocolAbstraction.o
 
-.debug_frame    0x00000000      0x2c0
+.debug_frame    0x00000000      0x314
  *(.debug_frame)
- .debug_frame   0x00000000      0x1c0 controlBoxHAL.o
- .debug_frame   0x000001c0       0xa4 main.o
- .debug_frame   0x00000264       0x5c protocolAbstraction.o
+ .debug_frame   0x00000000      0x214 controlBoxHAL.o
+ .debug_frame   0x00000214       0xa4 main.o
+ .debug_frame   0x000002b8       0x5c protocolAbstraction.o
 
-.debug_str      0x00000000      0x7c9
+.debug_str      0x00000000      0x840
  *(.debug_str)
  .debug_str     0x00000000      0x318 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_str     0x00000318      0x300 controlBoxHAL.o
-                                0x334 (size before relaxing)
- .debug_str     0x00000618      0x12a main.o
-                                0x31b (size before relaxing)
- .debug_str     0x00000742       0x87 protocolAbstraction.o
-                                0x23e (size before relaxing)
+ .debug_str     0x00000318      0x357 controlBoxHAL.o
+                                0x393 (size before relaxing)
+ .debug_str     0x0000066f      0x14a main.o
+                                0x35a (size before relaxing)
+ .debug_str     0x000007b9       0x87 protocolAbstraction.o
+                                0x23d (size before relaxing)
 
-.debug_loc      0x00000000      0x473
+.debug_loc      0x00000000      0x563
  *(.debug_loc)
- .debug_loc     0x00000000      0x369 controlBoxHAL.o
- .debug_loc     0x00000369       0xc6 main.o
- .debug_loc     0x0000042f       0x44 protocolAbstraction.o
+ .debug_loc     0x00000000      0x459 controlBoxHAL.o
+ .debug_loc     0x00000459       0xc6 main.o
+ .debug_loc     0x0000051f       0x44 protocolAbstraction.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -731,11 +744,11 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x120
+.debug_ranges   0x00000000      0x138
  *(.debug_ranges)
- .debug_ranges  0x00000000       0xc8 controlBoxHAL.o
- .debug_ranges  0x000000c8       0x30 main.o
- .debug_ranges  0x000000f8       0x28 protocolAbstraction.o
+ .debug_ranges  0x00000000       0xe0 controlBoxHAL.o
+ .debug_ranges  0x000000e0       0x30 main.o
+ .debug_ranges  0x00000110       0x28 protocolAbstraction.o
 
 .debug_macro
  *(.debug_macro)
