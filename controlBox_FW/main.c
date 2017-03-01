@@ -16,7 +16,11 @@
 
  #include "protocolAbstraction.h"
  #include "controlBoxHAL.h"
+ #include "measurements.h"
+ #include "lightcontrol.h"
 
+ TIMERS(&meas_timer, &light_timer);
+ 
  uint16_t address = 0x0C1;
  
  uint8_t toolID = 0x01;	/* intern toolID = 001 */
@@ -24,22 +28,34 @@
  //////////////////////////////////////////////////////////////////////////
  // global variables
 
- /* 4-Bit LED/sensor status code */
- uint8_t statusCode;
- /* 7 bounds */
- uint16_t bounds[7];
- /* 4 div voltages */
- uint16_t voltageDiv[4];
- /* 10-Bit ADC06 value (sensor) */
- uint16_t sensorValue;
- /* 10-Bit ADC08 value (temperature) */
- uint16_t temperature;
- /* LED brightness */
- uint8_t brightness;
- /* LED mode */
- uint8_t lightmode;
- /* bool (if measurement is possible) */
- uint8_t measLED_valid;
+/* 4-Bit LED/sensor status code */
+uint8_t statusCode; // OK not OK
+/* 7 bounds */
+uint16_t bounds[7];
+/* 4 div voltages */
+uint16_t voltageDiv[4];
+
+/* 4 voltages */
+uint16_t voltages[6];
+
+/* 10-Bit ADC06 value (sensor) */
+uint16_t sensorValue;
+
+/* 10-Bit ADC08 value (temperature) */
+uint16_t temperature;
+
+/* LED brightness */
+uint8_t brightness;
+
+/* LED mode */
+uint8_t lightmode;
+// Fully off         --> 0x00
+// Folly on          --> 0x01
+// costumbrightness  --> 0x02
+// blink			 --> 0x03
+
+/* bool (if measurement is possible) */
+uint8_t measLED_valid;
 
  //////////////////////////////////////////////////////////////////////////
  // state machine
@@ -117,6 +133,9 @@ int main(void)
     /* initialize main features */
 	sei();
 	/* initialize UART interfaces */
+	
+	hal_init();
+	
 	USART0_init();
 	USART1_init();
 
@@ -125,6 +144,7 @@ int main(void)
 
     while (1) 
     {
+		
 		stateMachine();
 		//sendAddress();
     }

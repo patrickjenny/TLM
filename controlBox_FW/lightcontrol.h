@@ -9,6 +9,8 @@
 #ifndef LIGHTCONTROL_H_
 #define LIGHTCONTROL_H_
 
+#include "controlBoxHAL.h"
+
 extern timer_var_t light_timer;
 
 void linghtcontrol_init(void);
