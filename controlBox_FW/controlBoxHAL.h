@@ -73,6 +73,8 @@ unsigned char TWI0_start(unsigned char address);
 unsigned char TWI0_write(unsigned char data);
 /*receive one byte from the TWI device */
 unsigned char TWI0_readAck(void);
+/*receive one byte from the TWI device */
+unsigned char TWI0_readNAck(void);
 
 /* initialize the TWI1 interface */
 void TWI1_init(void);
@@ -84,6 +86,8 @@ unsigned char TWI1_start(unsigned char address);
 unsigned char TWI1_write(unsigned char data);
 /*receive one byte from the TWI device */
 unsigned char TWI1_readAck(void);
+/*receive one byte from the TWI device */
+unsigned char TWI1_readNAck(void);
 
 /* initialize the EAT123 display */
 void EAT123_init(void);
