@@ -263,6 +263,17 @@ unsigned char TWI0_readAck(void)
 	return TWDR0;
 }
 
+unsigned char TWI0_readNAck(void)
+{
+	/* receive data */
+	TWCR0 = (1<<TWINT) | (1<<TWEN);
+	
+	/* Wait until the Reception is completed */
+	while (!(TWCR0 & (1<<TWINT)));
+	
+	/* return received Data */
+	return TWDR0;
+}
 ////////////////////////////////////////////////////////////////////////// TWI1 interface
 /* I2C clock in Hz */
 #define SCL1_CLOCK	100000L
@@ -330,6 +341,18 @@ unsigned char TWI1_readAck(void)
 	return TWDR1;
 }
 
+
+unsigned char TWI1_readNAck(void)
+{
+	/* receive data */
+	TWCR1 = (1<<TWINT1) | (1<<TWEN1);
+	
+	/* Wait until the Reception is completed */
+	while (!(TWCR1 & (1<<TWINT1)));
+	
+	/* return received Data */
+	return TWDR1;
+}
 
 ////////////////////////////////////////////////////////////////////////// Display
 #define devAddress_EAT123	0b01110100
