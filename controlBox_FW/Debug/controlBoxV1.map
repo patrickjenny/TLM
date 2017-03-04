@@ -49,6 +49,10 @@ Discarded input sections
                 0x00000000       0x10 controlBoxHAL.o
  .text.USART1_setToReceive
                 0x00000000       0x18 controlBoxHAL.o
+ .text.USART1_sendChar
+                0x00000000       0x10 controlBoxHAL.o
+ .text.USART1_sendString
+                0x00000000       0x2a controlBoxHAL.o
  .text.USART1_flush
                 0x00000000       0x1a controlBoxHAL.o
  .text.USART1_receive
@@ -58,20 +62,12 @@ Discarded input sections
  .text.TWI0_stop
                 0x00000000       0x12 controlBoxHAL.o
  .text.TWI0_start
-                0x00000000       0x50 controlBoxHAL.o
+                0x00000000       0x5a controlBoxHAL.o
  .text.TWI0_write
                 0x00000000       0x24 controlBoxHAL.o
  .text.TWI0_readAck
                 0x00000000       0x16 controlBoxHAL.o
- .text.TWI1_init
-                0x00000000        0xc controlBoxHAL.o
- .text.TWI1_stop
-                0x00000000       0x12 controlBoxHAL.o
- .text.TWI1_start
-                0x00000000       0x50 controlBoxHAL.o
- .text.TWI1_write
-                0x00000000       0x24 controlBoxHAL.o
- .text.TWI1_readAck
+ .text.TWI0_readNAck
                 0x00000000       0x16 controlBoxHAL.o
  .text.EAT123_init
                 0x00000000       0x84 controlBoxHAL.o
@@ -80,16 +76,30 @@ Discarded input sections
  .text          0x00000000        0x0 lightcontrol.o
  .data          0x00000000        0x0 lightcontrol.o
  .bss           0x00000000        0x0 lightcontrol.o
+ .text.lightcontrol_process
+                0x00000000      0x1ec lightcontrol.o
  .text          0x00000000        0x0 lightcontrol_hal.o
  .data          0x00000000        0x0 lightcontrol_hal.o
  .bss           0x00000000        0x0 lightcontrol_hal.o
+ .text.brightness_fully_off
+                0x00000000        0xa lightcontrol_hal.o
+ .text.set_brighntess
+                0x00000000        0xa lightcontrol_hal.o
+ .text.inv_brightness
+                0x00000000        0xa lightcontrol_hal.o
  .text          0x00000000        0x0 main.o
  .data          0x00000000        0x0 main.o
  .bss           0x00000000        0x0 main.o
+ .text.stateMachine
+                0x00000000       0x28 main.o
  .text.sendAddress
                 0x00000000       0x38 main.o
  .bss.readPointerU1
                 0x00000000        0x1 main.o
+ .bss.readPointerU0
+                0x00000000        0x1 main.o
+ .data.toolID   0x00000000        0x1 main.o
+ .data.address  0x00000000        0x2 main.o
  .text          0x00000000        0x0 measurements.o
  .data          0x00000000        0x0 measurements.o
  .bss           0x00000000        0x0 measurements.o
@@ -101,6 +111,29 @@ Discarded input sections
  .text          0x00000000        0x0 protocolAbstraction.o
  .data          0x00000000        0x0 protocolAbstraction.o
  .bss           0x00000000        0x0 protocolAbstraction.o
+ .text.bus_createAddressForNext
+                0x00000000       0x44 protocolAbstraction.o
+ .text.bus_createHello
+                0x00000000       0x38 protocolAbstraction.o
+ .text.calculateReadPointer
+                0x00000000       0x16 protocolAbstraction.o
+ .text.bus_process
+                0x00000000       0xc0 protocolAbstraction.o
+ .data.helloCode
+                0x00000000        0x1 protocolAbstraction.o
+ .data.STOP     0x00000000        0x1 protocolAbstraction.o
+ .data.START    0x00000000        0x1 protocolAbstraction.o
+ .debug_info    0x00000000      0x205 protocolAbstraction.o
+ .debug_abbrev  0x00000000       0xf3 protocolAbstraction.o
+ .debug_loc     0x00000000       0x44 protocolAbstraction.o
+ .debug_aranges
+                0x00000000       0x38 protocolAbstraction.o
+ .debug_ranges  0x00000000       0x28 protocolAbstraction.o
+ .debug_line    0x00000000      0x192 protocolAbstraction.o
+ .debug_str     0x00000000      0x23d protocolAbstraction.o
+ .comment       0x00000000       0x31 protocolAbstraction.o
+ .debug_frame   0x00000000       0x5c protocolAbstraction.o
+ COMMON         0x00000000        0x6 protocolAbstraction.o
  .text          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
  .data          0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
@@ -294,7 +327,7 @@ END GROUP
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0xabc
+.text           0x00000000      0x8e0
  *(.vectors)
  .vectors       0x00000000       0xb4 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
                 0x00000000                __vector_default
@@ -418,82 +451,79 @@ END GROUP
  .text.USART1_setToTransmit
                 0x00000226       0x16 controlBoxHAL.o
                 0x00000226                USART1_setToTransmit
- .text.USART1_sendChar
-                0x0000023c       0x10 controlBoxHAL.o
-                0x0000023c                USART1_sendChar
- .text.USART1_sendString
-                0x0000024c       0x2a controlBoxHAL.o
-                0x0000024c                USART1_sendString
+ .text.TWI1_init
+                0x0000023c        0xc controlBoxHAL.o
+                0x0000023c                TWI1_init
+ .text.TWI1_stop
+                0x00000248       0x12 controlBoxHAL.o
+                0x00000248                TWI1_stop
+ .text.TWI1_start
+                0x0000025a       0x5a controlBoxHAL.o
+                0x0000025a                TWI1_start
+ .text.TWI1_write
+                0x000002b4       0x24 controlBoxHAL.o
+                0x000002b4                TWI1_write
+ .text.TWI1_readAck
+                0x000002d8       0x16 controlBoxHAL.o
+                0x000002d8                TWI1_readAck
+ .text.TWI1_readNAck
+                0x000002ee       0x16 controlBoxHAL.o
+                0x000002ee                TWI1_readNAck
+ .text.DS1621_init
+                0x00000304       0x70 controlBoxHAL.o
+                0x00000304                DS1621_init
+ .text.read_DS1621
+                0x00000374       0x88 controlBoxHAL.o
+                0x00000374                read_DS1621
  .text.lightcontrol_init
-                0x00000276       0x14 lightcontrol.o
-                0x00000276                lightcontrol_init
- .text.lightcontrol_process
-                0x0000028a      0x1ec lightcontrol.o
-                0x0000028a                lightcontrol_process
+                0x000003fc       0x14 lightcontrol.o
+                0x000003fc                lightcontrol_init
  .text.lighcontrol_hal_init
-                0x00000476        0xc lightcontrol_hal.o
-                0x00000476                lighcontrol_hal_init
+                0x00000410        0xc lightcontrol_hal.o
+                0x00000410                lighcontrol_hal_init
  .text.brightness_fully_on
-                0x00000482        0xa lightcontrol_hal.o
-                0x00000482                brightness_fully_on
- .text.brightness_fully_off
-                0x0000048c        0xa lightcontrol_hal.o
-                0x0000048c                brightness_fully_off
- .text.set_brighntess
-                0x00000496        0xa lightcontrol_hal.o
-                0x00000496                set_brighntess
- .text.inv_brightness
-                0x000004a0        0xa lightcontrol_hal.o
-                0x000004a0                inv_brightness
- .text.stateMachine
-                0x000004aa       0x28 main.o
-                0x000004aa                stateMachine
+                0x0000041c        0xa lightcontrol_hal.o
+                0x0000041c                brightness_fully_on
  .text.__vector_18
-                0x000004d2       0x4c main.o
-                0x000004d2                __vector_18
+                0x00000426       0x4c main.o
+                0x00000426                __vector_18
  .text.__vector_28
-                0x0000051e       0x4c main.o
-                0x0000051e                __vector_28
- .text.main     0x0000056a       0x28 main.o
-                0x0000056a                main
+                0x00000472       0x4c main.o
+                0x00000472                __vector_28
+ .text.main     0x000004be       0x28 main.o
+                0x000004be                main
  .text.measurement_init
-                0x00000592       0x24 measurements.o
-                0x00000592                measurement_init
+                0x000004e6       0x28 measurements.o
+                0x000004e6                measurement_init
  .text.measurement_process
-                0x000005b6      0x188 measurements.o
-                0x000005b6                measurement_process
+                0x0000050e      0x18e measurements.o
+                0x0000050e                measurement_process
+ .text.measurement_hal_init
+                0x0000069c        0xa measurements_hal.o
+                0x0000069c                measurement_hal_init
  .text.read_adc_10
-                0x0000073e       0x46 measurements_hal.o
-                0x0000073e                read_adc_10
+                0x000006a6       0x46 measurements_hal.o
+                0x000006a6                read_adc_10
+ .text.get_ambient_TEMP
+                0x000006ec        0xe measurements_hal.o
+                0x000006ec                get_ambient_TEMP
  .text.get_all_voltages
-                0x00000784       0xce measurements_hal.o
-                0x00000784                get_all_voltages
+                0x000006fa       0xce measurements_hal.o
+                0x000006fa                get_all_voltages
  .text.get_all_div_voltages
-                0x00000852       0xc6 measurements_hal.o
-                0x00000852                get_all_div_voltages
+                0x000007c8       0xc6 measurements_hal.o
+                0x000007c8                get_all_div_voltages
  .text.get_sensor_value
-                0x00000918       0x26 measurements_hal.o
-                0x00000918                get_sensor_value
- .text.bus_createAddressForNext
-                0x0000093e       0x44 protocolAbstraction.o
-                0x0000093e                bus_createAddressForNext
- .text.bus_createHello
-                0x00000982       0x38 protocolAbstraction.o
-                0x00000982                bus_createHello
- .text.calculateReadPointer
-                0x000009ba       0x16 protocolAbstraction.o
-                0x000009ba                calculateReadPointer
- .text.bus_process
-                0x000009d0       0xc0 protocolAbstraction.o
-                0x000009d0                bus_process
+                0x0000088e       0x26 measurements_hal.o
+                0x0000088e                get_sensor_value
  .text.libgcc.div
-                0x00000a90       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
-                0x00000a90                __udivmodhi4
-                0x00000ab8                . = ALIGN (0x2)
+                0x000008b4       0x28 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_udivmodhi4.o)
+                0x000008b4                __udivmodhi4
+                0x000008dc                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000ab8        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
-                0x00000ab8                _exit
-                0x00000ab8                exit
+ .fini9         0x000008dc        0x0 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+                0x000008dc                _exit
+                0x000008dc                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -512,85 +542,68 @@ END GROUP
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000ab8        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
+ .fini0         0x000008dc        0x4 c:/program files (x86)/atmel/studio/7.0/toolchain/avr8/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.9.2/avr5\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000abc                _etext = .
+                0x000008e0                _etext = .
 
-.data           0x00800100        0xc load address 0x00000abc
+.data           0x00800100        0x6 load address 0x000008e0
                 0x00800100                PROVIDE (__data_start, .)
  *(.data)
  *(.data*)
- .data.toolID   0x00800100        0x1 main.o
-                0x00800100                toolID
- .data.address  0x00800101        0x2 main.o
-                0x00800101                address
- .data.helloCode
-                0x00800103        0x1 protocolAbstraction.o
-                0x00800103                helloCode
- .data.STOP     0x00800104        0x1 protocolAbstraction.o
-                0x00800104                STOP
- .data.START    0x00800105        0x1 protocolAbstraction.o
-                0x00800105                START
  *(.rodata)
  *(.rodata*)
  .rodata.hal_timers
-                0x00800106        0x6 main.o
-                0x00800106                hal_timers
+                0x00800100        0x6 main.o
+                0x00800100                hal_timers
  *(.gnu.linkonce.d*)
-                0x0080010c                . = ALIGN (0x2)
-                0x0080010c                _edata = .
-                0x0080010c                PROVIDE (__data_end, .)
+                0x00800106                . = ALIGN (0x2)
+                0x00800106                _edata = .
+                0x00800106                PROVIDE (__data_end, .)
 
-.bss            0x0080010c      0x109
-                0x0080010c                PROVIDE (__bss_start, .)
+.bss            0x00800106      0x102
+                0x00800106                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  .bss.timer_800us
-                0x0080010c        0x1 controlBoxHAL.o
- .bss.state     0x0080010d        0x1 lightcontrol.o
+                0x00800106        0x1 controlBoxHAL.o
+ .bss.state     0x00800107        0x1 lightcontrol.o
  .bss.writePointerU1
-                0x0080010e        0x1 main.o
-                0x0080010e                writePointerU1
- .bss.readPointerU0
-                0x0080010f        0x1 main.o
-                0x0080010f                readPointerU0
+                0x00800108        0x1 main.o
+                0x00800108                writePointerU1
  .bss.writePointerU0
-                0x00800110        0x1 main.o
-                0x00800110                writePointerU0
- .bss.state     0x00800111        0x1 main.o
-                0x00800111                state
- .bss.state     0x00800112        0x1 measurements.o
+                0x00800109        0x1 main.o
+                0x00800109                writePointerU0
+ .bss.state     0x0080010a        0x1 main.o
+                0x0080010a                state
+ .bss.state     0x0080010b        0x1 measurements.o
  *(COMMON)
- COMMON         0x00800113        0x5 lightcontrol.o
-                0x00800113                light_timer
-                0x00800117                act_brightness
- COMMON         0x00800118       0xf2 main.o
-                0x00800118                voltages
-                0x00800124                voltageDiv
-                0x0080012c                measLED_valid
-                0x0080012d                temperature
-                0x0080012f                bounds
-                0x0080013d                bufferU1
-                0x008001a1                statusCode
-                0x008001a2                bufferU0
-                0x00800206                sensorValue
-                0x00800208                brightness
-                0x00800209                lightmode
- COMMON         0x0080020a        0x5 measurements.o
-                0x0080020a                nLED
-                0x0080020b                meas_timer
- COMMON         0x0080020f        0x6 protocolAbstraction.o
-                0x0080020f                helloPacket
-                0x00800212                addressFrame
-                0x00800215                PROVIDE (__bss_end, .)
-                0x00000abc                __data_load_start = LOADADDR (.data)
-                0x00000ac8                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080010c        0x5 lightcontrol.o
+                0x0080010c                light_timer
+                0x00800110                act_brightness
+ COMMON         0x00800111       0xf2 main.o
+                0x00800111                voltages
+                0x0080011d                voltageDiv
+                0x00800125                measLED_valid
+                0x00800126                temperature
+                0x00800128                bounds
+                0x00800136                bufferU1
+                0x0080019a                statusCode
+                0x0080019b                bufferU0
+                0x008001ff                sensorValue
+                0x00800201                brightness
+                0x00800202                lightmode
+ COMMON         0x00800203        0x5 measurements.o
+                0x00800203                nLED
+                0x00800204                meas_timer
+                0x00800208                PROVIDE (__bss_end, .)
+                0x000008e0                __data_load_start = LOADADDR (.data)
+                0x000008e6                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x00800215        0x0
+.noinit         0x00800208        0x0
                 [!provide]                PROVIDE (__noinit_start, .)
  *(.noinit*)
                 [!provide]                PROVIDE (__noinit_end, .)
-                0x00800215                _end = .
+                0x00800208                _end = .
                 [!provide]                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
@@ -639,7 +652,6 @@ END GROUP
  .comment       0x00000030       0x31 main.o
  .comment       0x00000030       0x31 measurements.o
  .comment       0x00000030       0x31 measurements_hal.o
- .comment       0x00000030       0x31 protocolAbstraction.o
 
 .note.gnu.avr.deviceinfo
                 0x00000000       0x40
@@ -661,94 +673,85 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x248
+.debug_aranges  0x00000000      0x240
  *(.debug_aranges)
  .debug_aranges
-                0x00000000      0x100 controlBoxHAL.o
+                0x00000000      0x120 controlBoxHAL.o
  .debug_aranges
-                0x00000100       0x28 lightcontrol.o
+                0x00000120       0x28 lightcontrol.o
  .debug_aranges
-                0x00000128       0x40 lightcontrol_hal.o
+                0x00000148       0x40 lightcontrol_hal.o
  .debug_aranges
-                0x00000168       0x40 main.o
+                0x00000188       0x40 main.o
  .debug_aranges
-                0x000001a8       0x28 measurements.o
+                0x000001c8       0x28 measurements.o
  .debug_aranges
-                0x000001d0       0x40 measurements_hal.o
- .debug_aranges
-                0x00000210       0x38 protocolAbstraction.o
+                0x000001f0       0x50 measurements_hal.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x212e
+.debug_info     0x00000000     0x22f2
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0x8ea C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_info    0x000008ea      0x924 controlBoxHAL.o
- .debug_info    0x0000120e      0x215 lightcontrol.o
- .debug_info    0x00001423       0xed lightcontrol_hal.o
- .debug_info    0x00001510      0x511 main.o
- .debug_info    0x00001a21      0x22a measurements.o
- .debug_info    0x00001c4b      0x2de measurements_hal.o
- .debug_info    0x00001f29      0x205 protocolAbstraction.o
+ .debug_info    0x000008ea      0xc14 controlBoxHAL.o
+ .debug_info    0x000014fe      0x215 lightcontrol.o
+ .debug_info    0x00001713       0xed lightcontrol_hal.o
+ .debug_info    0x00001800      0x51c main.o
+ .debug_info    0x00001d1c      0x26d measurements.o
+ .debug_info    0x00001f89      0x369 measurements_hal.o
 
-.debug_abbrev   0x00000000     0x119b
+.debug_abbrev   0x00000000     0x111e
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0x86e C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_abbrev  0x0000086e      0x2ce controlBoxHAL.o
- .debug_abbrev  0x00000b3c       0xe8 lightcontrol.o
- .debug_abbrev  0x00000c24       0x7a lightcontrol_hal.o
- .debug_abbrev  0x00000c9e      0x1c4 main.o
- .debug_abbrev  0x00000e62      0x15a measurements.o
- .debug_abbrev  0x00000fbc       0xec measurements_hal.o
- .debug_abbrev  0x000010a8       0xf3 protocolAbstraction.o
+ .debug_abbrev  0x0000086e      0x2f9 controlBoxHAL.o
+ .debug_abbrev  0x00000b67       0xe8 lightcontrol.o
+ .debug_abbrev  0x00000c4f       0x7a lightcontrol_hal.o
+ .debug_abbrev  0x00000cc9      0x1c4 main.o
+ .debug_abbrev  0x00000e8d      0x15c measurements.o
+ .debug_abbrev  0x00000fe9      0x135 measurements_hal.o
 
-.debug_line     0x00000000     0x148c
+.debug_line     0x00000000     0x14b2
  *(.debug_line .debug_line.* .debug_line_end)
  .debug_line    0x00000000      0x1a5 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_line    0x000001a5      0x7c2 controlBoxHAL.o
- .debug_line    0x00000967      0x274 lightcontrol.o
- .debug_line    0x00000bdb      0x123 lightcontrol_hal.o
- .debug_line    0x00000cfe      0x28a main.o
- .debug_line    0x00000f88      0x1d6 measurements.o
- .debug_line    0x0000115e      0x19c measurements_hal.o
- .debug_line    0x000012fa      0x192 protocolAbstraction.o
+ .debug_line    0x000001a5      0x927 controlBoxHAL.o
+ .debug_line    0x00000acc      0x274 lightcontrol.o
+ .debug_line    0x00000d40      0x123 lightcontrol_hal.o
+ .debug_line    0x00000e63      0x28a main.o
+ .debug_line    0x000010ed      0x1e2 measurements.o
+ .debug_line    0x000012cf      0x1e3 measurements_hal.o
 
-.debug_frame    0x00000000      0x4cc
+.debug_frame    0x00000000      0x4dc
  *(.debug_frame)
- .debug_frame   0x00000000      0x234 controlBoxHAL.o
- .debug_frame   0x00000234       0x34 lightcontrol.o
- .debug_frame   0x00000268       0x64 lightcontrol_hal.o
- .debug_frame   0x000002cc       0xa4 main.o
- .debug_frame   0x00000370       0x54 measurements.o
- .debug_frame   0x000003c4       0xac measurements_hal.o
- .debug_frame   0x00000470       0x5c protocolAbstraction.o
+ .debug_frame   0x00000000      0x280 controlBoxHAL.o
+ .debug_frame   0x00000280       0x34 lightcontrol.o
+ .debug_frame   0x000002b4       0x64 lightcontrol_hal.o
+ .debug_frame   0x00000318       0xa4 main.o
+ .debug_frame   0x000003bc       0x54 measurements.o
+ .debug_frame   0x00000410       0xcc measurements_hal.o
 
-.debug_str      0x00000000      0xa4a
+.debug_str      0x00000000      0xa27
  *(.debug_str)
  .debug_str     0x00000000      0x318 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.1.130/gcc/dev/atmega328pb/avr5/crtatmega328pb.o
- .debug_str     0x00000318      0x368 controlBoxHAL.o
-                                0x3ad (size before relaxing)
- .debug_str     0x00000680       0xff lightcontrol.o
+ .debug_str     0x00000318      0x3b4 controlBoxHAL.o
+                                0x401 (size before relaxing)
+ .debug_str     0x000006cc       0xff lightcontrol.o
                                 0x26b (size before relaxing)
- .debug_str     0x0000077f       0x61 lightcontrol_hal.o
+ .debug_str     0x000007cb       0x61 lightcontrol_hal.o
                                 0x1d5 (size before relaxing)
- .debug_str     0x000007e0      0x131 main.o
-                                0x3b2 (size before relaxing)
- .debug_str     0x00000911       0x68 measurements.o
-                                0x243 (size before relaxing)
- .debug_str     0x00000979       0x4a measurements_hal.o
-                                0x219 (size before relaxing)
- .debug_str     0x000009c3       0x87 protocolAbstraction.o
-                                0x23d (size before relaxing)
+ .debug_str     0x0000082c      0x128 main.o
+                                0x3ba (size before relaxing)
+ .debug_str     0x00000954       0x8e measurements.o
+                                0x271 (size before relaxing)
+ .debug_str     0x000009e2       0x45 measurements_hal.o
+                                0x260 (size before relaxing)
 
-.debug_loc      0x00000000      0x7ef
+.debug_loc      0x00000000      0x86c
  *(.debug_loc)
- .debug_loc     0x00000000      0x459 controlBoxHAL.o
- .debug_loc     0x00000459       0xc6 main.o
- .debug_loc     0x0000051f       0x8b measurements.o
- .debug_loc     0x000005aa      0x201 measurements_hal.o
- .debug_loc     0x000007ab       0x44 protocolAbstraction.o
+ .debug_loc     0x00000000      0x51a controlBoxHAL.o
+ .debug_loc     0x0000051a       0xc6 main.o
+ .debug_loc     0x000005e0       0x8b measurements.o
+ .debug_loc     0x0000066b      0x201 measurements_hal.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -768,15 +771,14 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x1d8
+.debug_ranges   0x00000000      0x1e0
  *(.debug_ranges)
- .debug_ranges  0x00000000       0xf0 controlBoxHAL.o
- .debug_ranges  0x000000f0       0x18 lightcontrol.o
- .debug_ranges  0x00000108       0x30 lightcontrol_hal.o
- .debug_ranges  0x00000138       0x30 main.o
- .debug_ranges  0x00000168       0x18 measurements.o
- .debug_ranges  0x00000180       0x30 measurements_hal.o
- .debug_ranges  0x000001b0       0x28 protocolAbstraction.o
+ .debug_ranges  0x00000000      0x110 controlBoxHAL.o
+ .debug_ranges  0x00000110       0x18 lightcontrol.o
+ .debug_ranges  0x00000128       0x30 lightcontrol_hal.o
+ .debug_ranges  0x00000158       0x30 main.o
+ .debug_ranges  0x00000188       0x18 measurements.o
+ .debug_ranges  0x000001a0       0x40 measurements_hal.o
 
 .debug_macro
  *(.debug_macro)

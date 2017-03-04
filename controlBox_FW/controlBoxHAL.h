@@ -68,7 +68,7 @@ void TWI0_init(void);
 /* terminates the data transfer and releases the TWI0 bus */
 void TWI0_stop(void);
 /* issues a start condition and sends address and transfer direction */
-unsigned char TWI0_start(unsigned char address);
+unsigned char TWI0_start(unsigned char addr);
 /* send one byte to the TWI device */
 unsigned char TWI0_write(unsigned char data);
 /*receive one byte from the TWI device */
@@ -81,7 +81,7 @@ void TWI1_init(void);
 /* terminates the data transfer and releases the TWI1 bus */
 void TWI1_stop(void);
 /* issues a start condition and send address and transfer direction */
-unsigned char TWI1_start(unsigned char address);
+unsigned char TWI1_start(unsigned char addr);
 /* send one byte to the TWI device */
 unsigned char TWI1_write(unsigned char data);
 /*receive one byte from the TWI device */
@@ -95,5 +95,11 @@ void EAT123_init(void);
 void EAT123_setPosition(unsigned char line, unsigned char pos);
 /* write char out to display on current position */
 void EAT123_write(unsigned char *output, unsigned char line);
+
+
+void DS1621_init(void);
+
+int16_t read_DS1621(void);
+
 
 #endif /* CONTROLBOXHAL_H_ */

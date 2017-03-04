@@ -4,6 +4,7 @@
  * Created: 17.02.2017 12:23:42
  * Author : paddy
  */ 
+#include "controlBoxHAL.h"
 
 #include <avr/io.h>
 #include <stdint.h>
@@ -17,6 +18,13 @@ extern uint16_t temperature;
 ADC-Messung des übergebenen Kanals (chan)
 10Bit, Polling, 1.1V Referenz, Mittelung von 4 Werten
 *********************************************************************/
+
+void measurement_hal_init(void)
+{
+	TWI1_init();
+	DS1621_init();
+}
+
 uint16_t read_adc_10(char channel)
 {
 	//  0x00 - ADC0
@@ -47,6 +55,11 @@ uint16_t get_chip_TEMP(void)
 	// not evalluated
 	temp = read_adc_10(0x08);
 	return temp;
+}
+
+void get_ambient_TEMP(void)
+{
+	temperature = read_DS1621();
 }
 
 void get_all_voltages(void)

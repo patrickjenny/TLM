@@ -223,15 +223,15 @@ unsigned char TWI0_start(unsigned char address)
 	/* Wait until the transmission is completed */
 	while (!(TWCR0 & (1<<TWINT)));
 	/* Check value of TWI0 Status Register. Mask prescaler bits. */
-	if ((TWSR0 & 0xF8) != TW_START)
-		return 1;
+	if (((TWSR0 & 0xF8) != TW_START) && ((TWSR0 & 0xF8) != TW_REP_START))
+	return 1;
 	/* Send device address */
 	TWDR0 = address;
 	TWCR0 = (1<<TWINT) | (1<<TWEN);
 	/* Wait until the transmission is completed */
 	while (!(TWCR0 & (1<<TWINT)));
 	/* Check TWI0 Status Register. Mask prescaler bits. */
-	if (((TWCR0 & 0xF8) != TW_MT_SLA_ACK) && (TWCR0 & 0xF8) != TW_MR_SLA_ACK)
+	if (((TWSR0 & 0xF8) != TW_MT_SLA_ACK) && (TWSR0 & 0xF8) != TW_MR_SLA_ACK)
 		return 1;
 	else
 		return 0;
@@ -284,6 +284,7 @@ void TWI1_init(void)
 	TWSR1 = 0;
 	/* Should be >10 for stable operation */
 	TWBR1 = ((F_CPU / SCL1_CLOCK) - 16) / 2;
+
 }
 
 void TWI1_stop(void)
@@ -294,22 +295,22 @@ void TWI1_stop(void)
 	while(TWCR1 & (1<<TWSTO1));
 }
 
-unsigned char TWI1_start(unsigned char address)
+unsigned char TWI1_start(unsigned char addr)
 {
 	/* Send START condition */
 	TWCR1 = (1<<TWINT1) | (1<<TWSTA1) | (1<<TWEN1);
 	/* Wait until the transmission is completed */
 	while (!(TWCR1 & (1<<TWINT1)));
 	/* Check value of TWI1 Status Register. Mask prescaler bits. */
-	if ((TWCR1 & 0xF8) != TW_START)
+	if (((TWSR1 & 0xF8) != TW_START) && ((TWSR1 & 0xF8) != TW_REP_START))
 		return 1;
 	/* Send device address */
-	TWDR1 = address;
+	TWDR1 = addr;
 	TWCR1 = (1<<TWINT1) | (1<<TWEN1);
 	/* Wait until the transmission is completed */
 	while (!(TWCR1 & (1<<TWINT1)));
 	/* Check TWI1 Status Register. Mask prescaler bits. */
-	if (((TWCR1 & 0xF8) != TW_MT_SLA_ACK) && (TWCR1 & 0xF8) != TW_MR_SLA_ACK)
+	if (((TWSR1 & 0xF8) != TW_MT_SLA_ACK) && (TWSR1 & 0xF8) != TW_MR_SLA_ACK)
 		return 1;
 	else
 		return 0;
@@ -323,11 +324,12 @@ unsigned char TWI1_write(unsigned char data)
 	/* Wait until the transmission is completed */
 	while (!(TWCR1 & (1<<TWINT1)));
 	/* Check TWI0 Status Register. Mask prescaler bits */
-	if ((TWCR1 & 0xF8) != TW_MT_DATA_ACK)
+	if ((TWSR1 & 0xF8) != TW_MT_DATA_ACK)
 		return 1;
 	else
 		return 0;
 }
+
 
 unsigned char TWI1_readAck(void)
 {
@@ -426,4 +428,53 @@ void EAT123_write(unsigned char *output, unsigned char line)
 	}
 	/* Send a STOP condition*/
 	TWI0_stop();
+}
+
+////////////////////////////////////////////////////////////////////////// D1621 Temp-Sensor
+
+#define DevDS1621 0b10011110
+
+void DS1621_init(void)					/* Initialisierung Tempsens*/
+{
+	TWI1_start(DevDS1621+TW_WRITE);
+	_delay_ms (1.0);
+	TWI1_write(0xAC);			// access config
+	_delay_ms (1.0);
+	TWI1_write(0x00);			// config continous conversion
+	_delay_ms (1.0);
+	TWI1_stop();
+	_delay_ms (1.0);
+	TWI1_start(DevDS1621+TW_WRITE);
+	_delay_ms (1.0);
+	TWI1_write(0xEE);			// start convert
+	_delay_ms (1.0);
+	TWI1_stop();
+}
+
+int16_t read_DS1621(void)
+{
+		uint8_t msb;
+		uint8_t lsb;
+		uint16_t temp;
+		int16_t wert;
+		
+		TWI1_start(DevDS1621 + TW_WRITE);
+		TWI1_write(0xAA);	// read temperature command protocol
+	
+		TWI1_start(DevDS1621 + TW_READ);
+		msb = TWI1_readAck();
+		lsb = TWI1_readNAck();
+		TWI1_stop();
+	
+		
+		
+		temp = msb;
+		
+		if (msb >= 0x80)
+		{
+			wert = ((65536 - (temp << 8 | lsb)) >> 7) * (-5); // Temperatur negativ
+			return wert;
+		}
+		wert = ((temp << 8 | lsb) >> 7) * 5; // Temperatur positiv
+		return wert;
 }

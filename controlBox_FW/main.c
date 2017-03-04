@@ -42,7 +42,7 @@ uint16_t voltages[6];
 uint16_t sensorValue;
 
 /* 10-Bit ADC08 value (temperature) */
-uint16_t temperature;
+int16_t temperature;
 
 /* LED brightness */
 uint8_t brightness;
@@ -146,12 +146,15 @@ int main(void)
 
 	USART0_setToReceive();
 	USART1_setToTransmit();
-
+	
+	
     while (1) 
     {
 		hal_process();
-		stateMachine();
+		measurement_process();
+		//stateMachine();
 		//sendAddress();
     }
 }
+
 
