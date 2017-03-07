@@ -101,6 +101,7 @@ uint8_t measLED_valid;
 ISR(USART0_RX_vect)
 {
 	bufferU0[writePointerU0] = UDR0;
+	
 	state = BUSSYSTEM;	/* change state / start evaluation */
 
 	if (writePointerU0 >= (BUFFERSIZE - 1))
@@ -147,11 +148,14 @@ int main(void)
 	USART0_setToReceive();
 	USART1_setToTransmit();
 	
+	lightmode = 0x00;
+	brightness = 0x20;
 	
     while (1) 
     {
 		hal_process();
 		measurement_process();
+		lightcontrol_process();
 		//stateMachine();
 		//sendAddress();
     }
