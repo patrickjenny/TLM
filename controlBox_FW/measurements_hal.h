@@ -22,4 +22,6 @@ uint16_t get_sensor_value(uint8_t sensortype);
 
 int16_t get_ambient_TEMP(void);
 
+uint16_t read_adc_10(char channel);
+
 #endif /* MEASUREMENTS_HAL_H_ */

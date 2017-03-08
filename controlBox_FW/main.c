@@ -32,6 +32,10 @@
 uint8_t statusCode; // OK not OK
 /* 7 bounds */
 uint16_t bounds[7];
+
+
+
+
 /* 4 div voltages */
 uint16_t voltageDiv[4];
 
@@ -133,10 +137,18 @@ void sendAddress(void)
 
 int main(void)
 {
+	bounds[0] = 1880;
+	bounds[1] = 4760;
+	bounds[2] = 7640;
+	bounds[3] = 10520;
+	bounds[4] = 13400;
+	bounds[5] = 16000;
+	bounds[6] = 22000;
+
+	
 	hal_init();
 	measurement_init();
 	lightcontrol_init();
-		
     /* initialize main features */
 	sei();
 	/* initialize UART interfaces */
@@ -148,16 +160,22 @@ int main(void)
 	USART0_setToReceive();
 	USART1_setToTransmit();
 	
-	lightmode = 0x00;
-	brightness = 0x20;
+	lightmode = 0x01;
+	brightness = 50;
 	
     while (1) 
     {
+		
 		hal_process();
 		measurement_process();
 		lightcontrol_process();
+		
+		USART1_sendChar((char)(temperature>>8));
+		USART1_sendChar((char)(temperature));
+		USART1_sendChar(statusCode);
 		//stateMachine();
 		//sendAddress();
+		
     }
 }
 
