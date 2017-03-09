@@ -1,8 +1,8 @@
 /*
  * controlBoxV1.c
  *
- * Created: 20-Feb-17 10:09:00 AM
- * Author : Kofler Joshua
+ * Created: 20-02-17
+ * Author : Kofler Joshua / Patrick Jenny
  */ 
 //////////////////////////////////////////////////////////////////////////
 // important intern saved variables / includes
@@ -21,9 +21,10 @@
 
  TIMERS(&meas_timer, &light_timer);
  
+ /* intern stored address */
  uint16_t address = 0x0C1;
- 
- uint8_t toolID = 0x01;	/* intern toolID = 001 */
+ /* intern stored toolID = 001 (handrail) */
+ uint8_t toolID = 0x01;
 
  //////////////////////////////////////////////////////////////////////////
  // global variables
@@ -49,10 +50,10 @@ uint8_t brightness;
 
 /* LED mode */
 uint8_t lightmode;
-// Fully off         --> 0x00
-// Folly on          --> 0x01
-// costumbrightness  --> 0x02
-// blink			 --> 0x03
+// OFF		          --> 0x00
+// ON				  --> 0x01
+// costume brightness --> 0x02
+// blink			  --> 0x03
 
 /* bool (if measurement is possible) */
 uint8_t measLED_valid;
@@ -68,8 +69,7 @@ uint8_t measLED_valid;
  {
 	 switch (state)
 	 {
-		 case NORMAL:	/* normal operation state */
-		 /* Your code here */
+		 case NORMAL:			/* normal operation state */
 			lightcontrol_process();
 			measurement_process();
 		 break;
@@ -85,8 +85,7 @@ uint8_t measLED_valid;
 	 }
  }
 
- /////////////////////////
- #/////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////
  // bus system buffer
 
  #define BUFFERSIZE		100		/* receive buffer size */
@@ -118,42 +117,19 @@ ISR(USART1_RX_vect)
 	else writePointerU1++;
 }
 
-//////////////////////////////////////////////////////////////////////////
-
-void sendAddress(void)
-{
-	USART1_sendChar(0xA1);
-	_delay_ms(2);
-	USART1_sendChar(0x2A);
-	_delay_ms(2);
-	USART1_sendChar(0xA9);
-	_delay_ms(2);
-}
+////////////////////////////////////////////////////////////////////////// main
 
 int main(void)
 {
+	/* initialize main features */
 	hal_init();
 	measurement_init();
 	lightcontrol_init();
-		
-    /* initialize main features */
 	sei();
-	/* initialize UART interfaces */
-	
-	//could be put into hal_init() @joshua from patrick ?
-	USART0_init();
-	USART1_init();
 
-	USART0_setToReceive();
-	USART1_setToTransmit();
-	
-	
     while (1) 
     {
-		hal_process();
-		measurement_process();
-		//stateMachine();
-		//sendAddress();
+		stateMachine();
     }
 }
 

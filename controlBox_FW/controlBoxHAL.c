@@ -18,7 +18,7 @@
 #include <util/twi.h>
 #include <util/delay.h>
 
-////////////////////////////////////////////////////////////////////////// USART0 interface
+////////////////////////////////////////////////////////////////////////// HAL initializations
 
 static uint8_t timer_800us=0;
 
@@ -34,6 +34,13 @@ void hal_init(void)
 	TCCR2B = 0x05;
 	OCR2A = 99; // setting period to 800us
 	TIMSK2 = 0x02; //Output Compare A Match Interrupt Enable
+
+	/* initialize UART interfaces */
+	USART0_init();
+	USART1_init();
+
+	USART0_setToReceive();
+	USART1_setToTransmit();
 }
 
 void hal_process(void)
@@ -65,6 +72,8 @@ void hal_process(void)
 	}
 	TIMSK2|=0x02; // enable 800us timer
 }
+
+////////////////////////////////////////////////////////////////////////// USART0 interface
 
 void USART0_init(void) {
 	/* Set baud rate to 9600 */
@@ -180,6 +189,16 @@ void USART1_sendString(unsigned char *s) {
 		USART1_sendChar(*s);
 		_delay_ms(2);
 		s++;
+	}
+}
+
+void USART1_sendStringWL(unsigned char *s, unsigned char length) {
+	unsigned char i = 0;
+	while(i < length)
+	{
+		USART1_sendChar(*s);
+		_delay_ms(2);
+		s++; i++;
 	}
 }
 
