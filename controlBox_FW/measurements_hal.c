@@ -21,8 +21,8 @@ ADC-Messung des übergebenen Kanals (chan)
 
 void measurement_hal_init(void)
 {
-	TWI1_init();
-	DS1621_init();
+	//TWI1_init();
+	//DS1621_init();
 }
 
 uint16_t read_adc_10(char channel)

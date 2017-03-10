@@ -22,7 +22,7 @@
  TIMERS(&meas_timer, &light_timer);
  
  /* intern stored address */
- uint16_t address = 0x0C1;
+ uint16_t address = 0x00AA;
  /* intern stored toolID = 001 (handrail) */
  uint8_t toolID = 0x01;
 
@@ -88,7 +88,7 @@ uint8_t measLED_valid;
  //////////////////////////////////////////////////////////////////////////
  // bus system buffer
 
- #define BUFFERSIZE		100		/* receive buffer size */
+ #define BUFFERSIZE		150		/* receive buffer size */
  uint8_t bufferU0[BUFFERSIZE];	/* receive buffer UART0 */
  uint8_t writePointerU0 = 0;
  uint8_t readPointerU0 = 0;
@@ -97,14 +97,18 @@ uint8_t measLED_valid;
  uint8_t writePointerU1 = 0;
  uint8_t readPointerU1 = 0;
 
+ uint8_t buffer[BUFFERSIZE];
+ uint8_t writePointer = 0;
+ uint8_t readPointer = 0;
+
 ISR(USART0_RX_vect)
 {
-	bufferU0[writePointerU0] = UDR0;
+	buffer[writePointer] = UDR0;
 	state = BUSSYSTEM;	/* change state / start evaluation */
 
-	if (writePointerU0 >= (BUFFERSIZE - 1))
-		writePointerU0 = 0;
-	else writePointerU0++;
+	if (writePointer >= (BUFFERSIZE - 1))
+		writePointer = 0;
+	else writePointer++;
 }
 
 ISR(USART1_RX_vect)
@@ -119,17 +123,73 @@ ISR(USART1_RX_vect)
 
 ////////////////////////////////////////////////////////////////////////// main
 
+void sendAddress(void)
+{
+	USART1_sendChar(0xA1);
+	_delay_ms(2);
+	USART1_sendChar(0x2A);
+	_delay_ms(2);
+	USART1_sendChar(0xA9);
+	_delay_ms(10);
+}
+
+void sendSpecialFrame(void)
+{
+	USART1_sendChar(0xA4);
+	_delay_ms(2);
+	USART1_sendChar(0x2A);
+	_delay_ms(2);
+	USART1_sendChar(0xA9);
+	_delay_ms(2);
+	for (uint8_t i = 0; i < 32; i++)
+	{
+		USART1_sendChar(0x00);
+		_delay_ms(2);
+	}
+	USART1_sendChar(0x09);
+	_delay_ms(2000);
+}
+void sendSpecialFrame_1(void)
+{
+	USART1_sendChar(0xA4);
+	_delay_ms(2);
+	USART1_sendChar(0x2B);
+	_delay_ms(2);
+	USART1_sendChar(0xB9);
+	_delay_ms(2);
+	for (uint8_t i = 0; i < 32; i++)
+	{
+		USART1_sendChar(0x00);
+		_delay_ms(2);
+	}
+	USART1_sendChar(0x09);
+	_delay_ms(2000);
+}
+
 int main(void)
 {
 	/* initialize main features */
 	hal_init();
+	
+
 	measurement_init();
+
+	
+	USART1_sendChar(0xFF);
 	lightcontrol_init();
 	sei();
 
     while (1) 
     {
-		stateMachine();
+		//hal_process();
+		////stateMachine();
+		//measurement_process();
+		//lightcontrol_process();
+		bus_process();
+
+		//sendAddress();
+		//sendSpecialFrame();
+		//sendSpecialFrame_1();
     }
 }
 

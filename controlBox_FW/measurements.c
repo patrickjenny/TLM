@@ -41,7 +41,7 @@ void measurement_process(void)
 	{
 		case MEAS_ADV:		//State MEAS_ADV
 			
-			get_ambient_TEMP();
+			//get_ambient_TEMP();
 			get_sensor_value(0);			
 			get_all_voltages();
 			get_all_div_voltages();
@@ -75,7 +75,7 @@ void measurement_process(void)
 		
 		case MEAS_SIMP:		//STATE MEAS_SIMP
 			
-			get_ambient_TEMP();
+			//get_ambient_TEMP();
 			get_all_div_voltages();
 			for (uint8_t i = 0; i<4; i++)
 			{
