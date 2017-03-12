@@ -90,7 +90,7 @@ void get_sensor_value(uint8_t sensortype)
 	}
 	else
 	{
-		sensorValue = sensorValue; //Messung mv
+		sensorValue = sensorValue*11; //Messung mv
 	}
 
 }

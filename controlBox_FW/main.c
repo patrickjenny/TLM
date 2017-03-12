@@ -107,12 +107,8 @@ uint8_t measLED_valid;
 
 ISR(USART0_RX_vect)
 {
-<<<<<<< HEAD
 	buffer[writePointer] = UDR0;
-=======
 	bufferU0[writePointerU0] = UDR0;
-	
->>>>>>> origin/master
 	state = BUSSYSTEM;	/* change state / start evaluation */
 
 	if (writePointer >= (BUFFERSIZE - 1))
@@ -234,18 +230,16 @@ int main(void)
 	
 	/* initialize main features */
 	hal_init();
-	
-
+	lightcontrol_init();
 	measurement_init();
 
 	
 	USART1_sendChar(0xFF);
-	lightcontrol_init();
+
 	sei();
 
     while (1) 
     {
-<<<<<<< HEAD
 		//hal_process();
 		////stateMachine();
 		//measurement_process();
@@ -255,11 +249,10 @@ int main(void)
 		//sendAddress();
 		//sendStandardFrame();		//sendSpecialFrame();
 		//sendSpecialFrame_1();
-=======
+
 		hal_process();
 		stateMachine();
 		
->>>>>>> origin/master
     }
 }
 

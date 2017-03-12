@@ -40,14 +40,12 @@ void measurement_process(void)
 	switch(state)
 	{
 		case MEAS_ADV:		//State MEAS_ADV
-			
-<<<<<<< HEAD
-			//get_ambient_TEMP();
-=======
+		
+
 			meascount = 0;
 			
 			get_ambient_TEMP();
->>>>>>> origin/master
+
 			get_sensor_value(0);			
 			get_all_voltages();
 			get_all_div_voltages();
@@ -85,13 +83,11 @@ void measurement_process(void)
 		
 		case MEAS_SIMP:		//STATE MEAS_SIMP
 			
-<<<<<<< HEAD
 			//get_ambient_TEMP();
-=======
+
 			meascount++;
 			
 			get_ambient_TEMP();
->>>>>>> origin/master
 			get_all_div_voltages();
 			
 			nLED=0;
