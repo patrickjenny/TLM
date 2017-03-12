@@ -181,13 +181,13 @@ void USART1_sendChar(unsigned char data) {
 	while ( !(UCSR1A & (1<<UDRE1)));
 	/* Put data into buffer, sends the data */
 	UDR1 = data;
+	_delay_ms(2);
 }
 
 void USART1_sendString(unsigned char *s) {
 	while(*s)
 	{
 		USART1_sendChar(*s);
-		_delay_ms(2);
 		s++;
 	}
 }
@@ -197,7 +197,6 @@ void USART1_sendStringWL(unsigned char *s, unsigned char length) {
 	while(i < length)
 	{
 		USART1_sendChar(*s);
-		_delay_ms(2);
 		s++; i++;
 	}
 }

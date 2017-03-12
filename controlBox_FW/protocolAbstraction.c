@@ -38,7 +38,8 @@
 
  uint8_t frame[37];
 
-  uint8_t receiveCount = 3;
+  uint16_t receiveCount = 3;
+  uint16_t receiveLength = 0;
   uint8_t receiveFlag	= 0;
 
 #define MODEADR				1
@@ -47,6 +48,8 @@
 #define MODESTD				2
 
 #define MODEDEV				3
+ uint8_t deviceSTART = 0x50;
+ uint8_t deviceSTOP = 0x06;
 
 #define MODESPE				4
  
@@ -58,7 +61,9 @@
 uint16_t varValue;
 uint8_t varID;
 	#define sensorValueID		1
-	extern uint16_t sensorValue;
+	uint16_t sensorValue = 0xDADA;
+	#define brightnessID		2
+	uint8_t brightness = 0xAA;
 
 //////////////////////////////////////////////////////////////////////////
 // bus system buffer
@@ -71,6 +76,9 @@ void bus_process(void)
 {
 	/* check flags (jump to) */
 	if (receiveFlag == 1)
+		goto receivesend;
+
+	if (receiveFlag == 4)
 		goto receivestore1;
 	if (receiveFlag == 2)
 		goto receivestore2;
@@ -84,7 +92,7 @@ void bus_process(void)
 	 *
 	 * current problems
 	 * -------------------------------------------------------------------
-	 * timing of addressing does not work fine
+	 * standard query -> when toolID does not match		i dont know how long i will wait.. the address could 
 	 *
 	 */
 	 if (((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 2)
@@ -106,7 +114,7 @@ void bus_process(void)
 					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
 					{
 						/* when the received toolID matches intern toolID */
-						temp = ((buffer[readPointer]&0x1F) << 4);
+						temp = ((uint16_t)(buffer[readPointer]&0x1F) << 4);
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
 							readPointer = 0;
@@ -137,6 +145,125 @@ void bus_process(void)
 					if (readPointer >= (BUFFERSIZE - 1))
 						readPointer = 0;
 					else readPointer++;
+				break;
+
+				case MODESTD: /* standard query */
+					/* initialize standard query */
+					receiveCount = 3; receiveLength = 0; temp = 9;
+					
+					/* first 3-bit include toolID */
+					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
+					{
+						varID = (buffer[readPointer] << 3);
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+						varID += (buffer[readPointer] >> 5);
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+						
+						/* reset readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+
+						/* create frame for next device */
+						frame[0] = (START + MODESTD);
+						frame[1] = ((toolID << 5) + (varID >> 3));
+						frame[2] = (varID << 5);
+
+						/* add device packet */
+						frame[4] = (deviceSTART + MODEDEV);
+						frame[5] = ((toolID << 5) + (uint8_t)(address >> 4));
+						frame[6] = (uint8_t)(address << 4);
+						switch (varID)
+						{
+							case sensorValueID:	/* -> 1 */
+								varValue = sensorValue;
+							break;
+							case brightnessID:	/* -> 2 */
+								varValue = brightness;
+							break;
+
+							default:
+								/* fault -> 0x00 */
+								varValue = 0x00;
+							break;
+						}
+						frame[6] += (uint8_t)(varValue >> 12);
+						frame[7] = (uint8_t)(varValue >> 4);
+						frame[8] = ((varValue << 4) + deviceSTOP);
+						/* receive following device packets */
+						goto receivesend;
+					}
+					else
+					{
+						frame[0] = START + MODESTD;
+						frame[1] = buffer[readPointer];
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+						frame[2] = (buffer[readPointer]&0xE0);
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+						/* set flag */
+						temp = 4;
+
+						/* reset readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+
+						receivesend:
+						/* set flag */
+						receiveFlag = 1;
+
+						if ((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount == 3);
+						{
+							receiveLength += buffer[readPointer];
+							/* switch procedure (toolID match / do not) */
+							if (temp > 4)
+							{
+								frame[2] += ((receiveLength + 1) >> 8);
+								frame[3] = (receiveLength + 1);
+							}
+							else
+							{
+								frame[2] += (receiveLength >> 8);
+								frame[3] = receiveLength;
+							}
+							/* send frame */
+							USART1_sendStringWL(frame, temp);
+							/* increase count */
+							receiveCount++;
+							/* increase readPointer (consider step over) */
+							if (readPointer >= (BUFFERSIZE - 1))
+								readPointer = 0;
+							else readPointer++;
+						}
+
+						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount < (receiveLength * 5 + 4))
+						{
+							/* store received bytes */
+							USART1_sendChar(buffer[readPointer]);
+							/* increase count */
+							receiveCount++;
+							/* increase readPointer (consider step over) */
+							if (readPointer >= (BUFFERSIZE - 1))
+								readPointer = 0;
+							else readPointer++;
+						}
+						/* wait till the receive is complete */
+						if (receiveCount < (receiveLength * 5 + 4))
+							return;
+
+						/* reset flag */
+						receiveFlag = 0;
+						/* finish frame */
+						USART1_sendChar(STOP);
+					}
 				break;
 
 
@@ -191,7 +318,7 @@ void bus_process(void)
 
 						receivestore1:
 						/* set flag */
-						receiveFlag = 1;
+						receiveFlag = 4;
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 36)
 						{
@@ -223,6 +350,9 @@ void bus_process(void)
 
 
 				case MODECTR: /* control device */
+					/* set receive count */
+					receiveCount = 3;
+
 					/* first 3-bit include toolID */
 					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
 					{

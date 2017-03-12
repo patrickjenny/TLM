@@ -3,31 +3,31 @@ controlBoxV1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000006  00800100  000008a8  0000093c  2**0
+  0 .data         0000000c  00800100  00000c26  00000cba  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         000008a8  00000000  00000000  00000094  2**1
+  1 .text         00000c26  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000224  00800106  00800106  00000942  2**0
+  2 .bss          00000223  0080010c  0080010c  00000cc6  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  00000942  2**0
+  3 .comment      00000030  00000000  00000000  00000cc6  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000974  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000cf8  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000278  00000000  00000000  000009b4  2**0
+  5 .debug_aranges 00000280  00000000  00000000  00000d38  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000028ff  00000000  00000000  00000c2c  2**0
+  6 .debug_info   00002a03  00000000  00000000  00000fb8  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001273  00000000  00000000  0000352b  2**0
+  7 .debug_abbrev 0000129e  00000000  00000000  000039bb  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   0000199b  00000000  00000000  0000479e  2**0
+  8 .debug_line   00001b74  00000000  00000000  00004c59  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  00000570  00000000  00000000  0000613c  2**2
+  9 .debug_frame  0000058c  00000000  00000000  000067d0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00000b08  00000000  00000000  000066ac  2**0
+ 10 .debug_str    00000b40  00000000  00000000  00006d5c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000acd  00000000  00000000  000071b4  2**0
+ 11 .debug_loc    00000a87  00000000  00000000  0000789c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000208  00000000  00000000  00007c81  2**0
+ 12 .debug_ranges 00000210  00000000  00000000  00008323  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -91,18 +91,18 @@ Disassembly of section .text:
   c0:	11 e0       	ldi	r17, 0x01	; 1
   c2:	a0 e0       	ldi	r26, 0x00	; 0
   c4:	b1 e0       	ldi	r27, 0x01	; 1
-  c6:	e8 ea       	ldi	r30, 0xA8	; 168
-  c8:	f8 e0       	ldi	r31, 0x08	; 8
+  c6:	e6 e2       	ldi	r30, 0x26	; 38
+  c8:	fc e0       	ldi	r31, 0x0C	; 12
   ca:	02 c0       	rjmp	.+4      	; 0xd0 <__do_copy_data+0x10>
   cc:	05 90       	lpm	r0, Z+
   ce:	0d 92       	st	X+, r0
-  d0:	a6 30       	cpi	r26, 0x06	; 6
+  d0:	ac 30       	cpi	r26, 0x0C	; 12
   d2:	b1 07       	cpc	r27, r17
   d4:	d9 f7       	brne	.-10     	; 0xcc <__do_copy_data+0xc>
 
 000000d6 <__do_clear_bss>:
   d6:	23 e0       	ldi	r18, 0x03	; 3
-  d8:	a6 e0       	ldi	r26, 0x06	; 6
+  d8:	ac e0       	ldi	r26, 0x0C	; 12
   da:	b1 e0       	ldi	r27, 0x01	; 1
   dc:	01 c0       	rjmp	.+2      	; 0xe0 <.do_clear_bss_start>
 
@@ -110,19 +110,19 @@ Disassembly of section .text:
   de:	1d 92       	st	X+, r1
 
 000000e0 <.do_clear_bss_start>:
-  e0:	aa 32       	cpi	r26, 0x2A	; 42
+  e0:	af 32       	cpi	r26, 0x2F	; 47
   e2:	b2 07       	cpc	r27, r18
   e4:	e1 f7       	brne	.-8      	; 0xde <.do_clear_bss_loop>
   e6:	0e 94 55 01 	call	0x2aa	; 0x2aa <main>
-  ea:	0c 94 52 04 	jmp	0x8a4	; 0x8a4 <_exit>
+  ea:	0c 94 11 06 	jmp	0xc22	; 0xc22 <_exit>
 
 000000ee <__bad_interrupt>:
   ee:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
 000000f2 <__vector_7>:
+	while(*s)
 	{
 		USART1_sendChar(*s);
-		_delay_ms(2);
 		s++;
 	}
 }
@@ -132,9 +132,9 @@ Disassembly of section .text:
   f8:	0f 92       	push	r0
   fa:	11 24       	eor	r1, r1
   fc:	8f 93       	push	r24
-  fe:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <__data_end>
+  fe:	80 91 0c 01 	lds	r24, 0x010C	; 0x80010c <__data_end>
  102:	8f 5f       	subi	r24, 0xFF	; 255
- 104:	80 93 06 01 	sts	0x0106, r24	; 0x800106 <__data_end>
+ 104:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <__data_end>
  108:	8f 91       	pop	r24
  10a:	0f 90       	pop	r0
  10c:	0f be       	out	0x3f, r0	; 63
@@ -210,43 +210,37 @@ Disassembly of section .text:
  1a0:	95 ff       	sbrs	r25, 5
  1a2:	fd cf       	rjmp	.-6      	; 0x19e <USART1_sendChar+0x4>
  1a4:	80 93 ce 00 	sts	0x00CE, r24	; 0x8000ce <__TEXT_REGION_LENGTH__+0x7e00ce>
- 1a8:	08 95       	ret
+ 1a8:	8f e3       	ldi	r24, 0x3F	; 63
+ 1aa:	9f e1       	ldi	r25, 0x1F	; 31
+ 1ac:	01 97       	sbiw	r24, 0x01	; 1
+ 1ae:	f1 f7       	brne	.-4      	; 0x1ac <USART1_sendChar+0x12>
+ 1b0:	00 c0       	rjmp	.+0      	; 0x1b2 <USART1_sendChar+0x18>
+ 1b2:	00 00       	nop
+ 1b4:	08 95       	ret
 
-000001aa <USART1_sendStringWL>:
+000001b6 <USART1_sendStringWL>:
 
 void USART1_sendStringWL(unsigned char *s, unsigned char length) {
- 1aa:	0f 93       	push	r16
- 1ac:	1f 93       	push	r17
- 1ae:	cf 93       	push	r28
- 1b0:	df 93       	push	r29
- 1b2:	ec 01       	movw	r28, r24
+ 1b6:	0f 93       	push	r16
+ 1b8:	1f 93       	push	r17
+ 1ba:	cf 93       	push	r28
+ 1bc:	df 93       	push	r29
+ 1be:	ec 01       	movw	r28, r24
 	unsigned char i = 0;
 	while(i < length)
- 1b4:	66 23       	and	r22, r22
- 1b6:	99 f0       	breq	.+38     	; 0x1de <USART1_sendStringWL+0x34>
- 1b8:	61 50       	subi	r22, 0x01	; 1
- 1ba:	06 2f       	mov	r16, r22
- 1bc:	10 e0       	ldi	r17, 0x00	; 0
- 1be:	0f 5f       	subi	r16, 0xFF	; 255
- 1c0:	1f 4f       	sbci	r17, 0xFF	; 255
- 1c2:	08 0f       	add	r16, r24
- 1c4:	19 1f       	adc	r17, r25
+ 1c0:	66 23       	and	r22, r22
+ 1c2:	69 f0       	breq	.+26     	; 0x1de <USART1_sendStringWL+0x28>
+ 1c4:	61 50       	subi	r22, 0x01	; 1
+ 1c6:	06 2f       	mov	r16, r22
+ 1c8:	10 e0       	ldi	r17, 0x00	; 0
+ 1ca:	0f 5f       	subi	r16, 0xFF	; 255
+ 1cc:	1f 4f       	sbci	r17, 0xFF	; 255
+ 1ce:	08 0f       	add	r16, r24
+ 1d0:	19 1f       	adc	r17, r25
 	{
 		USART1_sendChar(*s);
- 1c6:	89 91       	ld	r24, Y+
- 1c8:	0e 94 cd 00 	call	0x19a	; 0x19a <USART1_sendChar>
-	#else
-		//round up by default
-		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
-	#endif
-
-	__builtin_avr_delay_cycles(__ticks_dc);
- 1cc:	8f e3       	ldi	r24, 0x3F	; 63
- 1ce:	9f e1       	ldi	r25, 0x1F	; 31
- 1d0:	01 97       	sbiw	r24, 0x01	; 1
- 1d2:	f1 f7       	brne	.-4      	; 0x1d0 <USART1_sendStringWL+0x26>
- 1d4:	00 c0       	rjmp	.+0      	; 0x1d6 <USART1_sendStringWL+0x2c>
- 1d6:	00 00       	nop
+ 1d2:	89 91       	ld	r24, Y+
+ 1d4:	0e 94 cd 00 	call	0x19a	; 0x19a <USART1_sendChar>
 	}
 }
 
@@ -255,10 +249,9 @@ void USART1_sendStringWL(unsigned char *s, unsigned char length) {
 	while(i < length)
  1d8:	c0 17       	cp	r28, r16
  1da:	d1 07       	cpc	r29, r17
- 1dc:	a1 f7       	brne	.-24     	; 0x1c6 <USART1_sendStringWL+0x1c>
+ 1dc:	d1 f7       	brne	.-12     	; 0x1d2 <USART1_sendStringWL+0x1c>
 	{
 		USART1_sendChar(*s);
-		_delay_ms(2);
 		s++; i++;
 	}
 }
@@ -275,10 +268,10 @@ timer_var_t light_timer;
 void lightcontrol_init(void)
 {
 	state = FULLYON;
- 1e8:	10 92 07 01 	sts	0x0107, r1	; 0x800107 <state>
+ 1e8:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <state>
 	measLED_valid = 1;
  1ec:	81 e0       	ldi	r24, 0x01	; 1
- 1ee:	80 93 22 01 	sts	0x0122, r24	; 0x800122 <measLED_valid>
+ 1ee:	80 93 2a 01 	sts	0x012A, r24	; 0x80012a <measLED_valid>
 	lighcontrol_hal_init();
  1f2:	0e 94 fe 00 	call	0x1fc	; 0x1fc <lighcontrol_hal_init>
 	brightness_fully_on();
@@ -301,12 +294,12 @@ void lightcontrol_init(void)
  210:	08 95       	ret
 
 00000212 <__vector_18>:
-		USART1_sendChar(0x00);
-		_delay_ms(2);
-	}
-	USART1_sendChar(0x09);
-	_delay_ms(2000);
-}
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
  212:	1f 92       	push	r1
  214:	0f 92       	push	r0
  216:	0f b6       	in	r0, 0x3f	; 63
@@ -316,21 +309,21 @@ void lightcontrol_init(void)
  21e:	9f 93       	push	r25
  220:	ef 93       	push	r30
  222:	ff 93       	push	r31
- 224:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <writePointer>
+ 224:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <writePointer>
  228:	90 91 c6 00 	lds	r25, 0x00C6	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
  22c:	e8 2f       	mov	r30, r24
  22e:	f0 e0       	ldi	r31, 0x00	; 0
- 230:	e6 53       	subi	r30, 0x36	; 54
+ 230:	ee 52       	subi	r30, 0x2E	; 46
  232:	fe 4f       	sbci	r31, 0xFE	; 254
  234:	90 83       	st	Z, r25
  236:	91 e0       	ldi	r25, 0x01	; 1
- 238:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <state>
+ 238:	90 93 11 01 	sts	0x0111, r25	; 0x800111 <state>
  23c:	85 39       	cpi	r24, 0x95	; 149
  23e:	18 f0       	brcs	.+6      	; 0x246 <__vector_18+0x34>
- 240:	10 92 09 01 	sts	0x0109, r1	; 0x800109 <writePointer>
+ 240:	10 92 0f 01 	sts	0x010F, r1	; 0x80010f <writePointer>
  244:	03 c0       	rjmp	.+6      	; 0x24c <__vector_18+0x3a>
  246:	8f 5f       	subi	r24, 0xFF	; 255
- 248:	80 93 09 01 	sts	0x0109, r24	; 0x800109 <writePointer>
+ 248:	80 93 0f 01 	sts	0x010F, r24	; 0x80010f <writePointer>
  24c:	ff 91       	pop	r31
  24e:	ef 91       	pop	r30
  250:	9f 91       	pop	r25
@@ -351,21 +344,21 @@ void lightcontrol_init(void)
  26a:	9f 93       	push	r25
  26c:	ef 93       	push	r30
  26e:	ff 93       	push	r31
- 270:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <writePointerU1>
+ 270:	80 91 10 01 	lds	r24, 0x0110	; 0x800110 <writePointerU1>
  274:	90 91 ce 00 	lds	r25, 0x00CE	; 0x8000ce <__TEXT_REGION_LENGTH__+0x7e00ce>
  278:	e8 2f       	mov	r30, r24
  27a:	f0 e0       	ldi	r31, 0x00	; 0
- 27c:	ed 5c       	subi	r30, 0xCD	; 205
+ 27c:	e5 5c       	subi	r30, 0xC5	; 197
  27e:	fe 4f       	sbci	r31, 0xFE	; 254
  280:	90 83       	st	Z, r25
  282:	91 e0       	ldi	r25, 0x01	; 1
- 284:	90 93 0b 01 	sts	0x010B, r25	; 0x80010b <state>
+ 284:	90 93 11 01 	sts	0x0111, r25	; 0x800111 <state>
  288:	85 39       	cpi	r24, 0x95	; 149
  28a:	18 f0       	brcs	.+6      	; 0x292 <__vector_28+0x34>
- 28c:	10 92 0a 01 	sts	0x010A, r1	; 0x80010a <writePointerU1>
+ 28c:	10 92 10 01 	sts	0x0110, r1	; 0x800110 <writePointerU1>
  290:	03 c0       	rjmp	.+6      	; 0x298 <__vector_28+0x3a>
  292:	8f 5f       	subi	r24, 0xFF	; 255
- 294:	80 93 0a 01 	sts	0x010A, r24	; 0x80010a <writePointerU1>
+ 294:	80 93 10 01 	sts	0x0110, r24	; 0x800110 <writePointerU1>
  298:	ff 91       	pop	r31
  29a:	ef 91       	pop	r30
  29c:	9f 91       	pop	r25
@@ -377,6 +370,7 @@ void lightcontrol_init(void)
  2a8:	18 95       	reti
 
 000002aa <main>:
+}
 
 int main(void)
 {
@@ -405,7 +399,7 @@ int main(void)
  2be:	0e 94 77 01 	call	0x2ee	; 0x2ee <bus_process>
 
 		//sendAddress();
-		//sendSpecialFrame();
+		//sendStandardFrame();		//sendSpecialFrame();
 		//sendSpecialFrame_1();
     }
  2c2:	fd cf       	rjmp	.-6      	; 0x2be <main+0x14>
@@ -418,7 +412,7 @@ void measurement_init(void)
 {
 	state = WAIT;
  2c4:	82 e0       	ldi	r24, 0x02	; 2
- 2c6:	80 93 0c 01 	sts	0x010C, r24	; 0x80010c <state>
+ 2c6:	80 93 12 01 	sts	0x0112, r24	; 0x800112 <state>
 	
 	DDRD |= (1<<PORTD7);
  2ca:	57 9a       	sbi	0x0a, 7	; 10
@@ -429,10 +423,10 @@ void measurement_init(void)
  2d0:	92 e4       	ldi	r25, 0x42	; 66
  2d2:	af e0       	ldi	r26, 0x0F	; 15
  2d4:	b0 e0       	ldi	r27, 0x00	; 0
- 2d6:	80 93 fb 02 	sts	0x02FB, r24	; 0x8002fb <meas_timer>
- 2da:	90 93 fc 02 	sts	0x02FC, r25	; 0x8002fc <meas_timer+0x1>
- 2de:	a0 93 fd 02 	sts	0x02FD, r26	; 0x8002fd <meas_timer+0x2>
- 2e2:	b0 93 fe 02 	sts	0x02FE, r27	; 0x8002fe <meas_timer+0x3>
+ 2d6:	80 93 00 03 	sts	0x0300, r24	; 0x800300 <meas_timer>
+ 2da:	90 93 01 03 	sts	0x0301, r25	; 0x800301 <meas_timer+0x1>
+ 2de:	a0 93 02 03 	sts	0x0302, r26	; 0x800302 <meas_timer+0x2>
+ 2e2:	b0 93 03 03 	sts	0x0303, r27	; 0x800303 <meas_timer+0x3>
 	
 	measurement_hal_init();
  2e6:	0e 94 76 01 	call	0x2ec	; 0x2ec <measurement_hal_init>
@@ -454,983 +448,1506 @@ extern uint8_t readPointer;
 
 void bus_process(void)
 {
- 2ee:	ff 92       	push	r15
- 2f0:	0f 93       	push	r16
- 2f2:	1f 93       	push	r17
- 2f4:	cf 93       	push	r28
- 2f6:	df 93       	push	r29
+ 2ee:	cf 92       	push	r12
+ 2f0:	df 92       	push	r13
+ 2f2:	ef 92       	push	r14
+ 2f4:	ff 92       	push	r15
+ 2f6:	0f 93       	push	r16
+ 2f8:	1f 93       	push	r17
+ 2fa:	cf 93       	push	r28
+ 2fc:	df 93       	push	r29
 	/* check flags (jump to) */
 	if (receiveFlag == 1)
- 2f8:	80 91 0d 01 	lds	r24, 0x010D	; 0x80010d <receiveFlag>
- 2fc:	81 30       	cpi	r24, 0x01	; 1
- 2fe:	09 f4       	brne	.+2      	; 0x302 <bus_process+0x14>
- 300:	19 c1       	rjmp	.+562    	; 0x534 <__LOCK_REGION_LENGTH__+0x134>
+ 2fe:	80 91 13 01 	lds	r24, 0x0113	; 0x800113 <receiveFlag>
+ 302:	81 30       	cpi	r24, 0x01	; 1
+ 304:	09 f4       	brne	.+2      	; 0x308 <bus_process+0x1a>
+ 306:	87 c1       	rjmp	.+782    	; 0x616 <__LOCK_REGION_LENGTH__+0x216>
+		goto receivesend;
+
+	if (receiveFlag == 4)
+ 308:	84 30       	cpi	r24, 0x04	; 4
+ 30a:	09 f4       	brne	.+2      	; 0x30e <bus_process+0x20>
+ 30c:	9b c2       	rjmp	.+1334   	; 0x844 <__LOCK_REGION_LENGTH__+0x444>
 		goto receivestore1;
 	if (receiveFlag == 2)
- 302:	82 30       	cpi	r24, 0x02	; 2
- 304:	09 f4       	brne	.+2      	; 0x308 <bus_process+0x1a>
- 306:	bc c1       	rjmp	.+888    	; 0x680 <__LOCK_REGION_LENGTH__+0x280>
+ 30e:	82 30       	cpi	r24, 0x02	; 2
+ 310:	09 f4       	brne	.+2      	; 0x314 <bus_process+0x26>
+ 312:	58 c3       	rjmp	.+1712   	; 0x9c4 <__stack+0xc5>
 		goto receivestore2;
 	if (receiveFlag == 3)
- 308:	83 30       	cpi	r24, 0x03	; 3
- 30a:	09 f4       	brne	.+2      	; 0x30e <bus_process+0x20>
- 30c:	41 c2       	rjmp	.+1154   	; 0x790 <__LOCK_REGION_LENGTH__+0x390>
+ 314:	83 30       	cpi	r24, 0x03	; 3
+ 316:	09 f4       	brne	.+2      	; 0x31a <bus_process+0x2c>
+ 318:	ea c3       	rjmp	.+2004   	; 0xaee <__stack+0x1ef>
 	 * current problems
 	 * -------------------------------------------------------------------
-	 * timing of addressing does not work fine
+	 * standard query -> when toolID does not match		i dont know how long i will wait.. the address could 
 	 *
 	 */
 	 if (((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 2)
- 30e:	40 91 08 01 	lds	r20, 0x0108	; 0x800108 <readPointer>
- 312:	24 2f       	mov	r18, r20
- 314:	30 e0       	ldi	r19, 0x00	; 0
- 316:	80 91 09 01 	lds	r24, 0x0109	; 0x800109 <writePointer>
- 31a:	90 e0       	ldi	r25, 0x00	; 0
- 31c:	82 1b       	sub	r24, r18
- 31e:	93 0b       	sbc	r25, r19
- 320:	8a 56       	subi	r24, 0x6A	; 106
- 322:	9f 4f       	sbci	r25, 0xFF	; 255
- 324:	66 e9       	ldi	r22, 0x96	; 150
- 326:	70 e0       	ldi	r23, 0x00	; 0
- 328:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 32c:	03 97       	sbiw	r24, 0x03	; 3
- 32e:	0c f4       	brge	.+2      	; 0x332 <bus_process+0x44>
- 330:	8b c2       	rjmp	.+1302   	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 31a:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <readPointer>
+ 31e:	24 2f       	mov	r18, r20
+ 320:	30 e0       	ldi	r19, 0x00	; 0
+ 322:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <writePointer>
+ 326:	90 e0       	ldi	r25, 0x00	; 0
+ 328:	82 1b       	sub	r24, r18
+ 32a:	93 0b       	sbc	r25, r19
+ 32c:	8a 56       	subi	r24, 0x6A	; 106
+ 32e:	9f 4f       	sbci	r25, 0xFF	; 255
+ 330:	66 e9       	ldi	r22, 0x96	; 150
+ 332:	70 e0       	ldi	r23, 0x00	; 0
+ 334:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ 338:	03 97       	sbiw	r24, 0x03	; 3
+ 33a:	0c f4       	brge	.+2      	; 0x33e <bus_process+0x50>
+ 33c:	41 c4       	rjmp	.+2178   	; 0xbc0 <__stack+0x2c1>
 	 {
 		/* first 4-bit should contain a START condition */
 		if ((buffer[readPointer]&0xF0) == START)
- 332:	f9 01       	movw	r30, r18
- 334:	e6 53       	subi	r30, 0x36	; 54
- 336:	fe 4f       	sbci	r31, 0xFE	; 254
- 338:	80 81       	ld	r24, Z
- 33a:	90 91 05 01 	lds	r25, 0x0105	; 0x800105 <START>
- 33e:	28 2f       	mov	r18, r24
- 340:	20 7f       	andi	r18, 0xF0	; 240
- 342:	92 13       	cpse	r25, r18
- 344:	7e c2       	rjmp	.+1276   	; 0x842 <__LOCK_REGION_LENGTH__+0x442>
+ 33e:	f9 01       	movw	r30, r18
+ 340:	ee 52       	subi	r30, 0x2E	; 46
+ 342:	fe 4f       	sbci	r31, 0xFE	; 254
+ 344:	80 81       	ld	r24, Z
+ 346:	90 91 0b 01 	lds	r25, 0x010B	; 0x80010b <START>
+ 34a:	28 2f       	mov	r18, r24
+ 34c:	20 7f       	andi	r18, 0xF0	; 240
+ 34e:	92 13       	cpse	r25, r18
+ 350:	34 c4       	rjmp	.+2152   	; 0xbba <__stack+0x2bb>
 		{
 			/* lower 4-bits represent mode */
 			mode = (buffer[readPointer]&0x0F);
- 346:	8f 70       	andi	r24, 0x0F	; 15
- 348:	80 93 02 03 	sts	0x0302, r24	; 0x800302 <mode>
+ 352:	8f 70       	andi	r24, 0x0F	; 15
+ 354:	80 93 07 03 	sts	0x0307, r24	; 0x800307 <mode>
 			/* increase readPointer (consider step over) */
 			if (readPointer >= (BUFFERSIZE - 1))
- 34c:	45 39       	cpi	r20, 0x95	; 149
- 34e:	18 f0       	brcs	.+6      	; 0x356 <bus_process+0x68>
+ 358:	45 39       	cpi	r20, 0x95	; 149
+ 35a:	18 f0       	brcs	.+6      	; 0x362 <bus_process+0x74>
 				readPointer = 0;
- 350:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 354:	03 c0       	rjmp	.+6      	; 0x35c <bus_process+0x6e>
+ 35c:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 360:	03 c0       	rjmp	.+6      	; 0x368 <bus_process+0x7a>
 			else readPointer++;
- 356:	4f 5f       	subi	r20, 0xFF	; 255
- 358:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 362:	4f 5f       	subi	r20, 0xFF	; 255
+ 364:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 			/* switch action for each mode */
 			switch (mode)
- 35c:	84 30       	cpi	r24, 0x04	; 4
- 35e:	09 f4       	brne	.+2      	; 0x362 <bus_process+0x74>
- 360:	74 c0       	rjmp	.+232    	; 0x44a <__LOCK_REGION_LENGTH__+0x4a>
- 362:	87 30       	cpi	r24, 0x07	; 7
- 364:	09 f4       	brne	.+2      	; 0x368 <bus_process+0x7a>
- 366:	44 c1       	rjmp	.+648    	; 0x5f0 <__LOCK_REGION_LENGTH__+0x1f0>
- 368:	81 30       	cpi	r24, 0x01	; 1
- 36a:	09 f0       	breq	.+2      	; 0x36e <bus_process+0x80>
- 36c:	6d c2       	rjmp	.+1242   	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 368:	82 30       	cpi	r24, 0x02	; 2
+ 36a:	09 f4       	brne	.+2      	; 0x36e <bus_process+0x80>
+ 36c:	79 c0       	rjmp	.+242    	; 0x460 <__LOCK_REGION_LENGTH__+0x60>
+ 36e:	18 f4       	brcc	.+6      	; 0x376 <bus_process+0x88>
+ 370:	81 30       	cpi	r24, 0x01	; 1
+ 372:	41 f0       	breq	.+16     	; 0x384 <bus_process+0x96>
+ 374:	25 c4       	rjmp	.+2122   	; 0xbc0 <__stack+0x2c1>
+ 376:	84 30       	cpi	r24, 0x04	; 4
+ 378:	09 f4       	brne	.+2      	; 0x37c <bus_process+0x8e>
+ 37a:	ec c1       	rjmp	.+984    	; 0x754 <__LOCK_REGION_LENGTH__+0x354>
+ 37c:	87 30       	cpi	r24, 0x07	; 7
+ 37e:	09 f4       	brne	.+2      	; 0x382 <bus_process+0x94>
+ 380:	d3 c2       	rjmp	.+1446   	; 0x928 <__stack+0x29>
+ 382:	1e c4       	rjmp	.+2108   	; 0xbc0 <__stack+0x2c1>
 			{
 				case MODEADR: /* addressing */
 					/* first 3-bit include toolID */
 					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
- 36e:	40 91 08 01 	lds	r20, 0x0108	; 0x800108 <readPointer>
- 372:	e4 2f       	mov	r30, r20
- 374:	f0 e0       	ldi	r31, 0x00	; 0
- 376:	e6 53       	subi	r30, 0x36	; 54
- 378:	fe 4f       	sbci	r31, 0xFE	; 254
- 37a:	80 81       	ld	r24, Z
- 37c:	58 2f       	mov	r21, r24
- 37e:	52 95       	swap	r21
- 380:	56 95       	lsr	r21
- 382:	57 70       	andi	r21, 0x07	; 7
- 384:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
- 388:	52 13       	cpse	r21, r18
- 38a:	3a c0       	rjmp	.+116    	; 0x400 <__LOCK_REGION_LENGTH__>
+ 384:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <readPointer>
+ 388:	e4 2f       	mov	r30, r20
+ 38a:	f0 e0       	ldi	r31, 0x00	; 0
+ 38c:	ee 52       	subi	r30, 0x2E	; 46
+ 38e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 390:	80 81       	ld	r24, Z
+ 392:	58 2f       	mov	r21, r24
+ 394:	52 95       	swap	r21
+ 396:	56 95       	lsr	r21
+ 398:	57 70       	andi	r21, 0x07	; 7
+ 39a:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
+ 39e:	52 13       	cpse	r21, r18
+ 3a0:	3a c0       	rjmp	.+116    	; 0x416 <__LOCK_REGION_LENGTH__+0x16>
 					{
 						/* when the received toolID matches intern toolID */
-						temp = ((buffer[readPointer]&0x1F) << 4);
- 38c:	28 2f       	mov	r18, r24
- 38e:	2f 71       	andi	r18, 0x1F	; 31
- 390:	60 e1       	ldi	r22, 0x10	; 16
- 392:	26 9f       	mul	r18, r22
- 394:	90 01       	movw	r18, r0
- 396:	11 24       	eor	r1, r1
- 398:	30 93 01 03 	sts	0x0301, r19	; 0x800301 <temp+0x1>
- 39c:	20 93 00 03 	sts	0x0300, r18	; 0x800300 <temp>
+						temp = ((uint16_t)(buffer[readPointer]&0x1F) << 4);
+ 3a2:	28 2f       	mov	r18, r24
+ 3a4:	2f 71       	andi	r18, 0x1F	; 31
+ 3a6:	60 e1       	ldi	r22, 0x10	; 16
+ 3a8:	26 9f       	mul	r18, r22
+ 3aa:	90 01       	movw	r18, r0
+ 3ac:	11 24       	eor	r1, r1
+ 3ae:	30 93 06 03 	sts	0x0306, r19	; 0x800306 <temp+0x1>
+ 3b2:	20 93 05 03 	sts	0x0305, r18	; 0x800305 <temp>
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 3a0:	45 39       	cpi	r20, 0x95	; 149
- 3a2:	18 f0       	brcs	.+6      	; 0x3aa <bus_process+0xbc>
+ 3b6:	45 39       	cpi	r20, 0x95	; 149
+ 3b8:	18 f0       	brcs	.+6      	; 0x3c0 <bus_process+0xd2>
 							readPointer = 0;
- 3a4:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 3a8:	03 c0       	rjmp	.+6      	; 0x3b0 <bus_process+0xc2>
+ 3ba:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 3be:	03 c0       	rjmp	.+6      	; 0x3c6 <bus_process+0xd8>
 						else readPointer++;
- 3aa:	4f 5f       	subi	r20, 0xFF	; 255
- 3ac:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 3c0:	4f 5f       	subi	r20, 0xFF	; 255
+ 3c2:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						/* store received address */
 						address = temp + (buffer[readPointer] >> 4);
- 3b0:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 3b4:	f0 e0       	ldi	r31, 0x00	; 0
- 3b6:	e6 53       	subi	r30, 0x36	; 54
- 3b8:	fe 4f       	sbci	r31, 0xFE	; 254
- 3ba:	80 81       	ld	r24, Z
- 3bc:	82 95       	swap	r24
- 3be:	8f 70       	andi	r24, 0x0F	; 15
- 3c0:	28 0f       	add	r18, r24
- 3c2:	31 1d       	adc	r19, r1
- 3c4:	30 93 02 01 	sts	0x0102, r19	; 0x800102 <address+0x1>
- 3c8:	20 93 01 01 	sts	0x0101, r18	; 0x800101 <address>
+ 3c6:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 3ca:	f0 e0       	ldi	r31, 0x00	; 0
+ 3cc:	ee 52       	subi	r30, 0x2E	; 46
+ 3ce:	fe 4f       	sbci	r31, 0xFE	; 254
+ 3d0:	80 81       	ld	r24, Z
+ 3d2:	82 95       	swap	r24
+ 3d4:	8f 70       	andi	r24, 0x0F	; 15
+ 3d6:	28 0f       	add	r18, r24
+ 3d8:	31 1d       	adc	r19, r1
+ 3da:	30 93 02 01 	sts	0x0102, r19	; 0x800102 <address+0x1>
+ 3de:	20 93 01 01 	sts	0x0101, r18	; 0x800101 <address>
 
 						/* create frame for next device */
 						frame[0] = (START + MODEADR);
- 3cc:	e5 e0       	ldi	r30, 0x05	; 5
- 3ce:	f3 e0       	ldi	r31, 0x03	; 3
- 3d0:	9f 5f       	subi	r25, 0xFF	; 255
- 3d2:	90 83       	st	Z, r25
+ 3e2:	ea e0       	ldi	r30, 0x0A	; 10
+ 3e4:	f3 e0       	ldi	r31, 0x03	; 3
+ 3e6:	9f 5f       	subi	r25, 0xFF	; 255
+ 3e8:	90 83       	st	Z, r25
 						frame[1] = (toolID << 5) + (uint8_t)((address + 1) >> 4);
- 3d4:	c9 01       	movw	r24, r18
- 3d6:	01 96       	adiw	r24, 0x01	; 1
- 3d8:	92 95       	swap	r25
- 3da:	82 95       	swap	r24
- 3dc:	8f 70       	andi	r24, 0x0F	; 15
- 3de:	89 27       	eor	r24, r25
- 3e0:	9f 70       	andi	r25, 0x0F	; 15
- 3e2:	89 27       	eor	r24, r25
- 3e4:	40 e2       	ldi	r20, 0x20	; 32
- 3e6:	54 9f       	mul	r21, r20
- 3e8:	80 0d       	add	r24, r0
- 3ea:	11 24       	eor	r1, r1
- 3ec:	81 83       	std	Z+1, r24	; 0x01
+ 3ea:	c9 01       	movw	r24, r18
+ 3ec:	01 96       	adiw	r24, 0x01	; 1
+ 3ee:	92 95       	swap	r25
+ 3f0:	82 95       	swap	r24
+ 3f2:	8f 70       	andi	r24, 0x0F	; 15
+ 3f4:	89 27       	eor	r24, r25
+ 3f6:	9f 70       	andi	r25, 0x0F	; 15
+ 3f8:	89 27       	eor	r24, r25
+ 3fa:	70 e2       	ldi	r23, 0x20	; 32
+ 3fc:	57 9f       	mul	r21, r23
+ 3fe:	80 0d       	add	r24, r0
+ 400:	11 24       	eor	r1, r1
+ 402:	81 83       	std	Z+1, r24	; 0x01
 						frame[2] = ((uint8_t)((address + 1) << 4) + STOP);
- 3ee:	2f 5f       	subi	r18, 0xFF	; 255
- 3f0:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <STOP>
- 3f4:	50 e1       	ldi	r21, 0x10	; 16
- 3f6:	25 9f       	mul	r18, r21
- 3f8:	80 0d       	add	r24, r0
- 3fa:	11 24       	eor	r1, r1
- 3fc:	82 83       	std	Z+2, r24	; 0x02
- 3fe:	15 c0       	rjmp	.+42     	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
+ 404:	2f 5f       	subi	r18, 0xFF	; 255
+ 406:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <STOP>
+ 40a:	90 e1       	ldi	r25, 0x10	; 16
+ 40c:	29 9f       	mul	r18, r25
+ 40e:	80 0d       	add	r24, r0
+ 410:	11 24       	eor	r1, r1
+ 412:	82 83       	std	Z+2, r24	; 0x02
+ 414:	15 c0       	rjmp	.+42     	; 0x440 <__LOCK_REGION_LENGTH__+0x40>
 					}
 					else
 					{
 						/* recreate frame for next device */
 						frame[0] = (START + MODEADR);
- 400:	e5 e0       	ldi	r30, 0x05	; 5
- 402:	f3 e0       	ldi	r31, 0x03	; 3
- 404:	9f 5f       	subi	r25, 0xFF	; 255
- 406:	90 83       	st	Z, r25
+ 416:	ea e0       	ldi	r30, 0x0A	; 10
+ 418:	f3 e0       	ldi	r31, 0x03	; 3
+ 41a:	9f 5f       	subi	r25, 0xFF	; 255
+ 41c:	90 83       	st	Z, r25
 						frame[1] = buffer[readPointer];
- 408:	81 83       	std	Z+1, r24	; 0x01
+ 41e:	81 83       	std	Z+1, r24	; 0x01
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 40a:	45 39       	cpi	r20, 0x95	; 149
- 40c:	18 f0       	brcs	.+6      	; 0x414 <__LOCK_REGION_LENGTH__+0x14>
+ 420:	45 39       	cpi	r20, 0x95	; 149
+ 422:	18 f0       	brcs	.+6      	; 0x42a <__LOCK_REGION_LENGTH__+0x2a>
 							readPointer = 0;
- 40e:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 412:	03 c0       	rjmp	.+6      	; 0x41a <__LOCK_REGION_LENGTH__+0x1a>
+ 424:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 428:	03 c0       	rjmp	.+6      	; 0x430 <__LOCK_REGION_LENGTH__+0x30>
 						else readPointer++;
- 414:	4f 5f       	subi	r20, 0xFF	; 255
- 416:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 42a:	4f 5f       	subi	r20, 0xFF	; 255
+ 42c:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						frame[2] = buffer[readPointer];
- 41a:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 41e:	f0 e0       	ldi	r31, 0x00	; 0
- 420:	e6 53       	subi	r30, 0x36	; 54
- 422:	fe 4f       	sbci	r31, 0xFE	; 254
- 424:	80 81       	ld	r24, Z
- 426:	80 93 07 03 	sts	0x0307, r24	; 0x800307 <frame+0x2>
+ 430:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 434:	f0 e0       	ldi	r31, 0x00	; 0
+ 436:	ee 52       	subi	r30, 0x2E	; 46
+ 438:	fe 4f       	sbci	r31, 0xFE	; 254
+ 43a:	80 81       	ld	r24, Z
+ 43c:	80 93 0c 03 	sts	0x030C, r24	; 0x80030c <frame+0x2>
 					}
 					/* send frame */
 					USART1_sendStringWL(frame, 3);
- 42a:	63 e0       	ldi	r22, 0x03	; 3
- 42c:	85 e0       	ldi	r24, 0x05	; 5
- 42e:	93 e0       	ldi	r25, 0x03	; 3
- 430:	0e 94 d5 00 	call	0x1aa	; 0x1aa <USART1_sendStringWL>
+ 440:	63 e0       	ldi	r22, 0x03	; 3
+ 442:	8a e0       	ldi	r24, 0x0A	; 10
+ 444:	93 e0       	ldi	r25, 0x03	; 3
+ 446:	0e 94 db 00 	call	0x1b6	; 0x1b6 <USART1_sendStringWL>
 
 					/* reset readPointer (consider step over) */
 					if (readPointer >= (BUFFERSIZE - 1))
- 434:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <readPointer>
- 438:	85 39       	cpi	r24, 0x95	; 149
- 43a:	18 f0       	brcs	.+6      	; 0x442 <__LOCK_REGION_LENGTH__+0x42>
+ 44a:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ 44e:	85 39       	cpi	r24, 0x95	; 149
+ 450:	18 f0       	brcs	.+6      	; 0x458 <__LOCK_REGION_LENGTH__+0x58>
 						readPointer = 0;
- 43c:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 440:	03 c2       	rjmp	.+1030   	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 452:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 456:	b4 c3       	rjmp	.+1896   	; 0xbc0 <__stack+0x2c1>
 					else readPointer++;
- 442:	8f 5f       	subi	r24, 0xFF	; 255
- 444:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <readPointer>
- 448:	ff c1       	rjmp	.+1022   	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 458:	8f 5f       	subi	r24, 0xFF	; 255
+ 45a:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+ 45e:	b0 c3       	rjmp	.+1888   	; 0xbc0 <__stack+0x2c1>
 				break;
+
+				case MODESTD: /* standard query */
+					/* initialize standard query */
+					receiveCount = 3; receiveLength = 0; temp = 9;
+ 460:	23 e0       	ldi	r18, 0x03	; 3
+ 462:	30 e0       	ldi	r19, 0x00	; 0
+ 464:	30 93 09 01 	sts	0x0109, r19	; 0x800109 <receiveCount+0x1>
+ 468:	20 93 08 01 	sts	0x0108, r18	; 0x800108 <receiveCount>
+ 46c:	29 e0       	ldi	r18, 0x09	; 9
+ 46e:	30 e0       	ldi	r19, 0x00	; 0
+ 470:	30 93 06 03 	sts	0x0306, r19	; 0x800306 <temp+0x1>
+ 474:	20 93 05 03 	sts	0x0305, r18	; 0x800305 <temp>
+					
+					/* first 3-bit include toolID */
+					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
+ 478:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ 47c:	e8 2f       	mov	r30, r24
+ 47e:	f0 e0       	ldi	r31, 0x00	; 0
+ 480:	ee 52       	subi	r30, 0x2E	; 46
+ 482:	fe 4f       	sbci	r31, 0xFE	; 254
+ 484:	20 81       	ld	r18, Z
+ 486:	32 2f       	mov	r19, r18
+ 488:	32 95       	swap	r19
+ 48a:	36 95       	lsr	r19
+ 48c:	37 70       	andi	r19, 0x07	; 7
+ 48e:	40 91 00 01 	lds	r20, 0x0100	; 0x800100 <__data_start>
+ 492:	34 13       	cpse	r19, r20
+ 494:	89 c0       	rjmp	.+274    	; 0x5a8 <__LOCK_REGION_LENGTH__+0x1a8>
+					{
+						varID = (buffer[readPointer] << 3);
+ 496:	22 0f       	add	r18, r18
+ 498:	22 0f       	add	r18, r18
+ 49a:	22 0f       	add	r18, r18
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+ 49c:	85 39       	cpi	r24, 0x95	; 149
+ 49e:	80 f0       	brcs	.+32     	; 0x4c0 <__LOCK_REGION_LENGTH__+0xc0>
+							readPointer = 0;
+						else readPointer++;
+						varID += (buffer[readPointer] >> 5);
+ 4a0:	80 91 d2 01 	lds	r24, 0x01D2	; 0x8001d2 <buffer>
+ 4a4:	48 2f       	mov	r20, r24
+ 4a6:	42 95       	swap	r20
+ 4a8:	46 95       	lsr	r20
+ 4aa:	47 70       	andi	r20, 0x07	; 7
+ 4ac:	24 0f       	add	r18, r20
+ 4ae:	20 93 04 03 	sts	0x0304, r18	; 0x800304 <varID>
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+ 4b2:	87 70       	andi	r24, 0x07	; 7
+ 4b4:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <receiveLength>
+ 4b8:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <receiveLength+0x1>
+						varID = (buffer[readPointer] << 3);
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+						varID += (buffer[readPointer] >> 5);
+ 4bc:	80 e0       	ldi	r24, 0x00	; 0
+ 4be:	17 c0       	rjmp	.+46     	; 0x4ee <__LOCK_REGION_LENGTH__+0xee>
+					{
+						varID = (buffer[readPointer] << 3);
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+ 4c0:	8f 5f       	subi	r24, 0xFF	; 255
+						varID += (buffer[readPointer] >> 5);
+ 4c2:	e8 2f       	mov	r30, r24
+ 4c4:	f0 e0       	ldi	r31, 0x00	; 0
+ 4c6:	ee 52       	subi	r30, 0x2E	; 46
+ 4c8:	fe 4f       	sbci	r31, 0xFE	; 254
+ 4ca:	40 81       	ld	r20, Z
+ 4cc:	54 2f       	mov	r21, r20
+ 4ce:	52 95       	swap	r21
+ 4d0:	56 95       	lsr	r21
+ 4d2:	57 70       	andi	r21, 0x07	; 7
+ 4d4:	25 0f       	add	r18, r21
+ 4d6:	20 93 04 03 	sts	0x0304, r18	; 0x800304 <varID>
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+ 4da:	47 70       	andi	r20, 0x07	; 7
+ 4dc:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <receiveLength>
+ 4e0:	40 93 15 01 	sts	0x0115, r20	; 0x800115 <receiveLength+0x1>
+						
+						/* reset readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+ 4e4:	85 39       	cpi	r24, 0x95	; 149
+ 4e6:	18 f0       	brcs	.+6      	; 0x4ee <__LOCK_REGION_LENGTH__+0xee>
+							readPointer = 0;
+ 4e8:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 4ec:	03 c0       	rjmp	.+6      	; 0x4f4 <__LOCK_REGION_LENGTH__+0xf4>
+						else readPointer++;
+ 4ee:	8f 5f       	subi	r24, 0xFF	; 255
+ 4f0:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+
+						/* create frame for next device */
+						frame[0] = (START + MODESTD);
+ 4f4:	ea e0       	ldi	r30, 0x0A	; 10
+ 4f6:	f3 e0       	ldi	r31, 0x03	; 3
+ 4f8:	9e 5f       	subi	r25, 0xFE	; 254
+ 4fa:	90 83       	st	Z, r25
+						frame[1] = ((toolID << 5) + (varID >> 3));
+ 4fc:	32 95       	swap	r19
+ 4fe:	33 0f       	add	r19, r19
+ 500:	30 7e       	andi	r19, 0xE0	; 224
+ 502:	82 2f       	mov	r24, r18
+ 504:	86 95       	lsr	r24
+ 506:	86 95       	lsr	r24
+ 508:	86 95       	lsr	r24
+ 50a:	83 0f       	add	r24, r19
+ 50c:	81 83       	std	Z+1, r24	; 0x01
+						frame[2] = (varID << 5);
+ 50e:	82 2f       	mov	r24, r18
+ 510:	82 95       	swap	r24
+ 512:	88 0f       	add	r24, r24
+ 514:	80 7e       	andi	r24, 0xE0	; 224
+ 516:	82 83       	std	Z+2, r24	; 0x02
+
+						/* add device packet */
+						frame[4] = (deviceSTART + MODEDEV);
+ 518:	80 91 07 01 	lds	r24, 0x0107	; 0x800107 <deviceSTART>
+ 51c:	8d 5f       	subi	r24, 0xFD	; 253
+ 51e:	84 83       	std	Z+4, r24	; 0x04
+						frame[5] = ((toolID << 5) + (uint8_t)(address >> 4));
+ 520:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <address>
+ 524:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <address+0x1>
+ 528:	ac 01       	movw	r20, r24
+ 52a:	52 95       	swap	r21
+ 52c:	42 95       	swap	r20
+ 52e:	4f 70       	andi	r20, 0x0F	; 15
+ 530:	45 27       	eor	r20, r21
+ 532:	5f 70       	andi	r21, 0x0F	; 15
+ 534:	45 27       	eor	r20, r21
+ 536:	34 0f       	add	r19, r20
+ 538:	35 83       	std	Z+5, r19	; 0x05
+						frame[6] = (uint8_t)(address << 4);
+ 53a:	82 95       	swap	r24
+ 53c:	80 7f       	andi	r24, 0xF0	; 240
+						switch (varID)
+ 53e:	21 30       	cpi	r18, 0x01	; 1
+ 540:	19 f0       	breq	.+6      	; 0x548 <__LOCK_REGION_LENGTH__+0x148>
+ 542:	22 30       	cpi	r18, 0x02	; 2
+ 544:	51 f0       	breq	.+20     	; 0x55a <__LOCK_REGION_LENGTH__+0x15a>
+ 546:	11 c0       	rjmp	.+34     	; 0x56a <__LOCK_REGION_LENGTH__+0x16a>
+						{
+							case sensorValueID:	/* -> 1 */
+								varValue = sensorValue;
+ 548:	20 91 04 01 	lds	r18, 0x0104	; 0x800104 <sensorValue>
+ 54c:	30 91 05 01 	lds	r19, 0x0105	; 0x800105 <sensorValue+0x1>
+ 550:	30 93 09 03 	sts	0x0309, r19	; 0x800309 <varValue+0x1>
+ 554:	20 93 08 03 	sts	0x0308, r18	; 0x800308 <varValue>
+							break;
+ 558:	0c c0       	rjmp	.+24     	; 0x572 <__LOCK_REGION_LENGTH__+0x172>
+							case brightnessID:	/* -> 2 */
+								varValue = brightness;
+ 55a:	20 91 03 01 	lds	r18, 0x0103	; 0x800103 <brightness>
+ 55e:	30 e0       	ldi	r19, 0x00	; 0
+ 560:	30 93 09 03 	sts	0x0309, r19	; 0x800309 <varValue+0x1>
+ 564:	20 93 08 03 	sts	0x0308, r18	; 0x800308 <varValue>
+							break;
+ 568:	04 c0       	rjmp	.+8      	; 0x572 <__LOCK_REGION_LENGTH__+0x172>
+
+							default:
+								/* fault -> 0x00 */
+								varValue = 0x00;
+ 56a:	10 92 09 03 	sts	0x0309, r1	; 0x800309 <varValue+0x1>
+ 56e:	10 92 08 03 	sts	0x0308, r1	; 0x800308 <varValue>
+							break;
+						}
+						frame[6] += (uint8_t)(varValue >> 12);
+ 572:	20 91 08 03 	lds	r18, 0x0308	; 0x800308 <varValue>
+ 576:	30 91 09 03 	lds	r19, 0x0309	; 0x800309 <varValue+0x1>
+ 57a:	ea e0       	ldi	r30, 0x0A	; 10
+ 57c:	f3 e0       	ldi	r31, 0x03	; 3
+ 57e:	93 2f       	mov	r25, r19
+ 580:	92 95       	swap	r25
+ 582:	9f 70       	andi	r25, 0x0F	; 15
+ 584:	89 0f       	add	r24, r25
+ 586:	86 83       	std	Z+6, r24	; 0x06
+						frame[7] = (uint8_t)(varValue >> 4);
+ 588:	c9 01       	movw	r24, r18
+ 58a:	92 95       	swap	r25
+ 58c:	82 95       	swap	r24
+ 58e:	8f 70       	andi	r24, 0x0F	; 15
+ 590:	89 27       	eor	r24, r25
+ 592:	9f 70       	andi	r25, 0x0F	; 15
+ 594:	89 27       	eor	r24, r25
+ 596:	87 83       	std	Z+7, r24	; 0x07
+						frame[8] = ((varValue << 4) + deviceSTOP);
+ 598:	80 91 06 01 	lds	r24, 0x0106	; 0x800106 <deviceSTOP>
+ 59c:	40 e1       	ldi	r20, 0x10	; 16
+ 59e:	24 9f       	mul	r18, r20
+ 5a0:	80 0d       	add	r24, r0
+ 5a2:	11 24       	eor	r1, r1
+ 5a4:	80 87       	std	Z+8, r24	; 0x08
+						/* receive following device packets */
+						goto receivesend;
+ 5a6:	37 c0       	rjmp	.+110    	; 0x616 <__LOCK_REGION_LENGTH__+0x216>
+					}
+					else
+					{
+						frame[0] = START + MODESTD;
+ 5a8:	ea e0       	ldi	r30, 0x0A	; 10
+ 5aa:	f3 e0       	ldi	r31, 0x03	; 3
+ 5ac:	9e 5f       	subi	r25, 0xFE	; 254
+ 5ae:	90 83       	st	Z, r25
+						frame[1] = buffer[readPointer];
+ 5b0:	21 83       	std	Z+1, r18	; 0x01
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+ 5b2:	85 39       	cpi	r24, 0x95	; 149
+ 5b4:	98 f0       	brcs	.+38     	; 0x5dc <__LOCK_REGION_LENGTH__+0x1dc>
+							readPointer = 0;
+						else readPointer++;
+						frame[2] = (buffer[readPointer]&0xE0);
+ 5b6:	80 91 d2 01 	lds	r24, 0x01D2	; 0x8001d2 <buffer>
+ 5ba:	98 2f       	mov	r25, r24
+ 5bc:	90 7e       	andi	r25, 0xE0	; 224
+ 5be:	90 93 0c 03 	sts	0x030C, r25	; 0x80030c <frame+0x2>
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+ 5c2:	87 70       	andi	r24, 0x07	; 7
+ 5c4:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <receiveLength>
+ 5c8:	80 93 15 01 	sts	0x0115, r24	; 0x800115 <receiveLength+0x1>
+						/* set flag */
+						temp = 4;
+ 5cc:	84 e0       	ldi	r24, 0x04	; 4
+ 5ce:	90 e0       	ldi	r25, 0x00	; 0
+ 5d0:	90 93 06 03 	sts	0x0306, r25	; 0x800306 <temp+0x1>
+ 5d4:	80 93 05 03 	sts	0x0305, r24	; 0x800305 <temp>
+						frame[1] = buffer[readPointer];
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+						frame[2] = (buffer[readPointer]&0xE0);
+ 5d8:	80 e0       	ldi	r24, 0x00	; 0
+ 5da:	1a c0       	rjmp	.+52     	; 0x610 <__LOCK_REGION_LENGTH__+0x210>
+						frame[0] = START + MODESTD;
+						frame[1] = buffer[readPointer];
+						/* increase readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+							readPointer = 0;
+						else readPointer++;
+ 5dc:	8f 5f       	subi	r24, 0xFF	; 255
+						frame[2] = (buffer[readPointer]&0xE0);
+ 5de:	e8 2f       	mov	r30, r24
+ 5e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 5e2:	ee 52       	subi	r30, 0x2E	; 46
+ 5e4:	fe 4f       	sbci	r31, 0xFE	; 254
+ 5e6:	90 81       	ld	r25, Z
+ 5e8:	29 2f       	mov	r18, r25
+ 5ea:	20 7e       	andi	r18, 0xE0	; 224
+ 5ec:	20 93 0c 03 	sts	0x030C, r18	; 0x80030c <frame+0x2>
+						/* set length */
+						receiveLength = ((buffer[readPointer]&0x07) << 8);
+ 5f0:	97 70       	andi	r25, 0x07	; 7
+ 5f2:	10 92 14 01 	sts	0x0114, r1	; 0x800114 <receiveLength>
+ 5f6:	90 93 15 01 	sts	0x0115, r25	; 0x800115 <receiveLength+0x1>
+						/* set flag */
+						temp = 4;
+ 5fa:	24 e0       	ldi	r18, 0x04	; 4
+ 5fc:	30 e0       	ldi	r19, 0x00	; 0
+ 5fe:	30 93 06 03 	sts	0x0306, r19	; 0x800306 <temp+0x1>
+ 602:	20 93 05 03 	sts	0x0305, r18	; 0x800305 <temp>
+
+						/* reset readPointer (consider step over) */
+						if (readPointer >= (BUFFERSIZE - 1))
+ 606:	85 39       	cpi	r24, 0x95	; 149
+ 608:	18 f0       	brcs	.+6      	; 0x610 <__LOCK_REGION_LENGTH__+0x210>
+							readPointer = 0;
+ 60a:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 60e:	03 c0       	rjmp	.+6      	; 0x616 <__LOCK_REGION_LENGTH__+0x216>
+						else readPointer++;
+ 610:	8f 5f       	subi	r24, 0xFF	; 255
+ 612:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+
+						receivesend:
+						/* set flag */
+						receiveFlag = 1;
+ 616:	81 e0       	ldi	r24, 0x01	; 1
+ 618:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <receiveFlag>
+
+						if ((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount == 3);
+ 61c:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 620:	f0 e0       	ldi	r31, 0x00	; 0
+						{
+							receiveLength += buffer[readPointer];
+ 622:	ee 52       	subi	r30, 0x2E	; 46
+ 624:	fe 4f       	sbci	r31, 0xFE	; 254
+ 626:	20 81       	ld	r18, Z
+ 628:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <receiveLength>
+ 62c:	90 91 15 01 	lds	r25, 0x0115	; 0x800115 <receiveLength+0x1>
+ 630:	82 0f       	add	r24, r18
+ 632:	91 1d       	adc	r25, r1
+ 634:	90 93 15 01 	sts	0x0115, r25	; 0x800115 <receiveLength+0x1>
+ 638:	80 93 14 01 	sts	0x0114, r24	; 0x800114 <receiveLength>
+							/* switch procedure (toolID match / do not) */
+							if (temp > 4)
+ 63c:	20 91 05 03 	lds	r18, 0x0305	; 0x800305 <temp>
+ 640:	30 91 06 03 	lds	r19, 0x0306	; 0x800306 <temp+0x1>
+ 644:	25 30       	cpi	r18, 0x05	; 5
+ 646:	31 05       	cpc	r19, r1
+ 648:	58 f0       	brcs	.+22     	; 0x660 <__LOCK_REGION_LENGTH__+0x260>
+							{
+								frame[2] += ((receiveLength + 1) >> 8);
+ 64a:	ea e0       	ldi	r30, 0x0A	; 10
+ 64c:	f3 e0       	ldi	r31, 0x03	; 3
+ 64e:	9c 01       	movw	r18, r24
+ 650:	2f 5f       	subi	r18, 0xFF	; 255
+ 652:	3f 4f       	sbci	r19, 0xFF	; 255
+ 654:	92 81       	ldd	r25, Z+2	; 0x02
+ 656:	93 0f       	add	r25, r19
+ 658:	92 83       	std	Z+2, r25	; 0x02
+								frame[3] = (receiveLength + 1);
+ 65a:	8f 5f       	subi	r24, 0xFF	; 255
+ 65c:	83 83       	std	Z+3, r24	; 0x03
+ 65e:	06 c0       	rjmp	.+12     	; 0x66c <__LOCK_REGION_LENGTH__+0x26c>
+							}
+							else
+							{
+								frame[2] += (receiveLength >> 8);
+ 660:	ea e0       	ldi	r30, 0x0A	; 10
+ 662:	f3 e0       	ldi	r31, 0x03	; 3
+ 664:	22 81       	ldd	r18, Z+2	; 0x02
+ 666:	92 0f       	add	r25, r18
+ 668:	92 83       	std	Z+2, r25	; 0x02
+								frame[3] = receiveLength;
+ 66a:	83 83       	std	Z+3, r24	; 0x03
+							}
+							/* send frame */
+							USART1_sendStringWL(frame, temp);
+ 66c:	60 91 05 03 	lds	r22, 0x0305	; 0x800305 <temp>
+ 670:	8a e0       	ldi	r24, 0x0A	; 10
+ 672:	93 e0       	ldi	r25, 0x03	; 3
+ 674:	0e 94 db 00 	call	0x1b6	; 0x1b6 <USART1_sendStringWL>
+							/* increase count */
+							receiveCount++;
+ 678:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <receiveCount>
+ 67c:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <receiveCount+0x1>
+ 680:	01 96       	adiw	r24, 0x01	; 1
+ 682:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <receiveCount+0x1>
+ 686:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <receiveCount>
+							/* increase readPointer (consider step over) */
+							if (readPointer >= (BUFFERSIZE - 1))
+ 68a:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ 68e:	85 39       	cpi	r24, 0x95	; 149
+ 690:	28 f0       	brcs	.+10     	; 0x69c <__LOCK_REGION_LENGTH__+0x29c>
+								readPointer = 0;
+ 692:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+							else readPointer++;
+						}
+
+						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount < (receiveLength * 5 + 4))
+ 696:	c6 e9       	ldi	r28, 0x96	; 150
+ 698:	d0 e0       	ldi	r29, 0x00	; 0
+ 69a:	1d c0       	rjmp	.+58     	; 0x6d6 <__LOCK_REGION_LENGTH__+0x2d6>
+							/* increase count */
+							receiveCount++;
+							/* increase readPointer (consider step over) */
+							if (readPointer >= (BUFFERSIZE - 1))
+								readPointer = 0;
+							else readPointer++;
+ 69c:	8f 5f       	subi	r24, 0xFF	; 255
+ 69e:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+ 6a2:	f9 cf       	rjmp	.-14     	; 0x696 <__LOCK_REGION_LENGTH__+0x296>
+						}
+
+						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount < (receiveLength * 5 + 4))
+						{
+							/* store received bytes */
+							USART1_sendChar(buffer[readPointer]);
+ 6a4:	f9 01       	movw	r30, r18
+ 6a6:	ee 52       	subi	r30, 0x2E	; 46
+ 6a8:	fe 4f       	sbci	r31, 0xFE	; 254
+ 6aa:	80 81       	ld	r24, Z
+ 6ac:	0e 94 cd 00 	call	0x19a	; 0x19a <USART1_sendChar>
+							/* increase count */
+							receiveCount++;
+ 6b0:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <receiveCount>
+ 6b4:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <receiveCount+0x1>
+ 6b8:	01 96       	adiw	r24, 0x01	; 1
+ 6ba:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <receiveCount+0x1>
+ 6be:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <receiveCount>
+							/* increase readPointer (consider step over) */
+							if (readPointer >= (BUFFERSIZE - 1))
+ 6c2:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ 6c6:	85 39       	cpi	r24, 0x95	; 149
+ 6c8:	18 f0       	brcs	.+6      	; 0x6d0 <__LOCK_REGION_LENGTH__+0x2d0>
+								readPointer = 0;
+ 6ca:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 6ce:	03 c0       	rjmp	.+6      	; 0x6d6 <__LOCK_REGION_LENGTH__+0x2d6>
+							else readPointer++;
+ 6d0:	8f 5f       	subi	r24, 0xFF	; 255
+ 6d2:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+							if (readPointer >= (BUFFERSIZE - 1))
+								readPointer = 0;
+							else readPointer++;
+						}
+
+						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 0) && receiveCount < (receiveLength * 5 + 4))
+ 6d6:	20 91 0e 01 	lds	r18, 0x010E	; 0x80010e <readPointer>
+ 6da:	30 e0       	ldi	r19, 0x00	; 0
+ 6dc:	80 91 0f 01 	lds	r24, 0x010F	; 0x80010f <writePointer>
+ 6e0:	90 e0       	ldi	r25, 0x00	; 0
+ 6e2:	82 1b       	sub	r24, r18
+ 6e4:	93 0b       	sbc	r25, r19
+ 6e6:	8a 56       	subi	r24, 0x6A	; 106
+ 6e8:	9f 4f       	sbci	r25, 0xFF	; 255
+ 6ea:	be 01       	movw	r22, r28
+ 6ec:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ 6f0:	18 16       	cp	r1, r24
+ 6f2:	19 06       	cpc	r1, r25
+ 6f4:	a4 f4       	brge	.+40     	; 0x71e <__LOCK_REGION_LENGTH__+0x31e>
+ 6f6:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <receiveLength>
+ 6fa:	90 91 15 01 	lds	r25, 0x0115	; 0x800115 <receiveLength+0x1>
+ 6fe:	ac 01       	movw	r20, r24
+ 700:	44 0f       	add	r20, r20
+ 702:	55 1f       	adc	r21, r21
+ 704:	44 0f       	add	r20, r20
+ 706:	55 1f       	adc	r21, r21
+ 708:	84 0f       	add	r24, r20
+ 70a:	95 1f       	adc	r25, r21
+ 70c:	04 96       	adiw	r24, 0x04	; 4
+ 70e:	40 91 08 01 	lds	r20, 0x0108	; 0x800108 <receiveCount>
+ 712:	50 91 09 01 	lds	r21, 0x0109	; 0x800109 <receiveCount+0x1>
+ 716:	48 17       	cp	r20, r24
+ 718:	59 07       	cpc	r21, r25
+ 71a:	20 f2       	brcs	.-120    	; 0x6a4 <__LOCK_REGION_LENGTH__+0x2a4>
+ 71c:	14 c0       	rjmp	.+40     	; 0x746 <__LOCK_REGION_LENGTH__+0x346>
+							if (readPointer >= (BUFFERSIZE - 1))
+								readPointer = 0;
+							else readPointer++;
+						}
+						/* wait till the receive is complete */
+						if (receiveCount < (receiveLength * 5 + 4))
+ 71e:	80 91 14 01 	lds	r24, 0x0114	; 0x800114 <receiveLength>
+ 722:	90 91 15 01 	lds	r25, 0x0115	; 0x800115 <receiveLength+0x1>
+ 726:	9c 01       	movw	r18, r24
+ 728:	22 0f       	add	r18, r18
+ 72a:	33 1f       	adc	r19, r19
+ 72c:	22 0f       	add	r18, r18
+ 72e:	33 1f       	adc	r19, r19
+ 730:	82 0f       	add	r24, r18
+ 732:	93 1f       	adc	r25, r19
+ 734:	04 96       	adiw	r24, 0x04	; 4
+ 736:	20 91 08 01 	lds	r18, 0x0108	; 0x800108 <receiveCount>
+ 73a:	30 91 09 01 	lds	r19, 0x0109	; 0x800109 <receiveCount+0x1>
+ 73e:	28 17       	cp	r18, r24
+ 740:	39 07       	cpc	r19, r25
+ 742:	08 f4       	brcc	.+2      	; 0x746 <__LOCK_REGION_LENGTH__+0x346>
+ 744:	3d c2       	rjmp	.+1146   	; 0xbc0 <__stack+0x2c1>
+							return;
+
+						/* reset flag */
+						receiveFlag = 0;
+ 746:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <receiveFlag>
+						/* finish frame */
+						USART1_sendChar(STOP);
+ 74a:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <STOP>
+ 74e:	0e 94 cd 00 	call	0x19a	; 0x19a <USART1_sendChar>
+					}
+				break;
+ 752:	36 c2       	rjmp	.+1132   	; 0xbc0 <__stack+0x2c1>
 
 
 				case MODESPE: /* special query */
 					/* set receive count */
 					receiveCount = 3;
- 44a:	83 e0       	ldi	r24, 0x03	; 3
- 44c:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <receiveCount>
+ 754:	23 e0       	ldi	r18, 0x03	; 3
+ 756:	30 e0       	ldi	r19, 0x00	; 0
+ 758:	30 93 09 01 	sts	0x0109, r19	; 0x800109 <receiveCount+0x1>
+ 75c:	20 93 08 01 	sts	0x0108, r18	; 0x800108 <receiveCount>
 
 					/* first 3-bit include toolID */
 					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
- 450:	40 91 08 01 	lds	r20, 0x0108	; 0x800108 <readPointer>
- 454:	e4 2f       	mov	r30, r20
- 456:	f0 e0       	ldi	r31, 0x00	; 0
- 458:	e6 53       	subi	r30, 0x36	; 54
- 45a:	fe 4f       	sbci	r31, 0xFE	; 254
- 45c:	80 81       	ld	r24, Z
- 45e:	58 2f       	mov	r21, r24
- 460:	52 95       	swap	r21
- 462:	56 95       	lsr	r21
- 464:	57 70       	andi	r21, 0x07	; 7
- 466:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
- 46a:	52 13       	cpse	r21, r18
- 46c:	4e c0       	rjmp	.+156    	; 0x50a <__LOCK_REGION_LENGTH__+0x10a>
+ 760:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <readPointer>
+ 764:	e4 2f       	mov	r30, r20
+ 766:	f0 e0       	ldi	r31, 0x00	; 0
+ 768:	ee 52       	subi	r30, 0x2E	; 46
+ 76a:	fe 4f       	sbci	r31, 0xFE	; 254
+ 76c:	80 81       	ld	r24, Z
+ 76e:	58 2f       	mov	r21, r24
+ 770:	52 95       	swap	r21
+ 772:	56 95       	lsr	r21
+ 774:	57 70       	andi	r21, 0x07	; 7
+ 776:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
+ 77a:	52 13       	cpse	r21, r18
+ 77c:	4e c0       	rjmp	.+156    	; 0x81a <__LOCK_REGION_LENGTH__+0x41a>
 					{
 						/* when the received toolID matches intern toolID */
 						temp = ((buffer[readPointer]&0x1F) << 4);
- 46e:	28 2f       	mov	r18, r24
- 470:	2f 71       	andi	r18, 0x1F	; 31
- 472:	60 e1       	ldi	r22, 0x10	; 16
- 474:	26 9f       	mul	r18, r22
- 476:	90 01       	movw	r18, r0
- 478:	11 24       	eor	r1, r1
+ 77e:	28 2f       	mov	r18, r24
+ 780:	2f 71       	andi	r18, 0x1F	; 31
+ 782:	60 e1       	ldi	r22, 0x10	; 16
+ 784:	26 9f       	mul	r18, r22
+ 786:	90 01       	movw	r18, r0
+ 788:	11 24       	eor	r1, r1
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 47a:	45 39       	cpi	r20, 0x95	; 149
- 47c:	18 f0       	brcs	.+6      	; 0x484 <__LOCK_REGION_LENGTH__+0x84>
+ 78a:	45 39       	cpi	r20, 0x95	; 149
+ 78c:	18 f0       	brcs	.+6      	; 0x794 <__LOCK_REGION_LENGTH__+0x394>
 							readPointer = 0;
- 47e:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 482:	03 c0       	rjmp	.+6      	; 0x48a <__LOCK_REGION_LENGTH__+0x8a>
+ 78e:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 792:	03 c0       	rjmp	.+6      	; 0x79a <__LOCK_REGION_LENGTH__+0x39a>
 						else readPointer++;
- 484:	4f 5f       	subi	r20, 0xFF	; 255
- 486:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 794:	4f 5f       	subi	r20, 0xFF	; 255
+ 796:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						/* store received address */
 						temp += (buffer[readPointer] >> 4);
- 48a:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 48e:	f0 e0       	ldi	r31, 0x00	; 0
- 490:	e6 53       	subi	r30, 0x36	; 54
- 492:	fe 4f       	sbci	r31, 0xFE	; 254
- 494:	80 81       	ld	r24, Z
- 496:	82 95       	swap	r24
- 498:	8f 70       	andi	r24, 0x0F	; 15
- 49a:	28 0f       	add	r18, r24
- 49c:	31 1d       	adc	r19, r1
- 49e:	30 93 01 03 	sts	0x0301, r19	; 0x800301 <temp+0x1>
- 4a2:	20 93 00 03 	sts	0x0300, r18	; 0x800300 <temp>
+ 79a:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 79e:	f0 e0       	ldi	r31, 0x00	; 0
+ 7a0:	ee 52       	subi	r30, 0x2E	; 46
+ 7a2:	fe 4f       	sbci	r31, 0xFE	; 254
+ 7a4:	80 81       	ld	r24, Z
+ 7a6:	82 95       	swap	r24
+ 7a8:	8f 70       	andi	r24, 0x0F	; 15
+ 7aa:	28 0f       	add	r18, r24
+ 7ac:	31 1d       	adc	r19, r1
+ 7ae:	30 93 06 03 	sts	0x0306, r19	; 0x800306 <temp+0x1>
+ 7b2:	20 93 05 03 	sts	0x0305, r18	; 0x800305 <temp>
 
 						/* create frame for next device */
 						frame[0] = START + MODEADR;
- 4a6:	e5 e0       	ldi	r30, 0x05	; 5
- 4a8:	f3 e0       	ldi	r31, 0x03	; 3
- 4aa:	9f 5f       	subi	r25, 0xFF	; 255
- 4ac:	90 83       	st	Z, r25
+ 7b6:	ea e0       	ldi	r30, 0x0A	; 10
+ 7b8:	f3 e0       	ldi	r31, 0x03	; 3
+ 7ba:	9f 5f       	subi	r25, 0xFF	; 255
+ 7bc:	90 83       	st	Z, r25
 						frame[1] = (toolID << 5) + (uint8_t)(temp >> 4);
- 4ae:	c9 01       	movw	r24, r18
- 4b0:	92 95       	swap	r25
- 4b2:	82 95       	swap	r24
- 4b4:	8f 70       	andi	r24, 0x0F	; 15
- 4b6:	89 27       	eor	r24, r25
- 4b8:	9f 70       	andi	r25, 0x0F	; 15
- 4ba:	89 27       	eor	r24, r25
- 4bc:	40 e2       	ldi	r20, 0x20	; 32
- 4be:	54 9f       	mul	r21, r20
- 4c0:	80 0d       	add	r24, r0
- 4c2:	11 24       	eor	r1, r1
- 4c4:	81 83       	std	Z+1, r24	; 0x01
+ 7be:	c9 01       	movw	r24, r18
+ 7c0:	92 95       	swap	r25
+ 7c2:	82 95       	swap	r24
+ 7c4:	8f 70       	andi	r24, 0x0F	; 15
+ 7c6:	89 27       	eor	r24, r25
+ 7c8:	9f 70       	andi	r25, 0x0F	; 15
+ 7ca:	89 27       	eor	r24, r25
+ 7cc:	70 e2       	ldi	r23, 0x20	; 32
+ 7ce:	57 9f       	mul	r21, r23
+ 7d0:	80 0d       	add	r24, r0
+ 7d2:	11 24       	eor	r1, r1
+ 7d4:	81 83       	std	Z+1, r24	; 0x01
 						frame[2] = (uint8_t)(temp << 4);
- 4c6:	82 2f       	mov	r24, r18
- 4c8:	82 95       	swap	r24
- 4ca:	80 7f       	andi	r24, 0xF0	; 240
- 4cc:	82 83       	std	Z+2, r24	; 0x02
+ 7d6:	82 2f       	mov	r24, r18
+ 7d8:	82 95       	swap	r24
+ 7da:	80 7f       	andi	r24, 0xF0	; 240
+ 7dc:	82 83       	std	Z+2, r24	; 0x02
 						/* check received address */
 						if (temp == address)
- 4ce:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <address>
- 4d2:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <address+0x1>
- 4d6:	28 17       	cp	r18, r24
- 4d8:	39 07       	cpc	r19, r25
- 4da:	61 f5       	brne	.+88     	; 0x534 <__LOCK_REGION_LENGTH__+0x134>
+ 7de:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <address>
+ 7e2:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <address+0x1>
+ 7e6:	28 17       	cp	r18, r24
+ 7e8:	39 07       	cpc	r19, r25
+ 7ea:	61 f5       	brne	.+88     	; 0x844 <__LOCK_REGION_LENGTH__+0x444>
 						{
 							/* add device information */
 							frame[3] = 0xAF;
- 4dc:	8f ea       	ldi	r24, 0xAF	; 175
- 4de:	83 83       	std	Z+3, r24	; 0x03
+ 7ec:	8f ea       	ldi	r24, 0xAF	; 175
+ 7ee:	83 83       	std	Z+3, r24	; 0x03
 							frame[4] = 0xFE;
- 4e0:	8e ef       	ldi	r24, 0xFE	; 254
- 4e2:	84 83       	std	Z+4, r24	; 0x04
- 4e4:	ea e0       	ldi	r30, 0x0A	; 10
- 4e6:	f3 e0       	ldi	r31, 0x03	; 3
- 4e8:	27 e2       	ldi	r18, 0x27	; 39
- 4ea:	33 e0       	ldi	r19, 0x03	; 3
+ 7f0:	8e ef       	ldi	r24, 0xFE	; 254
+ 7f2:	84 83       	std	Z+4, r24	; 0x04
+ 7f4:	ef e0       	ldi	r30, 0x0F	; 15
+ 7f6:	f3 e0       	ldi	r31, 0x03	; 3
+ 7f8:	2c e2       	ldi	r18, 0x2C	; 44
+ 7fa:	33 e0       	ldi	r19, 0x03	; 3
 							// ...
 							for (uint8_t n = 5; n < 34; n++)
 							{
 								frame[n] = 0x01;
- 4ec:	81 e0       	ldi	r24, 0x01	; 1
- 4ee:	81 93       	st	Z+, r24
+ 7fc:	81 e0       	ldi	r24, 0x01	; 1
+ 7fe:	81 93       	st	Z+, r24
 						{
 							/* add device information */
 							frame[3] = 0xAF;
 							frame[4] = 0xFE;
 							// ...
 							for (uint8_t n = 5; n < 34; n++)
- 4f0:	e2 17       	cp	r30, r18
- 4f2:	f3 07       	cpc	r31, r19
- 4f4:	e1 f7       	brne	.-8      	; 0x4ee <__LOCK_REGION_LENGTH__+0xee>
+ 800:	e2 17       	cp	r30, r18
+ 802:	f3 07       	cpc	r31, r19
+ 804:	e1 f7       	brne	.-8      	; 0x7fe <__LOCK_REGION_LENGTH__+0x3fe>
 							{
 								frame[n] = 0x01;
 							}
 							// ...
 							frame[34] = 0xAF;
- 4f6:	e5 e0       	ldi	r30, 0x05	; 5
- 4f8:	f3 e0       	ldi	r31, 0x03	; 3
- 4fa:	8f ea       	ldi	r24, 0xAF	; 175
- 4fc:	82 a3       	std	Z+34, r24	; 0x22
+ 806:	ea e0       	ldi	r30, 0x0A	; 10
+ 808:	f3 e0       	ldi	r31, 0x03	; 3
+ 80a:	8f ea       	ldi	r24, 0xAF	; 175
+ 80c:	82 a3       	std	Z+34, r24	; 0x22
 							frame[35] = 0xFE;
- 4fe:	8e ef       	ldi	r24, 0xFE	; 254
- 500:	83 a3       	std	Z+35, r24	; 0x23
+ 80e:	8e ef       	ldi	r24, 0xFE	; 254
+ 810:	83 a3       	std	Z+35, r24	; 0x23
 						}
 						else goto receivestore1;
 						/* finish frame */
 						frame[36] = STOP;
- 502:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <STOP>
- 506:	84 a3       	std	Z+36, r24	; 0x24
- 508:	63 c0       	rjmp	.+198    	; 0x5d0 <__LOCK_REGION_LENGTH__+0x1d0>
+ 812:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <STOP>
+ 816:	84 a3       	std	Z+36, r24	; 0x24
+ 818:	77 c0       	rjmp	.+238    	; 0x908 <__stack+0x9>
 					}
 					else
 					{
 						frame[0] = START + MODESPE;
- 50a:	e5 e0       	ldi	r30, 0x05	; 5
- 50c:	f3 e0       	ldi	r31, 0x03	; 3
- 50e:	9c 5f       	subi	r25, 0xFC	; 252
- 510:	90 83       	st	Z, r25
+ 81a:	ea e0       	ldi	r30, 0x0A	; 10
+ 81c:	f3 e0       	ldi	r31, 0x03	; 3
+ 81e:	9c 5f       	subi	r25, 0xFC	; 252
+ 820:	90 83       	st	Z, r25
 						frame[1] = buffer[readPointer];
- 512:	81 83       	std	Z+1, r24	; 0x01
+ 822:	81 83       	std	Z+1, r24	; 0x01
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 514:	45 39       	cpi	r20, 0x95	; 149
- 516:	18 f0       	brcs	.+6      	; 0x51e <__LOCK_REGION_LENGTH__+0x11e>
+ 824:	45 39       	cpi	r20, 0x95	; 149
+ 826:	18 f0       	brcs	.+6      	; 0x82e <__LOCK_REGION_LENGTH__+0x42e>
 							readPointer = 0;
- 518:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 51c:	03 c0       	rjmp	.+6      	; 0x524 <__LOCK_REGION_LENGTH__+0x124>
+ 828:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 82c:	03 c0       	rjmp	.+6      	; 0x834 <__LOCK_REGION_LENGTH__+0x434>
 						else readPointer++;
- 51e:	4f 5f       	subi	r20, 0xFF	; 255
- 520:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 82e:	4f 5f       	subi	r20, 0xFF	; 255
+ 830:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						frame[2] = buffer[readPointer];
- 524:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 528:	f0 e0       	ldi	r31, 0x00	; 0
- 52a:	e6 53       	subi	r30, 0x36	; 54
- 52c:	fe 4f       	sbci	r31, 0xFE	; 254
- 52e:	80 81       	ld	r24, Z
- 530:	80 93 07 03 	sts	0x0307, r24	; 0x800307 <frame+0x2>
+ 834:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 838:	f0 e0       	ldi	r31, 0x00	; 0
+ 83a:	ee 52       	subi	r30, 0x2E	; 46
+ 83c:	fe 4f       	sbci	r31, 0xFE	; 254
+ 83e:	80 81       	ld	r24, Z
+ 840:	80 93 0c 03 	sts	0x030C, r24	; 0x80030c <frame+0x2>
 
 						receivestore1:
 						/* set flag */
-						receiveFlag = 1;
- 534:	81 e0       	ldi	r24, 0x01	; 1
- 536:	80 93 0d 01 	sts	0x010D, r24	; 0x80010d <receiveFlag>
+						receiveFlag = 4;
+ 844:	84 e0       	ldi	r24, 0x04	; 4
+ 846:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <receiveFlag>
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 36)
- 53a:	c0 91 09 01 	lds	r28, 0x0109	; 0x800109 <writePointer>
- 53e:	d0 e0       	ldi	r29, 0x00	; 0
- 540:	30 91 08 01 	lds	r19, 0x0108	; 0x800108 <readPointer>
- 544:	ce 01       	movw	r24, r28
- 546:	83 1b       	sub	r24, r19
- 548:	91 09       	sbc	r25, r1
- 54a:	8a 56       	subi	r24, 0x6A	; 106
- 54c:	9f 4f       	sbci	r25, 0xFF	; 255
- 54e:	66 e9       	ldi	r22, 0x96	; 150
- 550:	70 e0       	ldi	r23, 0x00	; 0
- 552:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 556:	02 97       	sbiw	r24, 0x02	; 2
- 558:	84 f1       	brlt	.+96     	; 0x5ba <__LOCK_REGION_LENGTH__+0x1ba>
- 55a:	20 91 03 01 	lds	r18, 0x0103	; 0x800103 <receiveCount>
- 55e:	24 32       	cpi	r18, 0x24	; 36
- 560:	88 f5       	brcc	.+98     	; 0x5c4 <__LOCK_REGION_LENGTH__+0x1c4>
+ 84a:	c0 91 0f 01 	lds	r28, 0x010F	; 0x80010f <writePointer>
+ 84e:	d0 e0       	ldi	r29, 0x00	; 0
+ 850:	20 91 0e 01 	lds	r18, 0x010E	; 0x80010e <readPointer>
+ 854:	ce 01       	movw	r24, r28
+ 856:	82 1b       	sub	r24, r18
+ 858:	91 09       	sbc	r25, r1
+ 85a:	8a 56       	subi	r24, 0x6A	; 106
+ 85c:	9f 4f       	sbci	r25, 0xFF	; 255
+ 85e:	66 e9       	ldi	r22, 0x96	; 150
+ 860:	70 e0       	ldi	r23, 0x00	; 0
+ 862:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ 866:	02 97       	sbiw	r24, 0x02	; 2
+ 868:	0c f4       	brge	.+2      	; 0x86c <__LOCK_REGION_LENGTH__+0x46c>
+ 86a:	41 c0       	rjmp	.+130    	; 0x8ee <__LOCK_REGION_LENGTH__+0x4ee>
+ 86c:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <receiveCount>
+ 870:	f0 91 09 01 	lds	r31, 0x0109	; 0x800109 <receiveCount+0x1>
+ 874:	e4 32       	cpi	r30, 0x24	; 36
+ 876:	f1 05       	cpc	r31, r1
+ 878:	08 f0       	brcs	.+2      	; 0x87c <__LOCK_REGION_LENGTH__+0x47c>
+ 87a:	40 c0       	rjmp	.+128    	; 0x8fc <__LOCK_REGION_LENGTH__+0x4fc>
+ 87c:	e6 5f       	subi	r30, 0xF6	; 246
+ 87e:	fc 4f       	sbci	r31, 0xFC	; 252
+ 880:	0f 2e       	mov	r0, r31
+ 882:	fe e2       	ldi	r31, 0x2E	; 46
+ 884:	cf 2e       	mov	r12, r31
+ 886:	f3 e0       	ldi	r31, 0x03	; 3
+ 888:	df 2e       	mov	r13, r31
+ 88a:	f0 2d       	mov	r31, r0
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
 								readPointer = 0;
- 562:	f1 2c       	mov	r15, r1
+ 88c:	40 e0       	ldi	r20, 0x00	; 0
 
 						receivestore1:
 						/* set flag */
-						receiveFlag = 1;
+						receiveFlag = 4;
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 36)
- 564:	06 e9       	ldi	r16, 0x96	; 150
- 566:	10 e0       	ldi	r17, 0x00	; 0
+ 88e:	0f 2e       	mov	r0, r31
+ 890:	f6 e9       	ldi	r31, 0x96	; 150
+ 892:	ef 2e       	mov	r14, r31
+ 894:	f1 2c       	mov	r15, r1
+ 896:	f0 2d       	mov	r31, r0
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
- 568:	35 39       	cpi	r19, 0x95	; 149
- 56a:	10 f4       	brcc	.+4      	; 0x570 <__LOCK_REGION_LENGTH__+0x170>
+ 898:	25 39       	cpi	r18, 0x95	; 149
+ 89a:	10 f4       	brcc	.+4      	; 0x8a0 <__LOCK_REGION_LENGTH__+0x4a0>
 								readPointer = 0;
 							else readPointer++;
- 56c:	3f 5f       	subi	r19, 0xFF	; 255
- 56e:	01 c0       	rjmp	.+2      	; 0x572 <__LOCK_REGION_LENGTH__+0x172>
+ 89c:	2f 5f       	subi	r18, 0xFF	; 255
+ 89e:	01 c0       	rjmp	.+2      	; 0x8a2 <__LOCK_REGION_LENGTH__+0x4a2>
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 36)
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
 								readPointer = 0;
- 570:	3f 2d       	mov	r19, r15
+ 8a0:	24 2f       	mov	r18, r20
 							else readPointer++;
 							/* store received bytes */
 							frame[receiveCount] = buffer[readPointer];
- 572:	83 2f       	mov	r24, r19
- 574:	90 e0       	ldi	r25, 0x00	; 0
- 576:	e2 2f       	mov	r30, r18
- 578:	f0 e0       	ldi	r31, 0x00	; 0
- 57a:	eb 5f       	subi	r30, 0xFB	; 251
- 57c:	fc 4f       	sbci	r31, 0xFC	; 252
- 57e:	dc 01       	movw	r26, r24
- 580:	a6 53       	subi	r26, 0x36	; 54
- 582:	be 4f       	sbci	r27, 0xFE	; 254
- 584:	4c 91       	ld	r20, X
- 586:	40 83       	st	Z, r20
-							/* increase count */
-							receiveCount++;
- 588:	2f 5f       	subi	r18, 0xFF	; 255
+ 8a2:	82 2f       	mov	r24, r18
+ 8a4:	90 e0       	ldi	r25, 0x00	; 0
+ 8a6:	dc 01       	movw	r26, r24
+ 8a8:	ae 52       	subi	r26, 0x2E	; 46
+ 8aa:	be 4f       	sbci	r27, 0xFE	; 254
+ 8ac:	3c 91       	ld	r19, X
+ 8ae:	31 93       	st	Z+, r19
+ 8b0:	8f 01       	movw	r16, r30
+ 8b2:	0a 50       	subi	r16, 0x0A	; 10
+ 8b4:	13 40       	sbci	r17, 0x03	; 3
 
 						receivestore1:
 						/* set flag */
-						receiveFlag = 1;
+						receiveFlag = 4;
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 36)
- 58a:	ae 01       	movw	r20, r28
- 58c:	48 1b       	sub	r20, r24
- 58e:	59 0b       	sbc	r21, r25
- 590:	ca 01       	movw	r24, r20
- 592:	8a 56       	subi	r24, 0x6A	; 106
- 594:	9f 4f       	sbci	r25, 0xFF	; 255
- 596:	b8 01       	movw	r22, r16
- 598:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 59c:	02 97       	sbiw	r24, 0x02	; 2
- 59e:	2c f4       	brge	.+10     	; 0x5aa <__LOCK_REGION_LENGTH__+0x1aa>
- 5a0:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 5a4:	20 93 03 01 	sts	0x0103, r18	; 0x800103 <receiveCount>
- 5a8:	08 c0       	rjmp	.+16     	; 0x5ba <__LOCK_REGION_LENGTH__+0x1ba>
- 5aa:	24 32       	cpi	r18, 0x24	; 36
- 5ac:	e9 f6       	brne	.-70     	; 0x568 <__LOCK_REGION_LENGTH__+0x168>
- 5ae:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 5b2:	84 e2       	ldi	r24, 0x24	; 36
- 5b4:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <receiveCount>
- 5b8:	05 c0       	rjmp	.+10     	; 0x5c4 <__LOCK_REGION_LENGTH__+0x1c4>
+ 8b6:	be 01       	movw	r22, r28
+ 8b8:	68 1b       	sub	r22, r24
+ 8ba:	79 0b       	sbc	r23, r25
+ 8bc:	cb 01       	movw	r24, r22
+ 8be:	8a 56       	subi	r24, 0x6A	; 106
+ 8c0:	9f 4f       	sbci	r25, 0xFF	; 255
+ 8c2:	b7 01       	movw	r22, r14
+ 8c4:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ 8c8:	02 97       	sbiw	r24, 0x02	; 2
+ 8ca:	3c f4       	brge	.+14     	; 0x8da <__LOCK_REGION_LENGTH__+0x4da>
+ 8cc:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ 8d0:	10 93 09 01 	sts	0x0109, r17	; 0x800109 <receiveCount+0x1>
+ 8d4:	00 93 08 01 	sts	0x0108, r16	; 0x800108 <receiveCount>
+ 8d8:	0a c0       	rjmp	.+20     	; 0x8ee <__LOCK_REGION_LENGTH__+0x4ee>
+ 8da:	ec 15       	cp	r30, r12
+ 8dc:	fd 05       	cpc	r31, r13
+ 8de:	e1 f6       	brne	.-72     	; 0x898 <__LOCK_REGION_LENGTH__+0x498>
+ 8e0:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ 8e4:	10 93 09 01 	sts	0x0109, r17	; 0x800109 <receiveCount+0x1>
+ 8e8:	00 93 08 01 	sts	0x0108, r16	; 0x800108 <receiveCount>
+ 8ec:	07 c0       	rjmp	.+14     	; 0x8fc <__LOCK_REGION_LENGTH__+0x4fc>
 							frame[receiveCount] = buffer[readPointer];
 							/* increase count */
 							receiveCount++;
 						}
 						/* wait till the receive is complete */
 						if (receiveCount < 36)
- 5ba:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <receiveCount>
- 5be:	84 32       	cpi	r24, 0x24	; 36
- 5c0:	08 f4       	brcc	.+2      	; 0x5c4 <__LOCK_REGION_LENGTH__+0x1c4>
- 5c2:	42 c1       	rjmp	.+644    	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 8ee:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <receiveCount>
+ 8f2:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <receiveCount+0x1>
+ 8f6:	84 97       	sbiw	r24, 0x24	; 36
+ 8f8:	08 f4       	brcc	.+2      	; 0x8fc <__LOCK_REGION_LENGTH__+0x4fc>
+ 8fa:	62 c1       	rjmp	.+708    	; 0xbc0 <__stack+0x2c1>
 							return;
 						/* reset flag */
 						receiveFlag = 0;
- 5c4:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <receiveFlag>
+ 8fc:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <receiveFlag>
 
 						/* finish frame */
 						frame[36] = STOP;
- 5c8:	80 91 04 01 	lds	r24, 0x0104	; 0x800104 <STOP>
- 5cc:	80 93 29 03 	sts	0x0329, r24	; 0x800329 <frame+0x24>
+ 900:	80 91 0a 01 	lds	r24, 0x010A	; 0x80010a <STOP>
+ 904:	80 93 2e 03 	sts	0x032E, r24	; 0x80032e <frame+0x24>
 					}
 					USART1_sendStringWL(frame, 37);
- 5d0:	65 e2       	ldi	r22, 0x25	; 37
- 5d2:	85 e0       	ldi	r24, 0x05	; 5
- 5d4:	93 e0       	ldi	r25, 0x03	; 3
- 5d6:	0e 94 d5 00 	call	0x1aa	; 0x1aa <USART1_sendStringWL>
+ 908:	65 e2       	ldi	r22, 0x25	; 37
+ 90a:	8a e0       	ldi	r24, 0x0A	; 10
+ 90c:	93 e0       	ldi	r25, 0x03	; 3
+ 90e:	0e 94 db 00 	call	0x1b6	; 0x1b6 <USART1_sendStringWL>
 
 					/* reset readPointer (consider step over) */
 					if (readPointer >= (BUFFERSIZE - 1))
- 5da:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <readPointer>
- 5de:	85 39       	cpi	r24, 0x95	; 149
- 5e0:	18 f0       	brcs	.+6      	; 0x5e8 <__LOCK_REGION_LENGTH__+0x1e8>
+ 912:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ 916:	85 39       	cpi	r24, 0x95	; 149
+ 918:	18 f0       	brcs	.+6      	; 0x920 <__stack+0x21>
 						readPointer = 0;
- 5e2:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 5e6:	30 c1       	rjmp	.+608    	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 91a:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 91e:	50 c1       	rjmp	.+672    	; 0xbc0 <__stack+0x2c1>
 					else readPointer++;
- 5e8:	8f 5f       	subi	r24, 0xFF	; 255
- 5ea:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <readPointer>
- 5ee:	2c c1       	rjmp	.+600    	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ 920:	8f 5f       	subi	r24, 0xFF	; 255
+ 922:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+ 926:	4c c1       	rjmp	.+664    	; 0xbc0 <__stack+0x2c1>
 				break;
 
 
 				case MODECTR: /* control device */
+					/* set receive count */
+					receiveCount = 3;
+ 928:	23 e0       	ldi	r18, 0x03	; 3
+ 92a:	30 e0       	ldi	r19, 0x00	; 0
+ 92c:	30 93 09 01 	sts	0x0109, r19	; 0x800109 <receiveCount+0x1>
+ 930:	20 93 08 01 	sts	0x0108, r18	; 0x800108 <receiveCount>
+
 					/* first 3-bit include toolID */
 					if (((buffer[readPointer]&0xE0) >> 5) == toolID)
- 5f0:	40 91 08 01 	lds	r20, 0x0108	; 0x800108 <readPointer>
- 5f4:	e4 2f       	mov	r30, r20
- 5f6:	f0 e0       	ldi	r31, 0x00	; 0
- 5f8:	e6 53       	subi	r30, 0x36	; 54
- 5fa:	fe 4f       	sbci	r31, 0xFE	; 254
- 5fc:	80 81       	ld	r24, Z
- 5fe:	58 2f       	mov	r21, r24
- 600:	52 95       	swap	r21
- 602:	56 95       	lsr	r21
- 604:	57 70       	andi	r21, 0x07	; 7
- 606:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
- 60a:	52 13       	cpse	r21, r18
- 60c:	ac c0       	rjmp	.+344    	; 0x766 <__LOCK_REGION_LENGTH__+0x366>
+ 934:	40 91 0e 01 	lds	r20, 0x010E	; 0x80010e <readPointer>
+ 938:	e4 2f       	mov	r30, r20
+ 93a:	f0 e0       	ldi	r31, 0x00	; 0
+ 93c:	ee 52       	subi	r30, 0x2E	; 46
+ 93e:	fe 4f       	sbci	r31, 0xFE	; 254
+ 940:	80 81       	ld	r24, Z
+ 942:	58 2f       	mov	r21, r24
+ 944:	52 95       	swap	r21
+ 946:	56 95       	lsr	r21
+ 948:	57 70       	andi	r21, 0x07	; 7
+ 94a:	20 91 00 01 	lds	r18, 0x0100	; 0x800100 <__data_start>
+ 94e:	52 13       	cpse	r21, r18
+ 950:	b9 c0       	rjmp	.+370    	; 0xac4 <__stack+0x1c5>
 					{
 						/* when the received toolID matches intern toolID */
 						temp = ((buffer[readPointer]&0x1F) << 4);
- 60e:	28 2f       	mov	r18, r24
- 610:	2f 71       	andi	r18, 0x1F	; 31
- 612:	60 e1       	ldi	r22, 0x10	; 16
- 614:	26 9f       	mul	r18, r22
- 616:	90 01       	movw	r18, r0
- 618:	11 24       	eor	r1, r1
+ 952:	28 2f       	mov	r18, r24
+ 954:	2f 71       	andi	r18, 0x1F	; 31
+ 956:	70 e1       	ldi	r23, 0x10	; 16
+ 958:	27 9f       	mul	r18, r23
+ 95a:	90 01       	movw	r18, r0
+ 95c:	11 24       	eor	r1, r1
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 61a:	45 39       	cpi	r20, 0x95	; 149
- 61c:	18 f0       	brcs	.+6      	; 0x624 <__LOCK_REGION_LENGTH__+0x224>
+ 95e:	45 39       	cpi	r20, 0x95	; 149
+ 960:	18 f0       	brcs	.+6      	; 0x968 <__stack+0x69>
 							readPointer = 0;
- 61e:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 622:	03 c0       	rjmp	.+6      	; 0x62a <__LOCK_REGION_LENGTH__+0x22a>
+ 962:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ 966:	03 c0       	rjmp	.+6      	; 0x96e <__stack+0x6f>
 						else readPointer++;
- 624:	4f 5f       	subi	r20, 0xFF	; 255
- 626:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ 968:	4f 5f       	subi	r20, 0xFF	; 255
+ 96a:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						/* store received address */
 						temp += (buffer[readPointer] >> 4);
- 62a:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 62e:	f0 e0       	ldi	r31, 0x00	; 0
- 630:	e6 53       	subi	r30, 0x36	; 54
- 632:	fe 4f       	sbci	r31, 0xFE	; 254
- 634:	40 81       	ld	r20, Z
- 636:	84 2f       	mov	r24, r20
- 638:	82 95       	swap	r24
- 63a:	8f 70       	andi	r24, 0x0F	; 15
- 63c:	28 0f       	add	r18, r24
- 63e:	31 1d       	adc	r19, r1
- 640:	30 93 01 03 	sts	0x0301, r19	; 0x800301 <temp+0x1>
- 644:	20 93 00 03 	sts	0x0300, r18	; 0x800300 <temp>
+ 96e:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ 972:	f0 e0       	ldi	r31, 0x00	; 0
+ 974:	ee 52       	subi	r30, 0x2E	; 46
+ 976:	fe 4f       	sbci	r31, 0xFE	; 254
+ 978:	40 81       	ld	r20, Z
+ 97a:	84 2f       	mov	r24, r20
+ 97c:	82 95       	swap	r24
+ 97e:	8f 70       	andi	r24, 0x0F	; 15
+ 980:	28 0f       	add	r18, r24
+ 982:	31 1d       	adc	r19, r1
+ 984:	30 93 06 03 	sts	0x0306, r19	; 0x800306 <temp+0x1>
+ 988:	20 93 05 03 	sts	0x0305, r18	; 0x800305 <temp>
 
 						frame[0] = START + MODECTR;
- 648:	e5 e0       	ldi	r30, 0x05	; 5
- 64a:	f3 e0       	ldi	r31, 0x03	; 3
- 64c:	99 5f       	subi	r25, 0xF9	; 249
- 64e:	90 83       	st	Z, r25
+ 98c:	ea e0       	ldi	r30, 0x0A	; 10
+ 98e:	f3 e0       	ldi	r31, 0x03	; 3
+ 990:	99 5f       	subi	r25, 0xF9	; 249
+ 992:	90 83       	st	Z, r25
 						frame[1] = (toolID << 5) + (uint8_t)(temp >> 4);
- 650:	c9 01       	movw	r24, r18
- 652:	92 95       	swap	r25
- 654:	82 95       	swap	r24
- 656:	8f 70       	andi	r24, 0x0F	; 15
- 658:	89 27       	eor	r24, r25
- 65a:	9f 70       	andi	r25, 0x0F	; 15
- 65c:	89 27       	eor	r24, r25
- 65e:	60 e2       	ldi	r22, 0x20	; 32
- 660:	56 9f       	mul	r21, r22
- 662:	80 0d       	add	r24, r0
- 664:	11 24       	eor	r1, r1
- 666:	81 83       	std	Z+1, r24	; 0x01
+ 994:	c9 01       	movw	r24, r18
+ 996:	92 95       	swap	r25
+ 998:	82 95       	swap	r24
+ 99a:	8f 70       	andi	r24, 0x0F	; 15
+ 99c:	89 27       	eor	r24, r25
+ 99e:	9f 70       	andi	r25, 0x0F	; 15
+ 9a0:	89 27       	eor	r24, r25
+ 9a2:	60 e2       	ldi	r22, 0x20	; 32
+ 9a4:	56 9f       	mul	r21, r22
+ 9a6:	80 0d       	add	r24, r0
+ 9a8:	11 24       	eor	r1, r1
+ 9aa:	81 83       	std	Z+1, r24	; 0x01
 						frame[2] = buffer[readPointer];
- 668:	42 83       	std	Z+2, r20	; 0x02
+ 9ac:	42 83       	std	Z+2, r20	; 0x02
 
 						/* check received address */
 						if (temp == 0 || temp == address)
- 66a:	21 15       	cp	r18, r1
- 66c:	31 05       	cpc	r19, r1
- 66e:	41 f0       	breq	.+16     	; 0x680 <__LOCK_REGION_LENGTH__+0x280>
- 670:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <address>
- 674:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <address+0x1>
- 678:	28 17       	cp	r18, r24
- 67a:	39 07       	cpc	r19, r25
- 67c:	09 f0       	breq	.+2      	; 0x680 <__LOCK_REGION_LENGTH__+0x280>
- 67e:	88 c0       	rjmp	.+272    	; 0x790 <__LOCK_REGION_LENGTH__+0x390>
+ 9ae:	21 15       	cp	r18, r1
+ 9b0:	31 05       	cpc	r19, r1
+ 9b2:	41 f0       	breq	.+16     	; 0x9c4 <__stack+0xc5>
+ 9b4:	80 91 01 01 	lds	r24, 0x0101	; 0x800101 <address>
+ 9b8:	90 91 02 01 	lds	r25, 0x0102	; 0x800102 <address+0x1>
+ 9bc:	28 17       	cp	r18, r24
+ 9be:	39 07       	cpc	r19, r25
+ 9c0:	09 f0       	breq	.+2      	; 0x9c4 <__stack+0xc5>
+ 9c2:	95 c0       	rjmp	.+298    	; 0xaee <__stack+0x1ef>
 						{
 							/* wait till the next two bytes are received */
 							receivestore2:
 							/* set flag */
 							receiveFlag = 2;
- 680:	82 e0       	ldi	r24, 0x02	; 2
- 682:	80 93 0d 01 	sts	0x010D, r24	; 0x80010d <receiveFlag>
+ 9c4:	82 e0       	ldi	r24, 0x02	; 2
+ 9c6:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <receiveFlag>
 
 							/* when a new byte is received */
 							while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 686:	c0 91 09 01 	lds	r28, 0x0109	; 0x800109 <writePointer>
- 68a:	d0 e0       	ldi	r29, 0x00	; 0
- 68c:	30 91 08 01 	lds	r19, 0x0108	; 0x800108 <readPointer>
- 690:	ce 01       	movw	r24, r28
- 692:	83 1b       	sub	r24, r19
- 694:	91 09       	sbc	r25, r1
- 696:	8a 56       	subi	r24, 0x6A	; 106
- 698:	9f 4f       	sbci	r25, 0xFF	; 255
- 69a:	66 e9       	ldi	r22, 0x96	; 150
- 69c:	70 e0       	ldi	r23, 0x00	; 0
- 69e:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 6a2:	02 97       	sbiw	r24, 0x02	; 2
- 6a4:	84 f1       	brlt	.+96     	; 0x706 <__LOCK_REGION_LENGTH__+0x306>
- 6a6:	20 91 03 01 	lds	r18, 0x0103	; 0x800103 <receiveCount>
- 6aa:	26 30       	cpi	r18, 0x06	; 6
- 6ac:	88 f5       	brcc	.+98     	; 0x710 <__LOCK_REGION_LENGTH__+0x310>
+ 9ca:	00 91 0f 01 	lds	r16, 0x010F	; 0x80010f <writePointer>
+ 9ce:	10 e0       	ldi	r17, 0x00	; 0
+ 9d0:	20 91 0e 01 	lds	r18, 0x010E	; 0x80010e <readPointer>
+ 9d4:	c8 01       	movw	r24, r16
+ 9d6:	82 1b       	sub	r24, r18
+ 9d8:	91 09       	sbc	r25, r1
+ 9da:	8a 56       	subi	r24, 0x6A	; 106
+ 9dc:	9f 4f       	sbci	r25, 0xFF	; 255
+ 9de:	66 e9       	ldi	r22, 0x96	; 150
+ 9e0:	70 e0       	ldi	r23, 0x00	; 0
+ 9e2:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ 9e6:	02 97       	sbiw	r24, 0x02	; 2
+ 9e8:	dc f1       	brlt	.+118    	; 0xa60 <__stack+0x161>
+ 9ea:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <receiveCount>
+ 9ee:	f0 91 09 01 	lds	r31, 0x0109	; 0x800109 <receiveCount+0x1>
+ 9f2:	e6 30       	cpi	r30, 0x06	; 6
+ 9f4:	f1 05       	cpc	r31, r1
+ 9f6:	d8 f5       	brcc	.+118    	; 0xa6e <__stack+0x16f>
+ 9f8:	ef 01       	movw	r28, r30
+ 9fa:	c6 5f       	subi	r28, 0xF6	; 246
+ 9fc:	dc 4f       	sbci	r29, 0xFC	; 252
 							{
 								/* increase readPointer (consider step over) */
 								if (readPointer >= (BUFFERSIZE - 1))
 									readPointer = 0;
- 6ae:	f1 2c       	mov	r15, r1
+ 9fe:	40 e0       	ldi	r20, 0x00	; 0
 							receivestore2:
 							/* set flag */
 							receiveFlag = 2;
 
 							/* when a new byte is received */
 							while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 6b0:	06 e9       	ldi	r16, 0x96	; 150
- 6b2:	10 e0       	ldi	r17, 0x00	; 0
+ a00:	0f 2e       	mov	r0, r31
+ a02:	f6 e9       	ldi	r31, 0x96	; 150
+ a04:	ef 2e       	mov	r14, r31
+ a06:	f1 2c       	mov	r15, r1
+ a08:	f0 2d       	mov	r31, r0
 							{
 								/* increase readPointer (consider step over) */
 								if (readPointer >= (BUFFERSIZE - 1))
- 6b4:	35 39       	cpi	r19, 0x95	; 149
- 6b6:	10 f4       	brcc	.+4      	; 0x6bc <__LOCK_REGION_LENGTH__+0x2bc>
+ a0a:	25 39       	cpi	r18, 0x95	; 149
+ a0c:	10 f4       	brcc	.+4      	; 0xa12 <__stack+0x113>
 									readPointer = 0;
 								else readPointer++;
- 6b8:	3f 5f       	subi	r19, 0xFF	; 255
- 6ba:	01 c0       	rjmp	.+2      	; 0x6be <__LOCK_REGION_LENGTH__+0x2be>
+ a0e:	2f 5f       	subi	r18, 0xFF	; 255
+ a10:	01 c0       	rjmp	.+2      	; 0xa14 <__stack+0x115>
 							/* when a new byte is received */
 							while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
 							{
 								/* increase readPointer (consider step over) */
 								if (readPointer >= (BUFFERSIZE - 1))
 									readPointer = 0;
- 6bc:	3f 2d       	mov	r19, r15
+ a12:	24 2f       	mov	r18, r20
 								else readPointer++;
 								/* store received bytes */
 								frame[receiveCount] = buffer[readPointer];
- 6be:	83 2f       	mov	r24, r19
- 6c0:	90 e0       	ldi	r25, 0x00	; 0
- 6c2:	e2 2f       	mov	r30, r18
- 6c4:	f0 e0       	ldi	r31, 0x00	; 0
- 6c6:	eb 5f       	subi	r30, 0xFB	; 251
- 6c8:	fc 4f       	sbci	r31, 0xFC	; 252
- 6ca:	dc 01       	movw	r26, r24
- 6cc:	a6 53       	subi	r26, 0x36	; 54
- 6ce:	be 4f       	sbci	r27, 0xFE	; 254
- 6d0:	4c 91       	ld	r20, X
- 6d2:	40 83       	st	Z, r20
+ a14:	82 2f       	mov	r24, r18
+ a16:	90 e0       	ldi	r25, 0x00	; 0
+ a18:	dc 01       	movw	r26, r24
+ a1a:	ae 52       	subi	r26, 0x2E	; 46
+ a1c:	be 4f       	sbci	r27, 0xFE	; 254
+ a1e:	3c 91       	ld	r19, X
+ a20:	39 93       	st	Y+, r19
 								/* increase count */
 								receiveCount++;
- 6d4:	2f 5f       	subi	r18, 0xFF	; 255
+ a22:	31 96       	adiw	r30, 0x01	; 1
 							receivestore2:
 							/* set flag */
 							receiveFlag = 2;
 
 							/* when a new byte is received */
 							while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 6d6:	ae 01       	movw	r20, r28
- 6d8:	48 1b       	sub	r20, r24
- 6da:	59 0b       	sbc	r21, r25
- 6dc:	ca 01       	movw	r24, r20
- 6de:	8a 56       	subi	r24, 0x6A	; 106
- 6e0:	9f 4f       	sbci	r25, 0xFF	; 255
- 6e2:	b8 01       	movw	r22, r16
- 6e4:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 6e8:	02 97       	sbiw	r24, 0x02	; 2
- 6ea:	2c f4       	brge	.+10     	; 0x6f6 <__LOCK_REGION_LENGTH__+0x2f6>
- 6ec:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 6f0:	20 93 03 01 	sts	0x0103, r18	; 0x800103 <receiveCount>
- 6f4:	08 c0       	rjmp	.+16     	; 0x706 <__LOCK_REGION_LENGTH__+0x306>
- 6f6:	26 30       	cpi	r18, 0x06	; 6
- 6f8:	e9 f6       	brne	.-70     	; 0x6b4 <__LOCK_REGION_LENGTH__+0x2b4>
- 6fa:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 6fe:	86 e0       	ldi	r24, 0x06	; 6
- 700:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <receiveCount>
- 704:	05 c0       	rjmp	.+10     	; 0x710 <__LOCK_REGION_LENGTH__+0x310>
+ a24:	b8 01       	movw	r22, r16
+ a26:	68 1b       	sub	r22, r24
+ a28:	79 0b       	sbc	r23, r25
+ a2a:	cb 01       	movw	r24, r22
+ a2c:	8a 56       	subi	r24, 0x6A	; 106
+ a2e:	9f 4f       	sbci	r25, 0xFF	; 255
+ a30:	b7 01       	movw	r22, r14
+ a32:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ a36:	02 97       	sbiw	r24, 0x02	; 2
+ a38:	3c f4       	brge	.+14     	; 0xa48 <__stack+0x149>
+ a3a:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ a3e:	f0 93 09 01 	sts	0x0109, r31	; 0x800109 <receiveCount+0x1>
+ a42:	e0 93 08 01 	sts	0x0108, r30	; 0x800108 <receiveCount>
+ a46:	0c c0       	rjmp	.+24     	; 0xa60 <__stack+0x161>
+ a48:	e6 30       	cpi	r30, 0x06	; 6
+ a4a:	f1 05       	cpc	r31, r1
+ a4c:	f1 f6       	brne	.-68     	; 0xa0a <__stack+0x10b>
+ a4e:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ a52:	86 e0       	ldi	r24, 0x06	; 6
+ a54:	90 e0       	ldi	r25, 0x00	; 0
+ a56:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <receiveCount+0x1>
+ a5a:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <receiveCount>
+ a5e:	07 c0       	rjmp	.+14     	; 0xa6e <__stack+0x16f>
 								/* store received bytes */
 								frame[receiveCount] = buffer[readPointer];
 								/* increase count */
 								receiveCount++;
 							}
 							if (receiveCount < 6)
- 706:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <receiveCount>
- 70a:	86 30       	cpi	r24, 0x06	; 6
- 70c:	08 f4       	brcc	.+2      	; 0x710 <__LOCK_REGION_LENGTH__+0x310>
- 70e:	9c c0       	rjmp	.+312    	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ a60:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <receiveCount>
+ a64:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <receiveCount+0x1>
+ a68:	06 97       	sbiw	r24, 0x06	; 6
+ a6a:	08 f4       	brcc	.+2      	; 0xa6e <__stack+0x16f>
+ a6c:	a9 c0       	rjmp	.+338    	; 0xbc0 <__stack+0x2c1>
 								return;
 							/* reset flag */
 							receiveFlag = 0;
- 710:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <receiveFlag>
+ a6e:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <receiveFlag>
 
 							/* get varID & varValue from frame */
 							varID = ((frame[2]&0x0F) << 4) + ((frame[3]&0xF0) >> 4);
- 714:	e5 e0       	ldi	r30, 0x05	; 5
- 716:	f3 e0       	ldi	r31, 0x03	; 3
- 718:	83 81       	ldd	r24, Z+3	; 0x03
- 71a:	92 81       	ldd	r25, Z+2	; 0x02
- 71c:	28 2f       	mov	r18, r24
- 71e:	22 95       	swap	r18
- 720:	2f 70       	andi	r18, 0x0F	; 15
- 722:	50 e1       	ldi	r21, 0x10	; 16
- 724:	95 9f       	mul	r25, r21
- 726:	20 0d       	add	r18, r0
- 728:	11 24       	eor	r1, r1
- 72a:	20 93 ff 02 	sts	0x02FF, r18	; 0x8002ff <varID>
+ a72:	ea e0       	ldi	r30, 0x0A	; 10
+ a74:	f3 e0       	ldi	r31, 0x03	; 3
+ a76:	83 81       	ldd	r24, Z+3	; 0x03
+ a78:	92 81       	ldd	r25, Z+2	; 0x02
+ a7a:	28 2f       	mov	r18, r24
+ a7c:	22 95       	swap	r18
+ a7e:	2f 70       	andi	r18, 0x0F	; 15
+ a80:	70 e1       	ldi	r23, 0x10	; 16
+ a82:	97 9f       	mul	r25, r23
+ a84:	20 0d       	add	r18, r0
+ a86:	11 24       	eor	r1, r1
+ a88:	20 93 04 03 	sts	0x0304, r18	; 0x800304 <varID>
 
 							varValue = ((frame[3]&0x0F) << 12);
- 72e:	90 e0       	ldi	r25, 0x00	; 0
- 730:	98 2f       	mov	r25, r24
- 732:	88 27       	eor	r24, r24
- 734:	92 95       	swap	r25
- 736:	90 7f       	andi	r25, 0xF0	; 240
+ a8c:	90 e0       	ldi	r25, 0x00	; 0
+ a8e:	98 2f       	mov	r25, r24
+ a90:	88 27       	eor	r24, r24
+ a92:	92 95       	swap	r25
+ a94:	90 7f       	andi	r25, 0xF0	; 240
 							varValue += (frame[4] << 4);
- 738:	34 81       	ldd	r19, Z+4	; 0x04
- 73a:	60 e1       	ldi	r22, 0x10	; 16
- 73c:	36 9f       	mul	r19, r22
- 73e:	80 0d       	add	r24, r0
- 740:	91 1d       	adc	r25, r1
- 742:	11 24       	eor	r1, r1
+ a96:	34 81       	ldd	r19, Z+4	; 0x04
+ a98:	40 e1       	ldi	r20, 0x10	; 16
+ a9a:	34 9f       	mul	r19, r20
+ a9c:	80 0d       	add	r24, r0
+ a9e:	91 1d       	adc	r25, r1
+ aa0:	11 24       	eor	r1, r1
 							varValue += (frame[5] >> 4);
- 744:	35 81       	ldd	r19, Z+5	; 0x05
- 746:	32 95       	swap	r19
- 748:	3f 70       	andi	r19, 0x0F	; 15
- 74a:	83 0f       	add	r24, r19
- 74c:	91 1d       	adc	r25, r1
- 74e:	90 93 04 03 	sts	0x0304, r25	; 0x800304 <varValue+0x1>
- 752:	80 93 03 03 	sts	0x0303, r24	; 0x800303 <varValue>
+ aa2:	35 81       	ldd	r19, Z+5	; 0x05
+ aa4:	32 95       	swap	r19
+ aa6:	3f 70       	andi	r19, 0x0F	; 15
+ aa8:	83 0f       	add	r24, r19
+ aaa:	91 1d       	adc	r25, r1
+ aac:	90 93 09 03 	sts	0x0309, r25	; 0x800309 <varValue+0x1>
+ ab0:	80 93 08 03 	sts	0x0308, r24	; 0x800308 <varValue>
 
 							/* set variable in dependency of varID */
 							switch (varID)
- 756:	21 30       	cpi	r18, 0x01	; 1
- 758:	09 f0       	breq	.+2      	; 0x75c <__LOCK_REGION_LENGTH__+0x35c>
- 75a:	63 c0       	rjmp	.+198    	; 0x822 <__LOCK_REGION_LENGTH__+0x422>
+ ab4:	21 30       	cpi	r18, 0x01	; 1
+ ab6:	09 f0       	breq	.+2      	; 0xaba <__stack+0x1bb>
+ ab8:	70 c0       	rjmp	.+224    	; 0xb9a <__stack+0x29b>
 							{
 								case sensorValueID:
 								sensorValue = varValue;
- 75c:	90 93 f7 02 	sts	0x02F7, r25	; 0x8002f7 <sensorValue+0x1>
- 760:	80 93 f6 02 	sts	0x02F6, r24	; 0x8002f6 <sensorValue>
+ aba:	90 93 05 01 	sts	0x0105, r25	; 0x800105 <sensorValue+0x1>
+ abe:	80 93 04 01 	sts	0x0104, r24	; 0x800104 <sensorValue>
 								break;
- 764:	5e c0       	rjmp	.+188    	; 0x822 <__LOCK_REGION_LENGTH__+0x422>
+ ac2:	6b c0       	rjmp	.+214    	; 0xb9a <__stack+0x29b>
 							}
 						} else goto receivestore3;
 					}
 					else
 					{
 						frame[0] = START + MODECTR;
- 766:	e5 e0       	ldi	r30, 0x05	; 5
- 768:	f3 e0       	ldi	r31, 0x03	; 3
- 76a:	99 5f       	subi	r25, 0xF9	; 249
- 76c:	90 83       	st	Z, r25
+ ac4:	ea e0       	ldi	r30, 0x0A	; 10
+ ac6:	f3 e0       	ldi	r31, 0x03	; 3
+ ac8:	99 5f       	subi	r25, 0xF9	; 249
+ aca:	90 83       	st	Z, r25
 						frame[1] = buffer[readPointer];
- 76e:	81 83       	std	Z+1, r24	; 0x01
+ acc:	81 83       	std	Z+1, r24	; 0x01
 						/* increase readPointer (consider step over) */
 						if (readPointer >= (BUFFERSIZE - 1))
- 770:	45 39       	cpi	r20, 0x95	; 149
- 772:	18 f0       	brcs	.+6      	; 0x77a <__LOCK_REGION_LENGTH__+0x37a>
+ ace:	45 39       	cpi	r20, 0x95	; 149
+ ad0:	18 f0       	brcs	.+6      	; 0xad8 <__stack+0x1d9>
 							readPointer = 0;
- 774:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 778:	03 c0       	rjmp	.+6      	; 0x780 <__LOCK_REGION_LENGTH__+0x380>
+ ad2:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ ad6:	03 c0       	rjmp	.+6      	; 0xade <__stack+0x1df>
 						else readPointer++;
- 77a:	4f 5f       	subi	r20, 0xFF	; 255
- 77c:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ ad8:	4f 5f       	subi	r20, 0xFF	; 255
+ ada:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 						frame[2] = buffer[readPointer];
- 780:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <readPointer>
- 784:	f0 e0       	ldi	r31, 0x00	; 0
- 786:	e6 53       	subi	r30, 0x36	; 54
- 788:	fe 4f       	sbci	r31, 0xFE	; 254
- 78a:	80 81       	ld	r24, Z
- 78c:	80 93 07 03 	sts	0x0307, r24	; 0x800307 <frame+0x2>
+ ade:	e0 91 0e 01 	lds	r30, 0x010E	; 0x80010e <readPointer>
+ ae2:	f0 e0       	ldi	r31, 0x00	; 0
+ ae4:	ee 52       	subi	r30, 0x2E	; 46
+ ae6:	fe 4f       	sbci	r31, 0xFE	; 254
+ ae8:	80 81       	ld	r24, Z
+ aea:	80 93 0c 03 	sts	0x030C, r24	; 0x80030c <frame+0x2>
 
 						receivestore3:
 						/* set flag */
 						receiveFlag = 2;
- 790:	82 e0       	ldi	r24, 0x02	; 2
- 792:	80 93 0d 01 	sts	0x010D, r24	; 0x80010d <receiveFlag>
+ aee:	82 e0       	ldi	r24, 0x02	; 2
+ af0:	80 93 13 01 	sts	0x0113, r24	; 0x800113 <receiveFlag>
 
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 796:	c0 91 09 01 	lds	r28, 0x0109	; 0x800109 <writePointer>
- 79a:	d0 e0       	ldi	r29, 0x00	; 0
- 79c:	30 91 08 01 	lds	r19, 0x0108	; 0x800108 <readPointer>
- 7a0:	ce 01       	movw	r24, r28
- 7a2:	83 1b       	sub	r24, r19
- 7a4:	91 09       	sbc	r25, r1
- 7a6:	8a 56       	subi	r24, 0x6A	; 106
- 7a8:	9f 4f       	sbci	r25, 0xFF	; 255
- 7aa:	66 e9       	ldi	r22, 0x96	; 150
- 7ac:	70 e0       	ldi	r23, 0x00	; 0
- 7ae:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 7b2:	02 97       	sbiw	r24, 0x02	; 2
- 7b4:	84 f1       	brlt	.+96     	; 0x816 <__LOCK_REGION_LENGTH__+0x416>
- 7b6:	20 91 03 01 	lds	r18, 0x0103	; 0x800103 <receiveCount>
- 7ba:	26 30       	cpi	r18, 0x06	; 6
- 7bc:	80 f5       	brcc	.+96     	; 0x81e <__LOCK_REGION_LENGTH__+0x41e>
+ af4:	00 91 0f 01 	lds	r16, 0x010F	; 0x80010f <writePointer>
+ af8:	10 e0       	ldi	r17, 0x00	; 0
+ afa:	20 91 0e 01 	lds	r18, 0x010E	; 0x80010e <readPointer>
+ afe:	c8 01       	movw	r24, r16
+ b00:	82 1b       	sub	r24, r18
+ b02:	91 09       	sbc	r25, r1
+ b04:	8a 56       	subi	r24, 0x6A	; 106
+ b06:	9f 4f       	sbci	r25, 0xFF	; 255
+ b08:	66 e9       	ldi	r22, 0x96	; 150
+ b0a:	70 e0       	ldi	r23, 0x00	; 0
+ b0c:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ b10:	02 97       	sbiw	r24, 0x02	; 2
+ b12:	dc f1       	brlt	.+118    	; 0xb8a <__stack+0x28b>
+ b14:	e0 91 08 01 	lds	r30, 0x0108	; 0x800108 <receiveCount>
+ b18:	f0 91 09 01 	lds	r31, 0x0109	; 0x800109 <receiveCount+0x1>
+ b1c:	e6 30       	cpi	r30, 0x06	; 6
+ b1e:	f1 05       	cpc	r31, r1
+ b20:	d0 f5       	brcc	.+116    	; 0xb96 <__stack+0x297>
+ b22:	ef 01       	movw	r28, r30
+ b24:	c6 5f       	subi	r28, 0xF6	; 246
+ b26:	dc 4f       	sbci	r29, 0xFC	; 252
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
 								readPointer = 0;
- 7be:	f1 2c       	mov	r15, r1
+ b28:	40 e0       	ldi	r20, 0x00	; 0
 						receivestore3:
 						/* set flag */
 						receiveFlag = 2;
 
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 7c0:	06 e9       	ldi	r16, 0x96	; 150
- 7c2:	10 e0       	ldi	r17, 0x00	; 0
+ b2a:	0f 2e       	mov	r0, r31
+ b2c:	f6 e9       	ldi	r31, 0x96	; 150
+ b2e:	ef 2e       	mov	r14, r31
+ b30:	f1 2c       	mov	r15, r1
+ b32:	f0 2d       	mov	r31, r0
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
- 7c4:	35 39       	cpi	r19, 0x95	; 149
- 7c6:	10 f4       	brcc	.+4      	; 0x7cc <__LOCK_REGION_LENGTH__+0x3cc>
+ b34:	25 39       	cpi	r18, 0x95	; 149
+ b36:	10 f4       	brcc	.+4      	; 0xb3c <__stack+0x23d>
 								readPointer = 0;
 							else readPointer++;
- 7c8:	3f 5f       	subi	r19, 0xFF	; 255
- 7ca:	01 c0       	rjmp	.+2      	; 0x7ce <__LOCK_REGION_LENGTH__+0x3ce>
+ b38:	2f 5f       	subi	r18, 0xFF	; 255
+ b3a:	01 c0       	rjmp	.+2      	; 0xb3e <__stack+0x23f>
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
 						{
 							/* increase readPointer (consider step over) */
 							if (readPointer >= (BUFFERSIZE - 1))
 								readPointer = 0;
- 7cc:	3f 2d       	mov	r19, r15
+ b3c:	24 2f       	mov	r18, r20
 							else readPointer++;
 							/* store received bytes */
 							frame[receiveCount] = buffer[readPointer];
- 7ce:	83 2f       	mov	r24, r19
- 7d0:	90 e0       	ldi	r25, 0x00	; 0
- 7d2:	e2 2f       	mov	r30, r18
- 7d4:	f0 e0       	ldi	r31, 0x00	; 0
- 7d6:	eb 5f       	subi	r30, 0xFB	; 251
- 7d8:	fc 4f       	sbci	r31, 0xFC	; 252
- 7da:	dc 01       	movw	r26, r24
- 7dc:	a6 53       	subi	r26, 0x36	; 54
- 7de:	be 4f       	sbci	r27, 0xFE	; 254
- 7e0:	4c 91       	ld	r20, X
- 7e2:	40 83       	st	Z, r20
+ b3e:	82 2f       	mov	r24, r18
+ b40:	90 e0       	ldi	r25, 0x00	; 0
+ b42:	dc 01       	movw	r26, r24
+ b44:	ae 52       	subi	r26, 0x2E	; 46
+ b46:	be 4f       	sbci	r27, 0xFE	; 254
+ b48:	3c 91       	ld	r19, X
+ b4a:	39 93       	st	Y+, r19
 							/* increase count */
 							receiveCount++;
- 7e4:	2f 5f       	subi	r18, 0xFF	; 255
+ b4c:	31 96       	adiw	r30, 0x01	; 1
 						receivestore3:
 						/* set flag */
 						receiveFlag = 2;
 
 						/* when a new byte is received */
 						while((((writePointer - readPointer + BUFFERSIZE) % BUFFERSIZE) > 1) && receiveCount < 6)
- 7e6:	ae 01       	movw	r20, r28
- 7e8:	48 1b       	sub	r20, r24
- 7ea:	59 0b       	sbc	r21, r25
- 7ec:	ca 01       	movw	r24, r20
- 7ee:	8a 56       	subi	r24, 0x6A	; 106
- 7f0:	9f 4f       	sbci	r25, 0xFF	; 255
- 7f2:	b8 01       	movw	r22, r16
- 7f4:	0e 94 3e 04 	call	0x87c	; 0x87c <__divmodhi4>
- 7f8:	02 97       	sbiw	r24, 0x02	; 2
- 7fa:	2c f4       	brge	.+10     	; 0x806 <__LOCK_REGION_LENGTH__+0x406>
- 7fc:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 800:	20 93 03 01 	sts	0x0103, r18	; 0x800103 <receiveCount>
- 804:	08 c0       	rjmp	.+16     	; 0x816 <__LOCK_REGION_LENGTH__+0x416>
- 806:	26 30       	cpi	r18, 0x06	; 6
- 808:	e9 f6       	brne	.-70     	; 0x7c4 <__LOCK_REGION_LENGTH__+0x3c4>
- 80a:	30 93 08 01 	sts	0x0108, r19	; 0x800108 <readPointer>
- 80e:	86 e0       	ldi	r24, 0x06	; 6
- 810:	80 93 03 01 	sts	0x0103, r24	; 0x800103 <receiveCount>
- 814:	04 c0       	rjmp	.+8      	; 0x81e <__LOCK_REGION_LENGTH__+0x41e>
+ b4e:	b8 01       	movw	r22, r16
+ b50:	68 1b       	sub	r22, r24
+ b52:	79 0b       	sbc	r23, r25
+ b54:	cb 01       	movw	r24, r22
+ b56:	8a 56       	subi	r24, 0x6A	; 106
+ b58:	9f 4f       	sbci	r25, 0xFF	; 255
+ b5a:	b7 01       	movw	r22, r14
+ b5c:	0e 94 fd 05 	call	0xbfa	; 0xbfa <__divmodhi4>
+ b60:	02 97       	sbiw	r24, 0x02	; 2
+ b62:	3c f4       	brge	.+14     	; 0xb72 <__stack+0x273>
+ b64:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ b68:	f0 93 09 01 	sts	0x0109, r31	; 0x800109 <receiveCount+0x1>
+ b6c:	e0 93 08 01 	sts	0x0108, r30	; 0x800108 <receiveCount>
+ b70:	0c c0       	rjmp	.+24     	; 0xb8a <__stack+0x28b>
+ b72:	e6 30       	cpi	r30, 0x06	; 6
+ b74:	f1 05       	cpc	r31, r1
+ b76:	f1 f6       	brne	.-68     	; 0xb34 <__stack+0x235>
+ b78:	20 93 0e 01 	sts	0x010E, r18	; 0x80010e <readPointer>
+ b7c:	86 e0       	ldi	r24, 0x06	; 6
+ b7e:	90 e0       	ldi	r25, 0x00	; 0
+ b80:	90 93 09 01 	sts	0x0109, r25	; 0x800109 <receiveCount+0x1>
+ b84:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <receiveCount>
+ b88:	06 c0       	rjmp	.+12     	; 0xb96 <__stack+0x297>
 							/* store received bytes */
 							frame[receiveCount] = buffer[readPointer];
 							/* increase count */
 							receiveCount++;
 						}
 						if (receiveCount < 6)
- 816:	80 91 03 01 	lds	r24, 0x0103	; 0x800103 <receiveCount>
- 81a:	86 30       	cpi	r24, 0x06	; 6
- 81c:	a8 f0       	brcs	.+42     	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ b8a:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <receiveCount>
+ b8e:	90 91 09 01 	lds	r25, 0x0109	; 0x800109 <receiveCount+0x1>
+ b92:	06 97       	sbiw	r24, 0x06	; 6
+ b94:	a8 f0       	brcs	.+42     	; 0xbc0 <__stack+0x2c1>
 							return;
 						/* reset flag */
 						receiveFlag = 0;
- 81e:	10 92 0d 01 	sts	0x010D, r1	; 0x80010d <receiveFlag>
+ b96:	10 92 13 01 	sts	0x0113, r1	; 0x800113 <receiveFlag>
 					}
 					USART1_sendStringWL(frame, 6);
- 822:	66 e0       	ldi	r22, 0x06	; 6
- 824:	85 e0       	ldi	r24, 0x05	; 5
- 826:	93 e0       	ldi	r25, 0x03	; 3
- 828:	0e 94 d5 00 	call	0x1aa	; 0x1aa <USART1_sendStringWL>
+ b9a:	66 e0       	ldi	r22, 0x06	; 6
+ b9c:	8a e0       	ldi	r24, 0x0A	; 10
+ b9e:	93 e0       	ldi	r25, 0x03	; 3
+ ba0:	0e 94 db 00 	call	0x1b6	; 0x1b6 <USART1_sendStringWL>
 
 					/* reset readPointer (consider step over) */
 					if (readPointer >= (BUFFERSIZE - 1))
- 82c:	80 91 08 01 	lds	r24, 0x0108	; 0x800108 <readPointer>
- 830:	85 39       	cpi	r24, 0x95	; 149
- 832:	18 f0       	brcs	.+6      	; 0x83a <__LOCK_REGION_LENGTH__+0x43a>
+ ba4:	80 91 0e 01 	lds	r24, 0x010E	; 0x80010e <readPointer>
+ ba8:	85 39       	cpi	r24, 0x95	; 149
+ baa:	18 f0       	brcs	.+6      	; 0xbb2 <__stack+0x2b3>
 						readPointer = 0;
- 834:	10 92 08 01 	sts	0x0108, r1	; 0x800108 <readPointer>
- 838:	07 c0       	rjmp	.+14     	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ bac:	10 92 0e 01 	sts	0x010E, r1	; 0x80010e <readPointer>
+ bb0:	07 c0       	rjmp	.+14     	; 0xbc0 <__stack+0x2c1>
 					else readPointer++;
- 83a:	8f 5f       	subi	r24, 0xFF	; 255
- 83c:	80 93 08 01 	sts	0x0108, r24	; 0x800108 <readPointer>
- 840:	03 c0       	rjmp	.+6      	; 0x848 <__LOCK_REGION_LENGTH__+0x448>
+ bb2:	8f 5f       	subi	r24, 0xFF	; 255
+ bb4:	80 93 0e 01 	sts	0x010E, r24	; 0x80010e <readPointer>
+ bb8:	03 c0       	rjmp	.+6      	; 0xbc0 <__stack+0x2c1>
 				default:
 				/* Your code here */
 				break;
 			}
 		}
 		else readPointer++;
- 842:	4f 5f       	subi	r20, 0xFF	; 255
- 844:	40 93 08 01 	sts	0x0108, r20	; 0x800108 <readPointer>
+ bba:	4f 5f       	subi	r20, 0xFF	; 255
+ bbc:	40 93 0e 01 	sts	0x010E, r20	; 0x80010e <readPointer>
 	 }
- 848:	df 91       	pop	r29
- 84a:	cf 91       	pop	r28
- 84c:	1f 91       	pop	r17
- 84e:	0f 91       	pop	r16
- 850:	ff 90       	pop	r15
- 852:	08 95       	ret
+ bc0:	df 91       	pop	r29
+ bc2:	cf 91       	pop	r28
+ bc4:	1f 91       	pop	r17
+ bc6:	0f 91       	pop	r16
+ bc8:	ff 90       	pop	r15
+ bca:	ef 90       	pop	r14
+ bcc:	df 90       	pop	r13
+ bce:	cf 90       	pop	r12
+ bd0:	08 95       	ret
 
-00000854 <__udivmodhi4>:
- 854:	aa 1b       	sub	r26, r26
- 856:	bb 1b       	sub	r27, r27
- 858:	51 e1       	ldi	r21, 0x11	; 17
- 85a:	07 c0       	rjmp	.+14     	; 0x86a <__udivmodhi4_ep>
+00000bd2 <__udivmodhi4>:
+ bd2:	aa 1b       	sub	r26, r26
+ bd4:	bb 1b       	sub	r27, r27
+ bd6:	51 e1       	ldi	r21, 0x11	; 17
+ bd8:	07 c0       	rjmp	.+14     	; 0xbe8 <__udivmodhi4_ep>
 
-0000085c <__udivmodhi4_loop>:
- 85c:	aa 1f       	adc	r26, r26
- 85e:	bb 1f       	adc	r27, r27
- 860:	a6 17       	cp	r26, r22
- 862:	b7 07       	cpc	r27, r23
- 864:	10 f0       	brcs	.+4      	; 0x86a <__udivmodhi4_ep>
- 866:	a6 1b       	sub	r26, r22
- 868:	b7 0b       	sbc	r27, r23
+00000bda <__udivmodhi4_loop>:
+ bda:	aa 1f       	adc	r26, r26
+ bdc:	bb 1f       	adc	r27, r27
+ bde:	a6 17       	cp	r26, r22
+ be0:	b7 07       	cpc	r27, r23
+ be2:	10 f0       	brcs	.+4      	; 0xbe8 <__udivmodhi4_ep>
+ be4:	a6 1b       	sub	r26, r22
+ be6:	b7 0b       	sbc	r27, r23
 
-0000086a <__udivmodhi4_ep>:
- 86a:	88 1f       	adc	r24, r24
- 86c:	99 1f       	adc	r25, r25
- 86e:	5a 95       	dec	r21
- 870:	a9 f7       	brne	.-22     	; 0x85c <__udivmodhi4_loop>
- 872:	80 95       	com	r24
- 874:	90 95       	com	r25
- 876:	bc 01       	movw	r22, r24
- 878:	cd 01       	movw	r24, r26
- 87a:	08 95       	ret
+00000be8 <__udivmodhi4_ep>:
+ be8:	88 1f       	adc	r24, r24
+ bea:	99 1f       	adc	r25, r25
+ bec:	5a 95       	dec	r21
+ bee:	a9 f7       	brne	.-22     	; 0xbda <__udivmodhi4_loop>
+ bf0:	80 95       	com	r24
+ bf2:	90 95       	com	r25
+ bf4:	bc 01       	movw	r22, r24
+ bf6:	cd 01       	movw	r24, r26
+ bf8:	08 95       	ret
 
-0000087c <__divmodhi4>:
- 87c:	97 fb       	bst	r25, 7
- 87e:	07 2e       	mov	r0, r23
- 880:	16 f4       	brtc	.+4      	; 0x886 <__divmodhi4+0xa>
- 882:	00 94       	com	r0
- 884:	07 d0       	rcall	.+14     	; 0x894 <__divmodhi4_neg1>
- 886:	77 fd       	sbrc	r23, 7
- 888:	09 d0       	rcall	.+18     	; 0x89c <__divmodhi4_neg2>
- 88a:	0e 94 2a 04 	call	0x854	; 0x854 <__udivmodhi4>
- 88e:	07 fc       	sbrc	r0, 7
- 890:	05 d0       	rcall	.+10     	; 0x89c <__divmodhi4_neg2>
- 892:	3e f4       	brtc	.+14     	; 0x8a2 <__divmodhi4_exit>
+00000bfa <__divmodhi4>:
+ bfa:	97 fb       	bst	r25, 7
+ bfc:	07 2e       	mov	r0, r23
+ bfe:	16 f4       	brtc	.+4      	; 0xc04 <__divmodhi4+0xa>
+ c00:	00 94       	com	r0
+ c02:	07 d0       	rcall	.+14     	; 0xc12 <__divmodhi4_neg1>
+ c04:	77 fd       	sbrc	r23, 7
+ c06:	09 d0       	rcall	.+18     	; 0xc1a <__divmodhi4_neg2>
+ c08:	0e 94 e9 05 	call	0xbd2	; 0xbd2 <__udivmodhi4>
+ c0c:	07 fc       	sbrc	r0, 7
+ c0e:	05 d0       	rcall	.+10     	; 0xc1a <__divmodhi4_neg2>
+ c10:	3e f4       	brtc	.+14     	; 0xc20 <__divmodhi4_exit>
 
-00000894 <__divmodhi4_neg1>:
- 894:	90 95       	com	r25
- 896:	81 95       	neg	r24
- 898:	9f 4f       	sbci	r25, 0xFF	; 255
- 89a:	08 95       	ret
+00000c12 <__divmodhi4_neg1>:
+ c12:	90 95       	com	r25
+ c14:	81 95       	neg	r24
+ c16:	9f 4f       	sbci	r25, 0xFF	; 255
+ c18:	08 95       	ret
 
-0000089c <__divmodhi4_neg2>:
- 89c:	70 95       	com	r23
- 89e:	61 95       	neg	r22
- 8a0:	7f 4f       	sbci	r23, 0xFF	; 255
+00000c1a <__divmodhi4_neg2>:
+ c1a:	70 95       	com	r23
+ c1c:	61 95       	neg	r22
+ c1e:	7f 4f       	sbci	r23, 0xFF	; 255
 
-000008a2 <__divmodhi4_exit>:
- 8a2:	08 95       	ret
+00000c20 <__divmodhi4_exit>:
+ c20:	08 95       	ret
 
-000008a4 <_exit>:
- 8a4:	f8 94       	cli
+00000c22 <_exit>:
+ c22:	f8 94       	cli
 
-000008a6 <__stop_program>:
- 8a6:	ff cf       	rjmp	.-2      	; 0x8a6 <__stop_program>
+00000c24 <__stop_program>:
+ c24:	ff cf       	rjmp	.-2      	; 0xc24 <__stop_program>

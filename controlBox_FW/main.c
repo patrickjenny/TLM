@@ -125,11 +125,12 @@ ISR(USART1_RX_vect)
 
 void sendAddress(void)
 {
+	/* START + MODEADR */
 	USART1_sendChar(0xA1);
-	_delay_ms(2);
-	USART1_sendChar(0x2A);
-	_delay_ms(2);
-	USART1_sendChar(0xA9);
+	/* toolID + address */
+	USART1_sendChar(0x20);
+	/* address + STOP */
+	USART1_sendChar(0x29);
 	_delay_ms(10);
 }
 
@@ -149,6 +150,7 @@ void sendSpecialFrame(void)
 	USART1_sendChar(0x09);
 	_delay_ms(2000);
 }
+
 void sendSpecialFrame_1(void)
 {
 	USART1_sendChar(0xA4);
@@ -164,6 +166,33 @@ void sendSpecialFrame_1(void)
 	}
 	USART1_sendChar(0x09);
 	_delay_ms(2000);
+}
+
+void sendStandardFrame(void)
+{
+	/* START + MODESTD */
+	USART1_sendChar(0xA2);
+	/* toolID + varID */
+	USART1_sendChar(0x20);
+	/* varID + length */
+	USART1_sendChar(0x20);
+	/* length */
+	USART1_sendChar(0x01);
+
+	/* deviceSTART + MODEDEV */
+	USART1_sendChar(0x53);
+	/* toolID + address */
+	USART1_sendChar(0x20);
+	/* address + varValue */
+	USART1_sendChar(0x2A);
+	/* varValue */
+	USART1_sendChar(0xFF);
+	/* varValue + deviceSTOP*/
+	USART1_sendChar(0xE6);
+
+	/* STOP */
+	USART1_sendChar(0x09);
+	_delay_ms(500);
 }
 
 int main(void)
@@ -188,7 +217,7 @@ int main(void)
 		bus_process();
 
 		//sendAddress();
-		//sendSpecialFrame();
+		//sendStandardFrame();		//sendSpecialFrame();
 		//sendSpecialFrame_1();
     }
 }
