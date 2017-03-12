@@ -11,10 +11,10 @@
 
 #include <avr/io.h>
 
-// init hal
+// initialize HAL
 void hal_init(void);
 
-// hal process
+// HAL process
 void hal_process(void);
 
 // Timer
@@ -56,6 +56,8 @@ void USART1_setToTransmit(void);
 void USART1_sendChar(unsigned char data);
 /* send string over the USART1 interface */
 void USART1_sendString(unsigned char *s);
+/* send string with specific length over the USART1 interface */
+void USART1_sendStringWL(unsigned char *s, unsigned char length);
 /* flush the USART1 buffer */
 void USART1_flush(void);
 /* receive a char over the USART1 interface */
