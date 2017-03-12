@@ -13,17 +13,17 @@ static enum states{MEAS_ADV, MEAS_SIMP, WAIT} state;
 
 extern uint16_t bounds[7];
 extern uint16_t voltageDiv[4];
+extern uint16_t voltages[6];
 extern uint8_t statusCode;
 extern uint8_t measLED_valid;
 uint8_t nLED;
+uint8_t meascount = 0;
 timer_var_t meas_timer;
 
 void measurement_init(void)
 {
 	state = WAIT;
 	
-	DDRD |= (1<<PORTD7);
-	PORTD &= ~(1<<PORTD7);
 	meas_timer = TIMER_SEC(1);
 	
 	measurement_hal_init();
@@ -41,10 +41,19 @@ void measurement_process(void)
 	{
 		case MEAS_ADV:		//State MEAS_ADV
 			
+<<<<<<< HEAD
 			//get_ambient_TEMP();
+=======
+			meascount = 0;
+			
+			get_ambient_TEMP();
+>>>>>>> origin/master
 			get_sensor_value(0);			
 			get_all_voltages();
 			get_all_div_voltages();
+			
+			nLED = 0;
+			
 			for (uint8_t i = 0; i<4; i++)
 			{
 				if (voltageDiv[i] < bounds[6])
@@ -61,7 +70,7 @@ void measurement_process(void)
 			
 			if (nLED > 12)
 			{
-				statusCode = 0x03;
+				statusCode = 0x07;
 			}
 			else
 			{
@@ -70,30 +79,43 @@ void measurement_process(void)
 			
 			statusCode |= (nLED << 3);
 			state = WAIT;
-		
+			meas_timer = TIMER_SEC(3);
+						
 		break;
 		
 		case MEAS_SIMP:		//STATE MEAS_SIMP
 			
+<<<<<<< HEAD
 			//get_ambient_TEMP();
+=======
+			meascount++;
+			
+			get_ambient_TEMP();
+>>>>>>> origin/master
 			get_all_div_voltages();
+			
+			nLED=0;
+			
 			for (uint8_t i = 0; i<4; i++)
 			{
+				//USART1_sendChar((char)(voltageDiv[i]>>8));
+				//USART1_sendChar((char)(voltageDiv[i]));
 				if (voltageDiv[i] < bounds[6])
 				{
 					for (uint8_t ii = 0; ii<6; ii++)
 					{
-						if (voltageDiv[i] > bounds[ii])
+						if (voltageDiv[i] >= bounds[ii])
 						{
-							nLED++;
+							nLED++;							
 						}
 					}
 				}
 			}
-		
+			
+			
 			if (nLED > 12)
 			{
-				statusCode = 0x03;
+				statusCode = 0x07;
 			}
 			else
 			{
@@ -103,15 +125,24 @@ void measurement_process(void)
 			statusCode |= (nLED << 3);
 			state = WAIT;
 			meas_timer = TIMER_SEC(1);
+			
+			
 		break;
 		
 		case WAIT:			//STATE WAIT
 		
 			if (meas_timer == 0)
 			{
-				state = MEAS_SIMP;
+				if (meascount == 10)
+				{
+					state = MEAS_ADV;
+				}
+				else
+				{
+					state = MEAS_SIMP;
+				}
+				
 			}
-		
 		break;
 		
 	}

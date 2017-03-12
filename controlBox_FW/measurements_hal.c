@@ -64,20 +64,20 @@ void get_ambient_TEMP(void)
 
 void get_all_voltages(void)
 {
-	voltages[0] = read_adc_10(0x00) * (1100/1024) * 27/(680+27);
-	voltages[1] = read_adc_10(0x01) * (1100/1024) * 27/(680+27);
-	voltages[2] = read_adc_10(0x02) * (1100/1024) * 27/(680+27);
-	voltages[3] = read_adc_10(0x03) * (1100/1024) * 27/(680+27);
-	voltages[4] = read_adc_10(0x04) * (1100/1024) * 27/(680+27);
-	voltages[5] = read_adc_10(0x05) * (1100/1024) * 27/(680+27);
+	voltages[0] = read_adc_10(0x00) *25.741;
+	voltages[1] = read_adc_10(0x01) *25.741;
+	voltages[2] = read_adc_10(0x02) *25.741;
+	voltages[3] = read_adc_10(0x03) *25.741;
+	voltages[4] = read_adc_10(0x04) *25.741;
+	voltages[5] = read_adc_10(0x05) *25.741;
 }
 
 void get_all_div_voltages(void)
 {
-	voltageDiv[0] = (read_adc_10(0x04) - read_adc_10(0x00)) * (1100/1024) * 27/(680+27);
-	voltageDiv[1] = (read_adc_10(0x05) - read_adc_10(0x01)) * (1100/1024) * 27/(680+27);
-	voltageDiv[2] = (read_adc_10(0x04) - read_adc_10(0x02)) * (1100/1024) * 27/(680+27);
-	voltageDiv[3] = (read_adc_10(0x05) - read_adc_10(0x03)) * (1100/1024) * 27/(680+27);
+	voltageDiv[0] = (read_adc_10(0x04) - read_adc_10(0x00)) *25.741;
+	voltageDiv[1] = (read_adc_10(0x05) - read_adc_10(0x01)) *25.741;
+	voltageDiv[2] = (read_adc_10(0x04) - read_adc_10(0x02)) *25.741;
+	voltageDiv[3] = (read_adc_10(0x05) - read_adc_10(0x03)) *25.741;
 }
 
 void get_sensor_value(uint8_t sensortype)

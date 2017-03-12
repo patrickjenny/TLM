@@ -33,6 +33,10 @@
 uint8_t statusCode; // OK not OK
 /* 7 bounds */
 uint16_t bounds[7];
+
+
+
+
 /* 4 div voltages */
 uint16_t voltageDiv[4];
 
@@ -103,7 +107,12 @@ uint8_t measLED_valid;
 
 ISR(USART0_RX_vect)
 {
+<<<<<<< HEAD
 	buffer[writePointer] = UDR0;
+=======
+	bufferU0[writePointerU0] = UDR0;
+	
+>>>>>>> origin/master
 	state = BUSSYSTEM;	/* change state / start evaluation */
 
 	if (writePointer >= (BUFFERSIZE - 1))
@@ -197,6 +206,32 @@ void sendStandardFrame(void)
 
 int main(void)
 {
+	bounds[0] = 1880;
+	bounds[1] = 4760;
+	bounds[2] = 7640;
+	bounds[3] = 10520;
+	bounds[4] = 13400;
+	bounds[5] = 16000;
+	bounds[6] = 22000;
+
+	
+	hal_init();
+	measurement_init();
+	lightcontrol_init();
+    /* initialize main features */
+	sei();
+	/* initialize UART interfaces */
+	
+	//could be put into hal_init() @joshua from patrick ?
+	USART0_init();
+	USART1_init();
+
+	USART0_setToReceive();
+	USART1_setToTransmit();
+	
+	lightmode = 0x01;
+	brightness = 50;
+	
 	/* initialize main features */
 	hal_init();
 	
@@ -210,6 +245,7 @@ int main(void)
 
     while (1) 
     {
+<<<<<<< HEAD
 		//hal_process();
 		////stateMachine();
 		//measurement_process();
@@ -219,6 +255,11 @@ int main(void)
 		//sendAddress();
 		//sendStandardFrame();		//sendSpecialFrame();
 		//sendSpecialFrame_1();
+=======
+		hal_process();
+		stateMachine();
+		
+>>>>>>> origin/master
     }
 }
 
