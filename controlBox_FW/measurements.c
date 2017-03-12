@@ -17,7 +17,7 @@ extern uint16_t voltages[6];
 extern uint8_t statusCode;
 extern uint8_t measLED_valid;
 uint8_t nLED;
-uint8_t meascount;
+uint8_t meascount = 0;
 timer_var_t meas_timer;
 
 void measurement_init(void)
@@ -40,6 +40,8 @@ void measurement_process(void)
 	switch(state)
 	{
 		case MEAS_ADV:		//State MEAS_ADV
+			
+			meascount = 0;
 			
 			get_ambient_TEMP();
 			get_sensor_value(0);			
@@ -79,6 +81,7 @@ void measurement_process(void)
 		
 		case MEAS_SIMP:		//STATE MEAS_SIMP
 			
+			meascount++;
 			
 			get_ambient_TEMP();
 			get_all_div_voltages();
@@ -122,10 +125,16 @@ void measurement_process(void)
 		
 			if (meas_timer == 0)
 			{
-				state = MEAS_SIMP;
+				if (meascount == 10)
+				{
+					state = MEAS_ADV;
+				}
+				else
+				{
+					state = MEAS_SIMP;
+				}
+				
 			}
-		
-
 		break;
 		
 	}
