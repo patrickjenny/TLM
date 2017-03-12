@@ -17,6 +17,7 @@ extern uint16_t voltages[6];
 extern uint8_t statusCode;
 extern uint8_t measLED_valid;
 uint8_t nLED;
+uint8_t meascount;
 timer_var_t meas_timer;
 
 void measurement_init(void)
@@ -43,41 +44,6 @@ void measurement_process(void)
 			get_ambient_TEMP();
 			get_sensor_value(0);			
 			get_all_voltages();
-			
-			//////////////////////////////////////////////////////////////////////////
-			//TEST//
-			
-			//USART1_sendChar((char)(voltages[0]>>8));
-			//USART1_sendChar((char)(voltages[0]));
-			//USART1_sendChar((char)(voltages[1]>>8));
-			//USART1_sendChar((char)(voltages[1]));
-			//USART1_sendChar((char)(voltages[2]>>8));
-			//USART1_sendChar((char)(voltages[2]));
-			//USART1_sendChar((char)(voltages[3]>>8));
-			//USART1_sendChar((char)(voltages[3]));
-			//USART1_sendChar((char)(voltages[4]>>8));
-			//USART1_sendChar((char)(voltages[4]));
-			//USART1_sendChar((char)(voltages[5]>>8));
-			//USART1_sendChar((char)(voltages[5]));
-			
-			//uint16_t adc03;
-			//adc03 = read_adc_10(0x03)*25.741;
-			//USART1_sendChar((char)(adc03>>8));
-			//USART1_sendChar((char)(adc03));
-			//
-			//uint32_t adc13;
-			//adc13 = (uint32_t)read_adc_10(0x03)*(1100*647)/(1024*27);
-			//USART1_sendChar((char)(adc13>>8));
-			//USART1_sendChar((char)(adc13));
-			//
-			//uint16_t adc23;
-			//adc23 = read_adc_10(0x03)/1024*1100/27*647;
-			//USART1_sendChar((char)(adc23>>8));
-			//USART1_sendChar((char)(adc23));
-			
-			//TEST ENDE//
-			//////////////////////////////////////////////////////////////////////////
-			
 			get_all_div_voltages();
 			
 			nLED = 0;

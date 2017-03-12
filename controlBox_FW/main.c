@@ -126,7 +126,6 @@ ISR(USART1_RX_vect)
 
 int main(void)
 {
-<<<<<<< HEAD
 	bounds[0] = 1880;
 	bounds[1] = 4760;
 	bounds[2] = 7640;
@@ -153,20 +152,6 @@ int main(void)
 	lightmode = 0x01;
 	brightness = 50;
 	
-    while (1) 
-    {
-		
-		hal_process();
-		measurement_process();
-		lightcontrol_process();
-		
-		USART1_sendChar((char)(temperature>>8));
-		USART1_sendChar((char)(temperature));
-		USART1_sendChar(statusCode);
-		//stateMachine();
-		//sendAddress();
-		
-=======
 	/* initialize main features */
 	hal_init();
 	measurement_init();
@@ -175,8 +160,9 @@ int main(void)
 
     while (1) 
     {
+		hal_process();
 		stateMachine();
->>>>>>> origin/master
+		
     }
 }
 
