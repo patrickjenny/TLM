@@ -11,32 +11,36 @@
 
 void lighcontrol_hal_init(void) //Initialisierung Timer
 {
-	DDRD  |= (1 << DDRD6); // D6 - Ausgang
-	//TCCR0A = (1 << WGM01) | (1 << WGM00); //Mode select
-	TCCR0A = 0xC3;
-	TCCR0B = 0x02;
-	//TCCR0B = (1 << WGM02) | (1 << CS01);
+	//Set Pin PD6 as output
+	DDRD  |= (1 << DDRD6);
+	//PWM Mode
+	TCCR0A = 0xC3; // 0xC3 = 0b11000011
+	TCCR0B = 0x02; // 0x02 = 0b00000010
 }
 
 void brightness_fully_on(void)
 {
+	//DISABLE Timer Output and set PIN PD6 low
 	TCCR0A &= ~((1 << COM0A1) | (1<<COM0A0));
 	PORTD &= ~(1 << PORTD6);
 }
 
 void brightness_fully_off(void)
 {
+	//DISABLE Timer Output and set PIN PD6 high
 	TCCR0A &= ~((1 << COM0A1) | (1<<COM0A0));
 	PORTD |= (1<<PORTD6);
 }
 
 void set_brighntess(uint8_t val)
 {
+	// ENABLE Timer Output and set OCR Register
 	TCCR0A |= ((1 << COM0A1) | (1<<COM0A0));
 	OCR0A = val;
 }
 
 void inv_brightness(void)
 {	
+	//ínvert Pin PD6
 	PORTD^=(1<<PORTD6);
 }

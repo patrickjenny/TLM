@@ -225,7 +225,7 @@ int main(void)
 	USART0_setToReceive();
 	USART1_setToTransmit();
 	
-	lightmode = 0x01;
+	lightmode = 0x00;
 	brightness = 50;
 	
 	/* initialize main features */

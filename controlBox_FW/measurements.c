@@ -83,7 +83,7 @@ void measurement_process(void)
 		
 		case MEAS_SIMP:		//STATE MEAS_SIMP
 			
-			//get_ambient_TEMP();
+			get_ambient_TEMP();
 
 			meascount++;
 			
